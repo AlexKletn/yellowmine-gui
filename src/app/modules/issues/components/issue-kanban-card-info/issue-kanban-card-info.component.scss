@@ -1,0 +1,45 @@
+.issue-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &-loading {
+    margin: 0 auto;
+  }
+
+  &-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: .2em;
+
+    .title {
+      position: relative;
+      font-size: .8em;
+      font-weight: bold;
+    }
+
+    .estimation {
+      display: flex;
+      align-items: center;
+
+      .value {
+        margin-left: .5em;
+
+        &.warning {
+          color: var(--orange-600);
+        }
+        &.danger {
+          color: var(--red-600);
+        }
+      }
+    }
+
+    .description {
+      font-size: .8em;
+      padding: .2em;
+
+
+    }
+  }
+}

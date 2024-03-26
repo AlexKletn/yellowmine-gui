@@ -1,0 +1,28 @@
+.kanban-column {
+  width: 250px;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+
+    min-height: 4em;
+  }
+}
+:host ::ng-deep {
+  .panel {
+    transition: .3s;
+    border-radius: var(--border-radius);
+  }
+
+  .p-panel-content {
+    padding: .3em;
+  }
+
+  .p-draggable-enter {
+    .panel {
+      box-shadow: 0 0 0 1px var(--primary-color);
+      transform: scale(1.0025);
+    }
+  }
+}

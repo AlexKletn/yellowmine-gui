@@ -1,0 +1,35 @@
+<div class="issueView">
+  <p-panel *ngIf="issue">
+    <ng-template pTemplate="header">
+      <div class="issueViewHeader">
+        <span class="font-bold">
+          {{ issue.subject }}
+        </span>
+
+        <div class="tags">
+          <p-tag [value]="issue.priority.name"></p-tag>
+          <p-tag [value]="issue.status.name"></p-tag>
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="issueViewContent">
+      <div class="details">
+        <div class="detailsDescription" [innerHTML]="description">
+        </div>
+      </div>
+
+      <div>
+        <p-table [value]="issueArguments">
+          <ng-template pTemplate="body" let-issueArgument>
+            <tr>
+              <td>{{ issueArgument.label }}</td>
+              <td>{{ issueArgument.value }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+    </div>
+  </p-panel>
+</div>

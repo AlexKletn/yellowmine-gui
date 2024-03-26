@@ -1,0 +1,33 @@
+<!--<ng-scrollbar position="invertAll">-->
+  <div class="kanban">
+    <rm-kanban-column
+      class="p-col"
+      *ngFor="let column of columns; trackBy:getTrackByColumnKey"
+      [column]="column"
+      (onDrop)="dropHandler(column)"
+    >
+      <div
+        *ngFor="let item of items[column.id];trackBy: getTrackByKey"
+      >
+        <div
+          class="element"
+          pDraggable="items"
+
+          dragEffect="move"
+
+          (onDragStart)="dragStartHandler(item, $event, column.id)"
+          (onDragEnd)="dragEndHandler($event)"
+
+          [ngClass]="{
+            dragged: item.id === draggedItem?.id,
+          }"
+
+          [ngStyle]="{
+          }"
+        >
+          <ng-container *ngTemplateOutlet="data; context: {item}"></ng-container>
+        </div>
+      </div>
+    </rm-kanban-column>
+  </div>
+<!--</ng-scrollbar>-->

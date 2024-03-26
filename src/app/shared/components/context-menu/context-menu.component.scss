@@ -1,0 +1,26 @@
+.context-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  z-index: 1002;
+  min-width: 11em;
+  max-width: 20em;
+
+  &-with-slots {
+    padding: .5em;
+
+    background: var(--surface-a);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--surface-border);
+
+    .top-slot {
+      display: block;
+      padding: .5em 0;
+    }
+    .bottom-slot {
+      display: block;
+      padding: .5em 0;
+    }
+  }
+}

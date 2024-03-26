@@ -1,0 +1,61 @@
+<div *ngIf="!isLoading && issues.length > 0" class="kanban-list">
+  <div
+    class="kanban-list-item"
+    *ngFor="let assignedName of (issuesByAssignedAndStatus | keyvalue); trackBy:getTrackByUserKey"
+  >
+    <div class="title">
+      {{ assignedName.key }}
+    </div>
+
+    <rm-kanban
+      [columns]="activeIssueStatuses"
+      [items]="assignedName.value"
+
+      (onChange)="changeHandler($event.item, $event.newColumn)"
+
+      class="issue-kanban"
+    >
+      <ng-template #data let-item="item">
+        <rm-issues-kanban-card [issue]="item" [loading]="issuesInUpdate.has(item.id)"/>
+      </ng-template>
+    </rm-kanban>
+
+  </div>
+</div>
+
+<div *ngIf="!isLoading && issues.length === 0">
+  <rm-empty />
+</div>
+
+<div *ngIf="isLoading" class="kanban-list-loader">
+  <p-progressSpinner
+    styleClass="w-4rem h-4rem"
+    animationDuration=".5s"
+  ></p-progressSpinner>
+</div>
+
+<rm-issues-kanban-coluns-configurator [isOpen]="settingsIsOpen" />
+
+<rm-issues-kanban-filters>
+  <ng-template #actions>
+    <p-button
+      icon="pi pi-refresh"
+
+      [loading]="isLoading"
+      [rounded]="true"
+      [text]="true"
+      [style]="{ height: '3em', width: '3em'}"
+      (onClick)="loadIssues()"
+    />
+
+    <p-button
+      icon="pi pi-sliders-h"
+      severity="info"
+
+      [rounded]="true"
+      [text]="true"
+      [style]="{ height: '3em', width: '3em'}"
+      (onClick)="openSettingsHandler()"
+    />
+  </ng-template>
+</rm-issues-kanban-filters>

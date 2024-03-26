@@ -1,0 +1,51 @@
+<div #issueCard class="issue-card">
+  <div class="issue-card-header">
+    <div class="issue-title">
+      {{
+        issue.subject
+      }}
+    </div>
+    <div class="issue-id">
+      {{
+        issue.id
+      }}
+    </div>
+
+    <p-progressSpinner
+      *ngIf="loading"
+
+      class="spinner"
+      strokeWidth="8"
+      fill="var(--surface-ground)"
+      animationDuration=".5s"
+
+      [style]="{ height: '1em', width: '1em'}"
+    ></p-progressSpinner>
+  </div>
+
+  <div class="issue-card-footer">
+    <div class="priority">
+      Приоритет: {{
+        issue.priority.name
+      }}
+    </div>
+
+    <div class="estimate">
+      <div *ngIf="issue.estimated_hours">
+        Оценка: {{ issue.estimated_hours}} ч
+      </div>
+      <div *ngIf="issue.total_spent_hours">
+        Затрачено: {{ issue.total_spent_hours}} ч
+      </div>
+    </div>
+
+    <div class="progress">
+      <p-progressBar [value]="issue.done_ratio" [style]="{height: '.2em'}">
+        <ng-template pTemplate="content" let-value>
+        </ng-template>
+      </p-progressBar>
+    </div>
+  </div>
+</div>
+
+<rm-issues-kanban-card-context [issue]="issue" [issueCard]="issueCard"/>

@@ -1,0 +1,27 @@
+.issueCreate {
+  .headerFields {
+    padding: 1rem;
+
+    display: grid;
+    grid-template-areas: '. .' 'subject subject' 'description description';
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+  }
+
+  .subject {
+    grid-area: subject;
+  }
+
+  .description {
+    grid-area: description;
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .formRow {
+    display: grid;
+    grid-template-areas: '. . . .';
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,30 @@
+.filters {
+  background: var(--surface-a);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 0 1px var(--surface-b);
+  padding: 1em;
+
+  display: grid;
+  grid-template-areas: '. . actions';
+  grid-template-columns: 1fr 1fr auto;
+
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  right: 1em;
+
+  &-static {
+    position: static;
+    margin: 1em 0;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+  }
+
+  &-actions {
+    grid-area: actions;
+  }
+}

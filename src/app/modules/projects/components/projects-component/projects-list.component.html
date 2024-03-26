@@ -1,0 +1,7 @@
+<div class="container">
+  @for (project of projects; track $index) {
+    <p-card header="{{ project['name'] }}" (click)="openProject(''+project['id'])">
+      {{ project['description'] }}
+    </p-card>
+  }
+</div>

@@ -1,0 +1,60 @@
+.issue-card {
+  background: var(--surface-b);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 0 1px var(--surface-b);
+
+  &-header {
+    display: grid;
+    grid-template-areas: 'id    . loader'
+                           'title . .';
+    grid-template-columns: auto 1fr 1em;
+
+    padding: .2em;
+
+    .spinner {
+      grid-area: loader;
+    }
+  }
+
+  &-footer {
+    .priority {
+      margin: .3em 0;
+    }
+
+    .priority,
+    .estimate {
+      font-size: .8em;
+    }
+
+    .progress {
+      margin-top: .5em;
+    }
+  }
+
+  .issue {
+    &-id {
+      grid-area: id;
+      font-size: .8em;
+      color: var(--text-color-secondary);
+
+      &:before {
+        content: '#';
+        font-size: .8rem;
+        color: var(--text-color-secondary);
+        opacity: .8;
+      }
+    }
+
+    &-title {
+      grid-area: title;
+      color: var(--text-color);
+      margin-left: .5em;
+      font-weight: 600;
+    }
+  }
+}

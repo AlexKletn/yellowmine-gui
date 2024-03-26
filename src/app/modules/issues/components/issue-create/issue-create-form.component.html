@@ -1,0 +1,26 @@
+<div class="issueCreate">
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="headerFields">
+        <rm-trakers-select [value]="3" />
+        <projects-select />
+        <input class="control subject" placeholder="Тема" pInputText/>
+
+        <textarea
+          class="description"
+          pInputTextarea
+          placeholder="Описание"
+        ></textarea>
+      </div>
+    </ng-template>
+
+    <div class="formRow">
+<!--      <p-dropdown [filter]="true" placeholder="Родительская задача" [style]="{width: '100%'}"/>-->
+      <input pInputText placeholder="Родительская задача" [style]="{width: '100%'}"/>
+      <p-dropdown placeholder="Статус" [style]="{width: '100%'}"/>
+      <p-dropdown placeholder="Приоритет" [style]="{width: '100%'}"/>
+      <p-dropdown placeholder="Назначена" [style]="{width: '100%'}"/>
+    </div>
+
+  </p-card>
+</div>

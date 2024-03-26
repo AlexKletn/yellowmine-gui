@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.kanban-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-bottom: 5em;
+
+  .title {
+    padding: 1em;
+  }
+
+  &-item {
+    padding: .1em;
+
+    background: var(--surface-c);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 0 1px var(--surface-b);
+
+  }
+
+  &-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20em;
+  }
+}

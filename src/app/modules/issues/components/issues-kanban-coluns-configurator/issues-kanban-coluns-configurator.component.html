@@ -1,0 +1,40 @@
+<p-dialog
+  header="Настройка статусов"
+  position="bottomright"
+
+  [(visible)]="isOpen"
+
+  [draggable]="false"
+  [modal]="true"
+  [style]="{ width: '60em' }"
+>
+  <p-pickList
+    sourceHeader="Все статусы"
+    targetHeader="Выбранные статусы"
+    [source]="availableIssueStatuses"
+    [target]="activeIssueStatuses"
+
+    [dragdrop]="true"
+    [responsive]="true"
+
+    [sourceStyle]="{ height: '30rem' }"
+    [targetStyle]="{ height: '30rem' }"
+    [trackBy]="getTrackByStatusKey"
+
+    (onTargetReorder)="moveStatusHandler()"
+    (onSourceReorder)="moveStatusHandler()"
+    (onMoveAllToTarget)="moveStatusHandler()"
+    (onMoveAllToSource)="moveStatusHandler()"
+    (onMoveToTarget)="moveStatusHandler()"
+    (onMoveToSource)="moveStatusHandler()"
+  >
+    <ng-template let-status pTemplate="item">
+      <div class="flex flex-wrap p-2 align-items-center gap-3">
+        <div class="flex-1 flex flex-column gap-2">
+          <span class="font-bold">{{ status.name }}</span>
+        </div>
+        <span class="font-bold text-900">{{ '#' + status.id }}</span>
+      </div>
+    </ng-template>
+  </p-pickList>
+</p-dialog>

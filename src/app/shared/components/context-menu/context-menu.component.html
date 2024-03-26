@@ -1,0 +1,24 @@
+<div
+  *ngIf="isOpen"
+  class="context-menu"
+
+  [style]="{
+    top: menuPosition.y + 'px',
+    left: menuPosition.x + 'px',
+  }"
+  [ngClass]="{
+    'context-menu-with-slots': top || bottom,
+  }"
+
+  (mousedown)="containerClickHandler($event)"
+  (drag)="containerClickHandler($event)"
+>
+  <div *ngIf="top" class="top-slot">
+    <ng-container *ngTemplateOutlet="top"/>
+  </div>
+  <p-menu *ngIf="model.length > 0" #menu [model]="model" [style]="{width: '100%'}"/>
+
+  <div *ngIf="bottom" class="bottom-slot">
+    <ng-container *ngTemplateOutlet="bottom"/>
+  </div>
+</div>

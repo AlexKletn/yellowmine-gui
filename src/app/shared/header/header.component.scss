@@ -1,0 +1,12 @@
+.header {
+  //width: calc(100vw - 2em);
+  margin: 1em;
+
+  display: flex;
+  gap: 1em;
+  align-items: center;
+
+  .menuBar {
+    width: 100%;
+  }
+}

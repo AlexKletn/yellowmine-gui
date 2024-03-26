@@ -1,0 +1,52 @@
+<p-inplace [active]="!!issueDetails" (onActivate)="loadIssueDetails()">
+  <ng-template pTemplate="display">
+    <span>Информация о задаче</span>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <div class="issue-details">
+      <div *ngIf="!issueDetails" class="issue-details-loading">
+        <p-progressSpinner
+          [style]="{ height: '2em', width: '2em'}"
+        />
+      </div>
+
+      <div *ngIf="issueDetails" class="issue-details-info">
+
+        <div>
+          <div class="estimation">
+            <span class="title">Оценка</span>
+
+            <span
+              class="value"
+            >
+              {{ issueDetails.total_estimated_hours }}
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <div class="estimation">
+            <span class="title">Трудозатраты </span>
+
+            <span
+              class="value"
+              [ngClass]="{
+                'warning': issueDetails.total_estimated_hours && issueDetails.total_estimated_hours - issueDetails.total_spent_hours <= 4,
+                'danger': issueDetails.total_estimated_hours && issueDetails.total_estimated_hours - issueDetails.total_spent_hours <= 0,
+              }"
+            >
+              {{ issueDetails.total_spent_hours }}
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="issueDetails.description">
+          <div class="title">Описание</div>
+          <div class="description" [innerHTML]="description">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-inplace>

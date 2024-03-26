@@ -1,0 +1,24 @@
+<div
+  class="kanban-column"
+  pDroppable="items"
+
+  (onDrop)="dropHandler()"
+>
+  <p-panel
+    styleClass="panel"
+
+    [toggleable]="true"
+  >
+    <ng-template pTemplate="header">
+      <div>
+        {{
+          column.name
+        }}
+      </div>
+    </ng-template>
+
+    <div class="container">
+      <ng-content />
+    </div>
+  </p-panel>
+</div>

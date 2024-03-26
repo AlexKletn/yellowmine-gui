@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-dark-amber/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+html {
+  font-size: 14px;
+}
+
+.control {
+  width: 100%
+}
+
+.p-scrollpanel-content {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none;
+}
+
+p {
+  margin: .3em 0;
+}
+

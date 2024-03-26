@@ -1,0 +1,31 @@
+.issueView {
+  &Header {
+    width: 100%;
+
+    display: grid;
+    gap: 0.5em;
+    grid-template-areas: '. . tags';
+    grid-template-columns: auto 1fr auto;
+
+    .tags {
+      grid-area: tags;
+
+      display: flex;
+      gap: 0.5em;
+    }
+  }
+
+  &Content {
+    display: grid;
+    grid-template-areas: '. .';
+    grid-template-columns: 1fr .5fr;
+    gap: 1rem;
+
+    .details {
+      //padding: 1rem;
+      &Description {
+        min-height: 300px;
+      }
+    }
+  }
+}

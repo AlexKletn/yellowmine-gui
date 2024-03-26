@@ -1,0 +1,11 @@
+
+<form [formGroup]="form" (submit)="submit()">
+<p-panel header="Конфигурация">
+  <ng-template pTemplate="footer">
+    <p-button type="submit" label="Сохранить" icon="pi pi-check" />
+  </ng-template>
+
+  <input pInputText formControlName="api_key" placeholder="api ключ"/>
+</p-panel>
+
+</form>
