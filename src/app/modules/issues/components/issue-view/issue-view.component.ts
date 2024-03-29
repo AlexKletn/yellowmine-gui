@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import IssuesService from '../../issues-service/issues.service';
 import Issue from '../../domain/Issue';
 import { DatePipe, JsonPipe, NgIf } from '@angular/common';
@@ -7,6 +7,7 @@ import { TagModule } from 'primeng/tag';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
+import { Title } from '@angular/platform-browser';
 
 type Argument = {
   label: string;
@@ -30,6 +31,7 @@ type Argument = {
   styleUrl: './issue-view.component.scss',
 })
 export class IssueViewComponent {
+  private titleService = inject(Title);
   @Input() id!: number;
   issue?: Issue;
 
@@ -38,6 +40,7 @@ export class IssueViewComponent {
   issueArguments: Array<Argument> = [];
 
   constructor(private issuesService: IssuesService) {
+    this.titleService.setTitle('Задача...');
   }
 
   ngOnInit() {
@@ -47,6 +50,8 @@ export class IssueViewComponent {
         this.fillArguments();
 
         this.description = this.issuesService.parseDescription(issue.description);
+
+        this.titleService.setTitle(`Задача: ${issue.id} - ${issue.subject}`);
       },
     });
   }

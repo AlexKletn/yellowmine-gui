@@ -35,6 +35,10 @@ class IssuesService {
   }
 
   getProjectIssues(filter?: RequestFilterMaker) {
+    if (!this.activeProject) {
+      return this.getIssues(filter);
+    }
+
     return this.redmineApi.get<IssuesResponse>(`api/projects/${this.activeProject ?? 0}/issues.json`, {
       params: filter?.make() ?? undefined,
     });

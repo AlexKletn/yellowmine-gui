@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import ProjectComponent from '../../components/project-component/project.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'project-page',
@@ -12,11 +13,18 @@ import ProjectComponent from '../../components/project-component/project.compone
   styleUrl: './project-page.component.scss',
 })
 export class ProjectPageComponent {
+  private title = inject(Title);
+
   id?: number;
 
   constructor(private route: ActivatedRoute) {
     this.route.params.subscribe(({ id }) => {
       this.id = id;
     });
+    console.log('fdas');
+  }
+
+  ngOnInit() {
+    this.title.setTitle(`Redmine - ${this.id}`);
   }
 }

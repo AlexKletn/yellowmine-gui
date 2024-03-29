@@ -1,14 +1,14 @@
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { Store } from '@ngxs/store';
 import RedmineConfigState from '../services/redmine-config/store/redmine-config.state';
 import { map } from 'rxjs';
 
-export const loginGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const loginGuard: CanActivateFn = () => {
   const redmineConfigStore = inject(Store);
   const router = inject(Router);
 
-  const apiKey$ = redmineConfigStore.select(RedmineConfigState.apiKey).pipe(
+  return redmineConfigStore.select(RedmineConfigState.apiKey).pipe(
     map((state) => {
       if (!state) {
         router.navigate(['/login']);
@@ -17,23 +17,19 @@ export const loginGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: 
       return !!state;
     }),
   );
-
-  return apiKey$;
 };
 
-export const dontLoginGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const dontLoginGuard: CanActivateFn = () => {
   const redmineConfigStore = inject(Store);
   const router = inject(Router);
 
-  const apiKey$ = redmineConfigStore.select(RedmineConfigState.apiKey).pipe(
+  return redmineConfigStore.select(RedmineConfigState.apiKey).pipe(
     map((state) => {
       if (state) {
-        router.navigate(['/issues']);
+        router.navigate(['/projects']);
       }
 
       return !state;
     }),
   );
-
-  return apiKey$;
 };

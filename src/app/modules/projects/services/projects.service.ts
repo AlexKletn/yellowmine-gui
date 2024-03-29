@@ -3,9 +3,8 @@ import RedmineApiService from '../../../core/services/redmine-api/redmine-api.se
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import Project from '../domain/Project';
-import { ProjectsResponse, ProjectTagsResponse } from './types';
+import { ProjectsResponse } from './types';
 import { SetActiveProject, SetProjects } from '../store/projects.actions';
-import { SetTags } from '../store/projects.actions/set-tags';
 
 @Injectable({ providedIn: 'root' })
 class ProjectsService {
@@ -22,7 +21,6 @@ class ProjectsService {
     });
 
     this.loadProjects();
-    this.loadProjectTags();
   }
 
   loadProjects() {
@@ -33,23 +31,6 @@ class ProjectsService {
 
   setActiveProject(id: Project['id']) {
     return this.store.dispatch(new SetActiveProject(id));
-  }
-
-  loadProjectTags() {
-    this.activeProject.subscribe((activeProject) => {
-      if (activeProject) {
-        this.redmineApi.get<ProjectTagsResponse>(`api/issue_tags/auto_complete/${activeProject.id}`, {
-          params: {
-            q: 'Спринт',
-          },
-          headers: {
-            Accept: 'application/json',
-          },
-        }).subscribe((tags) => {
-          this.store.dispatch(new SetTags(tags));
-        });
-      }
-    });
   }
 }
 
