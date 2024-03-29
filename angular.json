@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "redmine-gui": {
+    "yellowmine-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -19,7 +19,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/redmine-gui",
+            "outputPath": "dist/yellowmine-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -74,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "redmine-gui:build:production"
+              "buildTarget": "yellowmine-client:build:production"
             },
             "development": {
-              "buildTarget": "redmine-gui:build:development"
+              "buildTarget": "yellowmine-client:build:development"
             }
           },
           "options": {
@@ -88,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "redmine-gui:build"
+            "buildTarget": "yellowmine-client:build"
           }
         },
         "lint": {
