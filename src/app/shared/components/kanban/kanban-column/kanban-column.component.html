@@ -4,21 +4,22 @@
 
   (onDrop)="dropHandler()"
 >
-<!--  <p-panel-->
-<!--    styleClass="panel"-->
-
-<!--    [toggleable]="true"-->
-<!--  >-->
-    <ng-template pTemplate="header">
-    </ng-template>
   <div class="title">
     {{
       column.name
     }}
+
+    <p-button
+      size="small"
+      severity="secondary"
+      [icon]="collapsed ? 'pi pi-plus' : 'pi pi-minus'"
+      [text]="true"
+
+      (click)="collapseSwitch()"
+    />
   </div>
 
-  <div class="container">
+  <div *ngIf="!collapsed" class="container">
     <ng-content />
   </div>
-<!--  </p-panel>-->
 </div>

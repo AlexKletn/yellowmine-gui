@@ -96,8 +96,12 @@ export class IssuesListComponent {
   private updateFilters() {
     const filters = this.issuesFilter;
 
-    const assigned_to = filters.isMy ? 'me' : '*';
-    this.filter.setFilter('assigned_to_id', assigned_to);
+    if (filters.isMy) {
+      this.filter.setFilter('assigned_to_id', 'me');
+    }
+    else {
+      this.filter.removeFilter('assigned_to_id');
+    }
 
     if (filters.tag) {
       this.filter.setFilter('tags', filters.tag);

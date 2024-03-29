@@ -9,7 +9,8 @@
 
     <rm-kanban
       [columns]="activeIssueStatuses"
-      [items]="assignedName.value"
+      [items]="assignedName.value.items"
+      [additional]="assignedName.value.columnAssigned"
 
       (onChange)="changeHandler($event.item, $event.newColumn)"
 

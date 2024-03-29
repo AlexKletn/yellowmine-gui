@@ -1,0 +1,16 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: .6em;
+
+  .title {
+    font-size: .8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-color-secondary);
+
+    .yellow {
+      color: #f59e0b;
+    }
+  }
+}

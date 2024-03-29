@@ -7,6 +7,12 @@ import MouseService from '../../service/mouse.service';
 import { DividerModule } from 'primeng/divider';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { NgScrollbar } from 'ngx-scrollbar';
+import { BaseModel } from '../../../core/services/redmine-api/types';
+import { Select, Store } from '@ngxs/store';
+import KanbanState from './store/Kanban.state';
+import { Observable } from 'rxjs';
+import { SetCurrentItem } from './store/actions/setItem.action';
+import deepClone from 'deep-clone';
 
 @Component({
   selector: 'rm-kanban',
@@ -25,15 +31,19 @@ import { NgScrollbar } from 'ngx-scrollbar';
   templateUrl: './kanban.component.html',
   styleUrl: './kanban.component.scss',
 })
-export class KanbanComponent<Item extends KanbanItem> {
+export class KanbanComponent<Item extends BaseModel, Additional = unknown> {
+  private store = inject(Store);
+
   @ContentChild('data') data!: TemplateRef<{ item: Item }>;
 
+  @Select(KanbanState.currentItem)
+  private currentItem$!: Observable<Item>;
+
   @Input() columns!: KanbanColumn[];
+  @Input() additional!: Additional;
   @Input() items!: { [key: string]: Item[] };
 
-  @Input() filter!: (item: Item) => boolean;
-
-  @Output() onChange = new EventEmitter<{ item: Item; newColumn: KanbanColumn }>();
+  @Output() onChange = new EventEmitter<{ item: KanbanItem<Item, Additional>; newColumn: KanbanColumn }>();
 
   draggedItem?: Item;
   draggedItemWidth?: number;
@@ -41,9 +51,13 @@ export class KanbanComponent<Item extends KanbanItem> {
   private renderer = inject(Renderer2);
 
   constructor(private mouseService: MouseService) {
+    this.setActiveItem(undefined);
+    this.currentItem$.subscribe((item: Item) => {
+      this.draggedItem = { ...item };
+    });
   }
 
-  dragStartHandler(item: Item, event: DragEvent, id: number) {
+  dragStartHandler(item: Item, event: DragEvent) {
     const { x, y } = this.mouseService.getElementMouseOffset(event.target as HTMLElement);
 
     const dragNode = event.target as HTMLElement;
@@ -57,28 +71,41 @@ export class KanbanComponent<Item extends KanbanItem> {
 
     this.draggedItemWidth = (event.target as HTMLElement).getBoundingClientRect().width;
 
-    this.draggedItem = item;
+    this.setActiveItem(item);
   }
 
   dragEndHandler(event: DragEvent) {
-    this.draggedItem = undefined;
+    this.setActiveItem(undefined);
     this.renderer.setStyle(event.target, 'pointer-events', 'unset');
     this.renderer.setStyle(event.target, 'display', 'block');
   }
 
   dropHandler(columnId: KanbanColumn) {
-    this.onChange.emit({
-      item: this.draggedItem!,
-      newColumn: columnId,
-    });
-    this.draggedItem = undefined;
+    if (this.draggedItem) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const clonedItem = deepClone(this.draggedItem) as Item;
+
+      this.onChange.emit({
+        item: {
+          item: clonedItem,
+          additional: this.additional,
+        },
+        newColumn: columnId,
+      });
+      this.setActiveItem(undefined);
+    }
   }
 
-  getTrackByKey(index: number, { id }: Item) {
-    return id;
+  getTrackByKey(index: number, item: Item) {
+    return item.id;
   }
 
   getTrackByColumnKey(index: number, { id }: KanbanColumn) {
     return id;
+  }
+
+  private setActiveItem(item?: Item) {
+    this.store.dispatch(new SetCurrentItem(item));
   }
 }

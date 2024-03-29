@@ -22,6 +22,9 @@
 
   .title {
     padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .container {
@@ -30,7 +33,5 @@
     gap: .5em;
     padding: 0.5em 0.5em;
     width: 300px;
-
-    min-height: 4em;
   }
 }

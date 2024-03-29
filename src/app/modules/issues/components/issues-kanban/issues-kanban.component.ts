@@ -22,8 +22,17 @@ import { TooltipModule } from 'primeng/tooltip';
 import ProjectsState from '../../../projects/store/projects.state';
 import { EmptyComponent } from '../../../../shared/components/empty/empty.component';
 import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
+import { KanbanItem } from '../../../../shared/components/kanban/types';
+import deepClone from 'deep-clone';
 
 const UNASSIGNED = '* Нет исполнителя';
+
+type IssuesByAssigned = { [key: string]: {
+  items: {
+    [key: string]: Issue[];
+  };
+  columnAssigned: Issue['assigned_to'];
+}; };
 
 @Component({
   selector: 'rm-issues-kanban',
@@ -64,7 +73,7 @@ export class IssuesKanbanComponent {
   issuesFilterMaker: RequestFilterMaker = new RequestFilterMaker(0, 100);
   issues: Issue[] = [];
   issuesByAssigned: { [key: string]: Issue[] } = {};
-  issuesByAssignedAndStatus: { [key: string]: { [key: string]: Issue[] } } = {};
+  issuesByAssignedAndStatus: IssuesByAssigned = {};
 
   settingsIsOpen: boolean = false;
   isLoading: boolean = true;
@@ -86,25 +95,29 @@ export class IssuesKanbanComponent {
     this.loadIssues();
   }
 
-  changeHandler(item: Issue, newStatus: IssueStatus) {
+  changeHandler({ item, additional }: KanbanItem<Issue, Issue['assigned_to']>, newStatus: IssueStatus) {
+    console.log(item, additional);
+
     const targetIssue = this.issues.find(issue => issue.id === item.id);
 
     if (targetIssue) {
-      const taskAssigned = targetIssue.assigned_to?.name ?? UNASSIGNED;
+      // const taskAssigned = targetIssue.assigned_to?.name ?? UNASSIGNED;
       targetIssue.status = newStatus;
+      targetIssue.assigned_to = additional;
 
-      this.issuesByAssignedAndStatus[taskAssigned] = this.sortIssuesByStatus(this.issuesByAssigned[taskAssigned]);
+      this.issuesByAssignedAndStatus = this.sortIssuesByAssigned();
 
       this.issuesInUpdate.add(targetIssue.id);
 
       this.issuesService.updateIssue({
         id: targetIssue.id,
         status_id: newStatus.id,
+        assigned_to_id: additional?.id,
       }).subscribe(() => {
         this.loadIssues(true).subscribe(({ issues }) => {
           const updatedIssue = issues.find(issue => issue.id === targetIssue.id);
 
-          if (updatedIssue?.status.id !== newStatus.id) {
+          if (updatedIssue?.status.id !== newStatus.id || updatedIssue?.assigned_to?.id !== additional?.id) {
             this.messageService.add({ severity: 'error', summary: 'Ошибка', detail: 'Данное перемещение невозможно', life: 3000 });
           }
           this.issuesInUpdate.delete(targetIssue.id);
@@ -153,10 +166,17 @@ export class IssuesKanbanComponent {
     this.issuesByAssigned = issuesByAssigned;
 
     const issuesByAssignedEntries = Object.entries(issuesByAssigned).map(([assignedKey, issues]) => {
-      return [assignedKey, this.sortIssuesByStatus(issues)];
+      return [assignedKey, {
+        items: this.sortIssuesByStatus(issues),
+        columnAssigned: issues[0].assigned_to ?? { name: UNASSIGNED },
+      }];
     });
 
-    this.issuesByAssignedAndStatus = Object.fromEntries(issuesByAssignedEntries);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this.issuesByAssignedAndStatus = deepClone(Object.fromEntries(issuesByAssignedEntries)) as IssuesByAssigned;
+
+    return this.issuesByAssignedAndStatus;
   }
 
   private sortIssuesByStatus(issues: Issue[] = this.issues) {
@@ -185,9 +205,12 @@ export class IssuesKanbanComponent {
       this.issuesFilterMaker.removeFilter('subject');
     }
 
-    const assigned_to = filters.isMy ? 'me' : '*';
-
-    this.issuesFilterMaker.setFilter('assigned_to_id', assigned_to);
+    if (filters.isMy) {
+      this.issuesFilterMaker.setFilter('assigned_to_id', 'me');
+    }
+    else {
+      this.issuesFilterMaker.removeFilter('assigned_to_id');
+    }
 
     return;
   }

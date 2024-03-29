@@ -60,6 +60,6 @@ export default class MouseService {
   };
 
   private mouseDownHandler = (e: MouseEvent) => {
-    this.mouseDownCoords.next({ x: e.pageX, y: e.pageY });
+    this.mouseDownCoords.next({ x: e.clientX, y: e.clientY });
   };
 }
