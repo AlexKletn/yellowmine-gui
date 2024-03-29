@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import ProjectsState from '../../../projects/store/projects.state';
 import { EmptyComponent } from '../../../../shared/components/empty/empty.component';
+import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
 
 const UNASSIGNED = '* Нет исполнителя';
 
@@ -40,6 +41,7 @@ const UNASSIGNED = '* Нет исполнителя';
     ReactiveFormsModule,
     TooltipModule,
     EmptyComponent,
+    BottomPanelComponent,
   ],
   templateUrl: './issues-kanban.component.html',
   styleUrl: './issues-kanban.component.scss',
@@ -176,6 +178,11 @@ export class IssuesKanbanComponent {
     else {
       this.issuesFilterMaker.removeFilter('tags');
     }
+
+    if (filters.subject) {
+      this.issuesFilterMaker.setFilter('subject', `~${filters.subject}`);
+    }
+
     const assigned_to = filters.isMy ? 'me' : '*';
 
     this.issuesFilterMaker.setFilter('assigned_to_id', assigned_to);

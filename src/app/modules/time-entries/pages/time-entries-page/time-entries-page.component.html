@@ -1,0 +1,225 @@
+<div class="calendar-wrapper">
+  <full-calendar
+    #calendar
+    class="calendar"
+    [options]="calendarOptions"
+  >
+
+    <ng-template #dayCellContent let-arg>
+      {{ arg.dayNumberText }}
+
+      <div class="total-time">
+        {{getFullHoursCountByDate(arg.date)}}ч
+      </div>
+    </ng-template>
+
+    <ng-template #eventContent let-arg>
+      <div class="time-entry">
+        <div class="id">
+          #{{ arg.event.extendedProps.issue.id }}
+        </div>
+
+        <div class="subject">
+          {{ arg.event.title}}
+        </div>
+
+        <div>
+          <p-tag
+            icon="pi pi-clock"
+            [value]="arg.event.extendedProps.hours + 'ч'"
+          >
+          </p-tag>
+        </div>
+      </div>
+    </ng-template>
+  </full-calendar>
+
+
+  <rm-bottom-panel [loading]="isLoading">
+    <div class="navigator">
+      <p-button
+        [label]="prevMonthName"
+        size="small"
+        icon="pi pi-chevron-left"
+
+        [text]="true"
+
+        (click)="prevMonth()"
+      ></p-button>
+      <p-button
+        [label]="currentMonthName"
+        [text]="true"
+        [disabled]="true"
+        [loading]="isLoading"
+      ></p-button>
+      <p-button
+        [label]="nextMonthName"
+        size="small"
+        iconPos="right"
+        icon="pi pi-chevron-right"
+
+        [text]="true"
+        [disabled]="isNextDisabled"
+
+        (click)="nextMonth()"
+      ></p-button>
+    </div>
+
+    <ng-template #end>
+
+      <p-button
+        icon="pi pi-refresh"
+
+        [loading]="isLoading"
+        [rounded]="true"
+        [text]="true"
+        [style]="{ height: '3em', width: '3em'}"
+        (onClick)="updateTimeEntries()"
+      />
+    </ng-template>
+  </rm-bottom-panel>
+
+  <form class="register-time" [formGroup]="timeEntreForm" (submit)="sendTimeEntry()">
+    <p-dialog
+      [visible]="isOpenedTimeEntryDialog"
+      [style]="{ width: '430px' }"
+      [draggable]="true"
+      [resizable]="false"
+      [closable]="false"
+
+      [ngClass]="{
+        'p-dialog-loading': isCreateTimeEntryLoading
+      }"
+    >
+      <ng-template pTemplate="header">
+        <div class="header">
+          Трудозатраты за:
+
+          <p-calendar
+            id="date"
+            class="date"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [required]="true"
+            [disabled]="isCreateTimeEntryLoading"
+            dataType="date"
+            dateFormat="dd.mm.yy"
+            formControlName="date"
+          ></p-calendar>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <div class="actions">
+          <p-button
+            severity="secondary"
+            label="Отмена"
+
+            [text]="true"
+            [disabled]="isCreateTimeEntryLoading"
+
+            (click)="closeTimeEntryDialog()"
+          >
+          </p-button>
+          <p-button
+            type="submit"
+            label="Оправить"
+
+            [disabled]="timeEntreForm.status === 'INVALID'"
+            [loading]="isCreateTimeEntryLoading"
+          >
+
+          </p-button>
+        </div>
+      </ng-template>
+
+      <div class="form">
+        <p-floatLabel class="issue">
+          <p-dropdown
+            id="issue"
+            optionLabel="subject"
+            optionValue="id"
+            filterBy="subject"
+            formControlName="issueId"
+            [filter]="true"
+            [showClear]="true"
+            [style]="{width: '100%', height: 'calc(1em + 1.86em)'}"
+            [panelStyle]="{width: '100%'}"
+            [options]="issues"
+            [required]="true"
+            [disabled]="isCreateTimeEntryLoading"
+
+            (onFilter)="loadIssues($event)"
+          >
+            <ng-template pTemplate="selectedItem" let-issue>
+              <div class="value current">
+                <p-tag
+                  class="tag"
+                  [value]="issue.id"
+                >
+                </p-tag>
+
+                <span class="subject">
+                  {{ issue.subject }}
+                </span>
+              </div>
+            </ng-template>
+            <ng-template let-issue pTemplate="item">
+              <div class="value">
+                <p-tag
+                  class="tag"
+                  [value]="issue.id"
+                >
+                </p-tag>
+
+                <span
+                  class="subject"
+                  [pTooltip]="issue.description"
+                  tooltipPosition="right"
+                >
+                  {{ issue.subject }}
+                </span>
+              </div>
+            </ng-template>
+
+          </p-dropdown>
+          <label class="required"  for="issue">Задача</label>
+        </p-floatLabel>
+
+        <p-floatLabel class="time">
+          <p-inputNumber
+            id="hours"
+            inputId="mile"
+            suffix=" ч"
+            formControlName="hours"
+
+            [required]="true"
+            [disabled]="isCreateTimeEntryLoading"
+            [max]="8"
+            [min]=".5"
+          ></p-inputNumber>
+          <label class="required" for="hours">Часы</label>
+        </p-floatLabel>
+
+        <p-floatLabel
+          class="comment"
+          [ngClass]="{
+            'disabled': isCreateTimeEntryLoading
+          }"
+        >
+          <textarea
+            id="comment"
+            pInputTextarea
+            formControlName="comment"
+
+            [disabled]="isCreateTimeEntryLoading"
+          ></textarea>
+          <label for="comment">Комментарий</label>
+        </p-floatLabel>
+
+      </div>
+    </p-dialog>
+
+  </form>
+</div>
+

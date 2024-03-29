@@ -4,20 +4,10 @@
 
 
 .kanban {
-  //width: 100%;
   height: 100%;
-  padding: {
-    top: 1em;
-    left: .5em;
-    right: .5em;
-    bottom: .5em;
-  };
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  grid-auto-flow:column;
-  gap: 1em;
+  display: flex;
   overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 
   .element {
     width: 100%;
@@ -36,8 +26,5 @@
     border: 1px solid transparent;
     transition: border-color .2s;
 
-    &.p-draggable-enter {
-      border-color: var(--primary-color);
-    }
   }
 }

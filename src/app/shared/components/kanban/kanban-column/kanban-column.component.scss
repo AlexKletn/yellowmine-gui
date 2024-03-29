@@ -1,28 +1,36 @@
+:host {
+  background: rgba(0, 0, 0, 0.06);
+  //border-radius: var(--border-radius);
+  //border: 1px solid var(--surface-border);
+
+  &:nth-child(even) {
+    background: rgba(255, 255, 255, 0.01);
+  }
+
+  &:last-child {
+    width: 100%;
+  }
+}
+
 .kanban-column {
-  width: 250px;
+  width: 300px;
+  height: 100%;
+
+  &.p-draggable-enter {
+    background-color: var(--highlight-bg);
+  }
+
+  .title {
+    padding: 1em;
+  }
 
   .container {
     display: flex;
     flex-direction: column;
     gap: .5em;
+    padding: 0.5em 0.5em;
+    width: 300px;
 
     min-height: 4em;
-  }
-}
-:host ::ng-deep {
-  .panel {
-    transition: .3s;
-    border-radius: var(--border-radius);
-  }
-
-  .p-panel-content {
-    padding: .3em;
-  }
-
-  .p-draggable-enter {
-    .panel {
-      box-shadow: 0 0 0 1px var(--primary-color);
-      transform: scale(1.0025);
-    }
   }
 }

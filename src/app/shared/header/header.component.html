@@ -1,8 +1,75 @@
 <header class="header">
-  <p-menubar class="menuBar" [model]="menuItems">
+<!--  <p-button-->
+<!--    class="menu-button"-->
+<!--    icon="pi pi-bars"-->
+<!--    [text]="true"-->
+<!--    [rounded]="true"-->
+<!--    (click)="openMenu()"-->
+<!--  />-->
 
-    <ng-template pTemplate="end">
-      <rm-project-global-select />
-    </ng-template>
-  </p-menubar>
+  <div class="logo">
+    <rm-logo
+      height="3em"
+      width="3em"
+    />
+  </div>
+
+  <div class="navigation">
+    <p-button
+      *ngFor="let item of menuItems; trackBy: trackByLink"
+
+      [text]="true"
+      [severity]="isActiveRoute(item.routerLink!) ? 'primary' : 'secondary'"
+      size="small"
+
+      (click)="navigate(item)"
+    >
+      {{ item.label }}
+    </p-button>
+  </div>
+
+  <div class="navigation-additional">
+    <p-button
+      *ngFor="let item of additionalMenuItems; trackBy: trackByLink"
+
+      [text]="true"
+      [severity]="isActiveRoute(item.routerLink!) ? 'primary' : 'secondary'"
+      size="small"
+
+      (click)="navigate(item)"
+    >
+      {{ item.label }}
+    </p-button>
+  </div>
+
+  <div class="projects">
+    <p-button
+      [text]="true"
+      [severity]="isActiveRoute('/projects') ? 'primary' : 'secondary'"
+      size="small"
+
+      (click)="navigate({ routerLink: '/projects'})"
+    >
+      Проекты
+    </p-button>
+
+    <rm-project-global-select />
+  </div>
+
+  <div class="exit" *ngIf="isSignIn">
+    <p-button
+      [text]="true"
+      severity="info"
+      [icon]="currentTheme === 'light' ? 'pi pi-sun' : 'pi pi-moon'"
+
+      (click)="switchTheme()"
+    ></p-button>
+    <p-button
+      [text]="true"
+      severity="danger"
+      icon="pi pi-sign-out"
+
+      (click)="exit()"
+    ></p-button>
+  </div>
 </header>

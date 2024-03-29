@@ -1,11 +1,7 @@
 <div class="container">
-  id {{id}}
-
-  <p-panel *ngIf="project">
-    <ng-template pTemplate="header">
-      {{project['name']}}
-    </ng-template>
+  <div *ngIf="project">
+    {{project['name']}}
 
     {{project['description']}}
-  </p-panel>
+  </div>
 </div>

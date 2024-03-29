@@ -11,6 +11,12 @@ import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-ka
 import IssuesState from '../../store/issues.state';
 import { IssuesStoreState } from '../../store/types';
 import { Observable } from 'rxjs';
+import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
+import {
+  IssuesKanbanColunsConfiguratorComponent,
+} from '../issues-kanban-coluns-configurator/issues-kanban-coluns-configurator.component';
+import ProjectsState from '../../../projects/store/projects.state';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'rm-issues-list',
@@ -22,6 +28,9 @@ import { Observable } from 'rxjs';
     NgIf,
     RouterLink,
     IssuesKanbanFiltersComponent,
+    BottomPanelComponent,
+    IssuesKanbanColunsConfiguratorComponent,
+    ButtonModule,
   ],
   templateUrl: './issues-list.component.html',
   styleUrl: './issues-list.component.scss',
@@ -34,27 +43,33 @@ export class IssuesListComponent {
 
   start: number = 0;
   pageSize: number = 25;
-  total_count: number = 10000;
-  loading: boolean = false;
+  total_count: number = 0;
+  isLoading: boolean = false;
   issues: Issue[] = [];
   filter: RequestFilterMaker;
 
   isReady: boolean = false;
+  settingsIsOpen: boolean = false;
 
   constructor(private issuesService: IssuesService, private store: Store) {
     // const activeProject = store.select(({ projects }) =>
     //   projects.activeProject,
     // ).pipe();
 
+    this.filter = new RequestFilterMaker();
+    this.filter.setOffsetPagination(this.start, this.pageSize);
+  }
+
+  ngOnInit() {
+    this.store.select(ProjectsState.activeProject).subscribe(() => {
+      this.updateFilters();
+    });
     this.issuesFilter$
       .subscribe((filters) => {
         this.issuesFilter = filters;
 
         this.updateFilters();
       });
-
-    this.filter = new RequestFilterMaker();
-    this.filter.setOffsetPagination(this.start, this.pageSize);
   }
 
   lazyLoadIssues({ first, rows }: TableLazyLoadEvent) {
@@ -64,19 +79,25 @@ export class IssuesListComponent {
     this.loadIssues();
   }
 
-  private loadIssues() {
-    this.loading = true;
-    this.issuesService.getIssues(this.filter).subscribe(({ issues, total_count }) => {
-      this.issues = issues;
-      this.total_count = total_count;
-      this.loading = false;
+  loadIssues() {
+    if (this.filter) {
+      this.isLoading = true;
 
-      this.isReady = true;
-    });
+      this.issuesService.getIssues(this.filter).subscribe(({ issues, total_count }) => {
+        this.issues = issues;
+        this.total_count = total_count;
+        this.isLoading = false;
+
+        this.isReady = true;
+      });
+    }
   }
 
   private updateFilters() {
     const filters = this.issuesFilter;
+
+    const assigned_to = filters.isMy ? 'me' : '*';
+    this.filter.setFilter('assigned_to_id', assigned_to);
 
     if (filters.tag) {
       this.filter.setFilter('tags', filters.tag);
@@ -84,9 +105,10 @@ export class IssuesListComponent {
     else {
       this.filter.removeFilter('tags');
     }
-    const assigned_to = filters.isMy ? 'me' : '*';
 
-    this.filter.setFilter('assigned_to_id', assigned_to);
+    if (filters.subject) {
+      this.filter.setFilter('subject', `~${filters.subject}`);
+    }
 
     this.loadIssues();
   }

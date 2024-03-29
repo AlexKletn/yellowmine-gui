@@ -1,4 +1,4 @@
-import { Component, ContentChild, inject, Input, TemplateRef } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -26,23 +26,32 @@ export class IssuesKanbanFiltersComponent {
   @Input() loading!: boolean;
   @Input() static!: boolean;
 
-  @ContentChild('actions') actions!: TemplateRef<never>;
-
   private store = inject(Store);
 
   filterForm: FormGroup = new FormGroup({
     tag: new FormControl<string>('', {
-      updateOn: 'submit',
+      updateOn: 'blur',
+    }),
+    subject: new FormControl<string>('', {
+      updateOn: 'blur',
     }),
     isMy: new FormControl<boolean>(false),
   });
 
+  updateFilterTimeout?: ReturnType<typeof setTimeout>;
+
   filterChangeHandler() {
-    this.store.dispatch(
-      new UpdateFormDirty({
-        dirty: false,
-        path: 'issues.settings.kanbanFilters',
-      }),
-    );
+    if (this.updateFilterTimeout) {
+      clearTimeout(this.updateFilterTimeout);
+    }
+
+    this.updateFilterTimeout = setTimeout(() => {
+      this.store.dispatch(
+        new UpdateFormDirty({
+          dirty: false,
+          path: 'issues.settings.kanbanFilters',
+        }),
+      );
+    }, 500);
   }
 }

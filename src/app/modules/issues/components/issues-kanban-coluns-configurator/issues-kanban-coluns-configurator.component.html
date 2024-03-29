@@ -1,3 +1,13 @@
+<p-button
+  icon="pi pi-sliders-h"
+  severity="info"
+
+  [rounded]="true"
+  [text]="true"
+  [style]="{ height: '3em', width: '3em'}"
+  (onClick)="openHandler()"
+/>
+
 <p-dialog
   header="Настройка статусов"
   position="bottomright"
@@ -5,6 +15,7 @@
   [(visible)]="isOpen"
 
   [draggable]="false"
+  [baseZIndex]="1020"
   [modal]="true"
   [style]="{ width: '60em' }"
 >

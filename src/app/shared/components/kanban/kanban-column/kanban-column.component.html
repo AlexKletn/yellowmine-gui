@@ -4,21 +4,21 @@
 
   (onDrop)="dropHandler()"
 >
-  <p-panel
-    styleClass="panel"
+<!--  <p-panel-->
+<!--    styleClass="panel"-->
 
-    [toggleable]="true"
-  >
+<!--    [toggleable]="true"-->
+<!--  >-->
     <ng-template pTemplate="header">
-      <div>
-        {{
-          column.name
-        }}
-      </div>
     </ng-template>
+  <div class="title">
+    {{
+      column.name
+    }}
+  </div>
 
-    <div class="container">
-      <ng-content />
-    </div>
-  </p-panel>
+  <div class="container">
+    <ng-content />
+  </div>
+<!--  </p-panel>-->
 </div>

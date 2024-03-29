@@ -3,11 +3,12 @@ import { CardModule } from 'primeng/card';
 import ProjectsService from '../../services/projects.service';
 import { Router } from '@angular/router';
 import Project from '../../domain/Project';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'projects-list',
   templateUrl: 'projects-list.component.html',
-  imports: [CardModule],
+  imports: [CardModule, TagModule],
   standalone: true,
   styleUrl: 'projects-list.component.scss',
 })
@@ -22,8 +23,9 @@ class ProjectsListComponent {
     } });
   }
 
-  openProject(id: string) {
-    this.router.navigate([`projects/${id}`]);
+  openProject(id: Project['id']) {
+    this.projectsService.setActiveProject(id);
+    this.router.navigate([`/issues`]);
   }
 }
 

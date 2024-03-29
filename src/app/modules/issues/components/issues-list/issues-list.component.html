@@ -1,52 +1,72 @@
-<rm-issues-kanban-filters [static]="true" />
-
-<p-table
-  *ngIf="isReady"
-
-  [tableStyle]="{ 'min-width': '50rem' }"
-  [value]="issues"
-  [paginator]="true"
-  [rowsPerPageOptions]="[10, 25, 50, 100, 1000]"
-  [rows]="pageSize"
-  [totalRecords]="total_count"
-  [showCurrentPageReport]="true"
-  [lazy]="true"
-  [loading]="loading"
-
-  (onLazyLoad)="lazyLoadIssues($event)"
-
-  currentPageReportTemplate="Показано {first} по {last} из {totalRecords}"
-  styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th style="width: 1rem">
-        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-      </th>
-      <th style="width: 40%" colspan="2">Задача</th>
-      <th>Приоритет</th>
-      <th>Статус</th>
-      <th>Назначена</th>
-      <th>Обновлено</th>
-    </tr>
+<rm-bottom-panel [loading]="isLoading">
+  <ng-template #start>
+    <rm-issues-kanban-filters [static]="true" />
   </ng-template>
-  <ng-template pTemplate="body" let-issue>
-    <tr [pSelectableRow]="issue">
-      <td>
-        <p-tableCheckbox [value]="issue"></p-tableCheckbox>
-      </td>
-      <td>{{ issue.id }}</td>
-      <td>
-        <a [routerLink]="'./' + issue.id">
-          {{ issue.subject }}
-        </a>
-      </td>
-      <td>{{ issue.priority.name }}</td>
-      <td>
-        <p-tag [value]="issue.status.name"></p-tag>
-      </td>
-      <td>{{ issue.assigned_to?.name ?? '-' }}</td>
-      <td>{{ issue.updated_on | date:'HH:mm dd.MM.YYYY' }}</td>
-    </tr>
+
+  <ng-template #end>
+    <p-button
+      icon="pi pi-refresh"
+
+      [loading]="isLoading"
+      [rounded]="true"
+      [text]="true"
+      [style]="{ height: '3em', width: '3em'}"
+      (onClick)="loadIssues()"
+    />
+
+    <rm-issues-kanban-coluns-configurator />
   </ng-template>
-</p-table>
+</rm-bottom-panel>
+
+<div class="issues-list">
+  <p-table
+    *ngIf="isReady"
+
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [value]="issues"
+    [paginator]="true"
+    [rowsPerPageOptions]="[10, 25, 50, 100, 1000]"
+    [rows]="pageSize"
+    [totalRecords]="total_count"
+    [showCurrentPageReport]="true"
+    [lazy]="true"
+    [loading]="isLoading"
+
+    (onLazyLoad)="lazyLoadIssues($event)"
+
+    currentPageReportTemplate="Показано {first} по {last} из {totalRecords}"
+    styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 1rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th style="width: 40%" colspan="2">Задача</th>
+        <th>Приоритет</th>
+        <th>Статус</th>
+        <th>Назначена</th>
+        <th>Обновлено</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-issue>
+      <tr [pSelectableRow]="issue">
+        <td>
+          <p-tableCheckbox [value]="issue"></p-tableCheckbox>
+        </td>
+        <td>{{ issue.id }}</td>
+        <td>
+          <a [routerLink]="'./' + issue.id">
+            {{ issue.subject }}
+          </a>
+        </td>
+        <td>{{ issue.priority.name }}</td>
+        <td>
+          <p-tag [value]="issue.status.name"></p-tag>
+        </td>
+        <td>{{ issue.assigned_to?.name ?? '-' }}</td>
+        <td>{{ issue.updated_on | date:'HH:mm dd.MM.YYYY' }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

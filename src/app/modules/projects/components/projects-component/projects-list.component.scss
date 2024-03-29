@@ -1,6 +1,41 @@
 .container {
-  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+
+
+  background: var(--surface-c);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--surface-border);
+
+  .project {
+    padding: 1em;
+    background: rgba(0, 0, 0, 0.06);
+    display: grid;
+    grid-template-areas: 'id          name'
+                         'description description';
+    grid-template-columns: auto 1fr;
+
+    gap: 1em;
+
+    cursor: pointer;
+
+    &-id {
+      grid-area: id;
+    }
+    &-name {
+      grid-area: name;
+    }
+    &-description {
+      grid-area: description;
+      color: var(--text-color-secondary)
+    }
+
+    &:nth-child(even) {
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    &:hover {
+      background: var(--highlight-bg);
+    }
+  }
 }

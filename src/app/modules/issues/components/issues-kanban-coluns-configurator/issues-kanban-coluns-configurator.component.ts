@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { PickListModule } from 'primeng/picklist';
 import { SharedModule } from 'primeng/api';
@@ -8,6 +8,7 @@ import IssuesState from '../../store/issues.state';
 import { combineLatestWith, Observable, take } from 'rxjs';
 import { IssueStatus } from '../../../issue-statuses/domain/IssueStatus';
 import IssueStatusesService from '../../../issue-statuses/service/issueStatuses.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'rm-issues-kanban-coluns-configurator',
@@ -16,12 +17,13 @@ import IssueStatusesService from '../../../issue-statuses/service/issueStatuses.
     DialogModule,
     PickListModule,
     SharedModule,
+    ButtonModule,
   ],
   templateUrl: './issues-kanban-coluns-configurator.component.html',
   styleUrl: './issues-kanban-coluns-configurator.component.scss',
 })
 export class IssuesKanbanColunsConfiguratorComponent {
-  @Input() isOpen: boolean = false;
+  isOpen: boolean = false;
 
   private store = inject(Store);
   private issueStatusesService = inject(IssueStatusesService);
@@ -45,6 +47,10 @@ export class IssuesKanbanColunsConfiguratorComponent {
         return !activeIssueStatuses.some(activeStatus => activeStatus.id === id);
       }));
     });
+  }
+
+  openHandler() {
+    this.isOpen = true;
   }
 
   getTrackByStatusKey(index: unknown, { id }: IssueStatus) {

@@ -1,4 +1,13 @@
-<p-dropdown [options]="projects" [ngModel]="value" optionValue="id" optionLabel="name" [filter]="true" filterBy="name" placeholder="Select project" (onChange)="changeHandler($event.value)" [style]="{width: '100%'}">
+<p-dropdown
+  optionValue="id"
+  optionLabel="name"
+  filterBy="name"
+  placeholder="Select project"
+  [options]="projects"
+  [ngModel]="value"
+  [style]="{width: '100%'}"
+  (onChange)="changeHandler($event.value)"
+>
   <ng-template pTemplate="selectedItem" let-selectedOption>
     <div class="flex align-items-center gap-2">
       <div>{{ selectedOption.name }}</div>

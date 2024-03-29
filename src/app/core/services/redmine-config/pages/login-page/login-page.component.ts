@@ -5,6 +5,7 @@ import { SetTokenAction } from '../../store/actions/setToken.action';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'rm-login-page',
@@ -20,6 +21,7 @@ import { PanelModule } from 'primeng/panel';
 })
 export class LoginPageComponent {
   private store = inject(Store);
+  private router = inject(Router);
 
   form = new FormGroup({
     api_key: new FormControl<string>(''),
@@ -27,5 +29,7 @@ export class LoginPageComponent {
 
   submit() {
     this.store.dispatch(new SetTokenAction(this.form.value.api_key!));
+
+    this.router.navigate(['/projects']);
   }
 }

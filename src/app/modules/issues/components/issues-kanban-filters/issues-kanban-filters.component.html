@@ -1,20 +1,15 @@
-<div class="filters" [ngClass]="{ 'filters-static': static }">
-  <form
-    [formGroup]="filterForm"
-    class="filters-form"
-    [ngxsForm]="'issues.settings.kanbanFilters'"
-    (submit)="filterChangeHandler()"
-  >
-    <p-toggleButton
-      formControlName="isMy"
-      onLabel="Мои"
-      offLabel="Все"
-    ></p-toggleButton>
+<form
+  [formGroup]="filterForm"
+  class="filters-form"
+  [ngxsForm]="'issues.settings.kanbanFilters'"
+  (submit)="filterChangeHandler()"
+>
+  <p-toggleButton
+    formControlName="isMy"
+    onLabel="Мои"
+    offLabel="Все"
+  ></p-toggleButton>
 
-    <input formControlName="tag" pInputText placeholder="Метка"/>
-  </form>
-
-  <div class="filters-actions">
-    <ng-container *ngTemplateOutlet="actions"/>
-  </div>
-</div>
+  <input formControlName="tag" pInputText placeholder="Метка"/>
+  <input formControlName="subject" pInputText placeholder="Поиск по теме"/>
+</form>

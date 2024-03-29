@@ -34,10 +34,14 @@
   ></p-progressSpinner>
 </div>
 
-<rm-issues-kanban-coluns-configurator [isOpen]="settingsIsOpen" />
-
-<rm-issues-kanban-filters>
-  <ng-template #actions>
+<rm-bottom-panel [loading]="isLoading">
+  <ng-template #start>
+    <rm-issues-kanban-filters>
+      <ng-template #actions>
+      </ng-template>
+    </rm-issues-kanban-filters>
+  </ng-template>
+  <ng-template #end>
     <p-button
       icon="pi pi-refresh"
 
@@ -48,14 +52,6 @@
       (onClick)="loadIssues()"
     />
 
-    <p-button
-      icon="pi pi-sliders-h"
-      severity="info"
-
-      [rounded]="true"
-      [text]="true"
-      [style]="{ height: '3em', width: '3em'}"
-      (onClick)="openSettingsHandler()"
-    />
+    <rm-issues-kanban-coluns-configurator />
   </ng-template>
-</rm-issues-kanban-filters>
+</rm-bottom-panel>

@@ -9,6 +9,7 @@ export interface IssuesStoreState {
     kanbanFilters: {
       model: {
         tag?: string;
+        subject?: string;
         isMy?: boolean;
       };
     };

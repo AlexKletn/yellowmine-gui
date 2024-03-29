@@ -1,5 +1,5 @@
 import { importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -22,8 +22,9 @@ export const appConfig = {
       NgxsStoragePluginModule.forRoot(),
       NgxsFormPluginModule.forRoot(),
     ]),
-    provideRouter(routes),
-    // provideClientHydration(),
+    provideRouter(routes,
+      withPreloading(PreloadAllModules),
+    ),
     provideHttpClient(),
   ],
 };

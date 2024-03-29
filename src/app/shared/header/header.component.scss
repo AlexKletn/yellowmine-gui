@@ -1,12 +1,47 @@
 .header {
-  //width: calc(100vw - 2em);
   margin: 1em;
 
-  display: flex;
-  gap: 1em;
+  display: grid;
+  grid-template-areas: 'logo menuBtn navigation navigation-additional . projects exit';
+  grid-template-columns: auto auto auto auto 1fr auto auto;
   align-items: center;
+  gap: 1em;
 
-  .menuBar {
-    width: 100%;
+  .menu-button {
+    grid-area: menuBtn;
+  }
+
+  .logo {
+    grid-area: logo;
+    margin-right: 1em;
+  }
+
+  .navigation {
+    grid-area: navigation;
+
+    display: flex;
+    gap: .5em;
+    align-items: center;
+
+    padding: .3em;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+  }
+
+  .navigation-additional {
+    grid-area: navigation-additional;
+  }
+
+  .projects {
+    grid-area: projects;
+    z-index: 1010;
+
+    display: flex;
+    gap: .5em;
+    align-items: center;
+  }
+
+  .exit {
+    grid-area: exit;
   }
 }

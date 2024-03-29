@@ -17,7 +17,6 @@ import { FormsModule } from '@angular/forms';
 export class ProjectsSelectComponent {
   projects: Array<Project> = [];
   activeProject?: Project['id'];
-  isVisible?: boolean = true;
 
   constructor(private projectsService: ProjectsService) {
     this.projectsService.projects.subscribe({ next: (data) => {
@@ -32,8 +31,6 @@ export class ProjectsSelectComponent {
   @Input() value!: Project['id'];
   @Output() onChanged = new EventEmitter<Project['id']>();
   changeHandler(newId: Project['id']) {
-    console.log(newId);
-
     this.onChanged.emit(newId);
   }
 }
