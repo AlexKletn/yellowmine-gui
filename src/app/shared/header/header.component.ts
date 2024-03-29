@@ -22,7 +22,20 @@ import { ThemeService } from '../../core/services/theme-service/theme.service';
 @Component({
   selector: 'header-component',
   standalone: true,
-  imports: [ToolbarModule, AvatarModule, RouterLink, ProjectsSelectComponent, MenubarModule, ProjectGlobalSelectComponent, ButtonModule, SidebarModule, MenuModule, NgForOf, LogoComponent, NgIf],
+  imports: [
+    ToolbarModule,
+    AvatarModule,
+    RouterLink,
+    ProjectsSelectComponent,
+    MenubarModule,
+    ProjectGlobalSelectComponent,
+    ButtonModule,
+    SidebarModule,
+    MenuModule,
+    NgForOf,
+    LogoComponent,
+    NgIf,
+  ],
   templateUrl: './header.component.html',
   styleUrl: 'header.component.scss',
 })
@@ -61,10 +74,6 @@ export class HeaderComponent {
         ];
 
         this.additionalMenuItems = [
-          // {
-          //   label: 'Вики',
-          //   routerLink: '/wiki',
-          // },
         ];
       }
       else {
@@ -80,9 +89,6 @@ export class HeaderComponent {
     this.themeService.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
     });
-  }
-
-  ngAfterViewInit() {
   }
 
   isActiveRoute(url: string) {

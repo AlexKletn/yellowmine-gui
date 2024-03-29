@@ -12,15 +12,15 @@ export default class MouseService {
   mouseCoords$: Subject<MouseCoords> = new Subject<MouseCoords>();
 
   constructor(@Inject(DOCUMENT) private document: Document) {
-    document.addEventListener('pointermove', (e) => {
+    this.document.addEventListener('pointermove', (e) => {
       this.mouseMoveHandler(e);
     });
 
-    document.addEventListener('dragover', (e) => {
+    this.document.addEventListener('dragover', (e) => {
       this.mouseMoveHandler(e);
     });
 
-    document.addEventListener('mousedown', (e) => {
+    this.document.addEventListener('mousedown', (e) => {
       this.mouseDownHandler(e);
     });
 

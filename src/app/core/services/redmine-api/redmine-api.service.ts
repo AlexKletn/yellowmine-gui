@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import RedmineConfigService from '../redmine-config/redmine-config.service';
 import RedmineConfigState from '../redmine-config/store/redmine-config.state';
 import { Select } from '@ngxs/store';
 
@@ -12,7 +11,7 @@ export class RedmineHandler extends HttpHandler {
 
   private apiKey?: string;
 
-  constructor(private redmineConfig: RedmineConfigService, private httpHandler: HttpHandler) {
+  constructor(private httpHandler: HttpHandler) {
     super();
 
     this.apiKey$.subscribe((key) => {
@@ -38,7 +37,7 @@ export class RedmineHandler extends HttpHandler {
 
 @Injectable({ providedIn: 'root' })
 class RedmineApiService extends HttpClient {
-  constructor(private redmineHandler: RedmineHandler) {
+  constructor(redmineHandler: RedmineHandler) {
     super(redmineHandler);
   }
 }

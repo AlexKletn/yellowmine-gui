@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import IssuesState from '../../store/issues.state';
 import { Observable, skip } from 'rxjs';
 import { IssueStatus } from '../../../issue-statuses/domain/IssueStatus';
@@ -48,7 +48,6 @@ const UNASSIGNED = '* Нет исполнителя';
 })
 export class IssuesKanbanComponent {
   private messageService = inject(MessageService);
-  private store = inject(Store);
   private issuesService = inject(IssuesService);
 
   @Select(IssuesState.currentFilter)

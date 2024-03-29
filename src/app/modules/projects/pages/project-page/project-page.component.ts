@@ -15,7 +15,7 @@ export class ProjectPageComponent {
   id?: number;
 
   constructor(private route: ActivatedRoute) {
-    route.params.subscribe(({ id }) => {
+    this.route.params.subscribe(({ id }) => {
       this.id = id;
     });
   }

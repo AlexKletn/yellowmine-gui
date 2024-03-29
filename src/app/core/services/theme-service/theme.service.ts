@@ -9,7 +9,6 @@ import SetThemeAction from '../../store/application-store/actions/set-theme.acti
   providedIn: 'root',
 })
 export class ThemeService {
-  private themeLink?: HTMLLinkElement;
   private store = inject(Store);
 
   @Select(ApplicationState.currentTheme)

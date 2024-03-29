@@ -1,0 +1,18 @@
+<div
+  class="bottom-panel"
+  [ngClass]="{
+    'loading': loading
+  }"
+>
+  <div class="bottom-panel-start">
+    <ng-container *ngTemplateOutlet="start"/>
+  </div>
+
+  <div class="bottom-panel-center">
+    <ng-content />
+  </div>
+
+  <div class="bottom-panel-end">
+    <ng-container *ngTemplateOutlet="end"/>
+  </div>
+</div>

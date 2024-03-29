@@ -17,7 +17,7 @@ export class IssuePageComponent {
   id!: number;
 
   constructor(private route: ActivatedRoute) {
-    route.params.subscribe(({ id }) => {
+    this.route.params.subscribe(({ id }) => {
       this.id = id;
     });
   }

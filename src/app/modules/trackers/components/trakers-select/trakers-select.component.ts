@@ -20,7 +20,7 @@ export class TrakersSelectComponent {
   trackers: Array<Tracker> = [];
 
   constructor(private trackerService: TrackerService) {
-    trackerService.trackers.subscribe((trackers) => {
+    this.trackerService.trackers.subscribe((trackers) => {
       console.log(trackers);
       this.trackers = trackers;
     });

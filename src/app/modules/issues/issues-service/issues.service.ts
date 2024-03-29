@@ -15,7 +15,7 @@ class IssuesService {
   private activeProject?: string;
 
   constructor(private redmineApi: RedmineApiService, private store: Store) {
-    store.select(({ projects }) =>
+    this.store.select(({ projects }) =>
       projects.activeProject,
     ).subscribe({
       next: (value) => {
