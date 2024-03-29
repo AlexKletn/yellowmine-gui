@@ -9,6 +9,7 @@ import { combineLatestWith, Observable, take } from 'rxjs';
 import { IssueStatus } from '../../../issue-statuses/domain/IssueStatus';
 import IssueStatusesService from '../../../issue-statuses/service/issueStatuses.service';
 import { ButtonModule } from 'primeng/button';
+import RedmineConfigState from '../../../../core/services/redmine-config/store/redmine-config.state';
 
 @Component({
   selector: 'rm-issues-kanban-coluns-configurator',
@@ -28,25 +29,27 @@ export class IssuesKanbanColunsConfiguratorComponent {
   private store = inject(Store);
   private issueStatusesService = inject(IssueStatusesService);
 
+  @Select(RedmineConfigState.apiKey)
+  private apiKey$!: Observable<string>;
+
   @Select(IssuesState.activeIssueStatuses)
   activeIssueStatuses$!: Observable<IssueStatus[]>;
 
   activeIssueStatuses!: IssueStatus[];
   availableIssueStatuses!: IssueStatus[];
 
-  ngOnInit() {
-    const issueStatuses$ = this.issueStatusesService.issueStatuses.pipe(take(1));
+  constructor() {
+    this.init();
 
-    this.activeIssueStatuses$.pipe(
-      take(1),
-      combineLatestWith(issueStatuses$),
-    ).subscribe(([activeIssueStatuses, availableIssueStatuses]) => {
-      this.activeIssueStatuses = [...(activeIssueStatuses)];
-
-      this.availableIssueStatuses = (availableIssueStatuses.filter(({ id }) => {
-        return !activeIssueStatuses.some(activeStatus => activeStatus.id === id);
-      }));
+    this.apiKey$.subscribe((key) => {
+      if (key) {
+        this.issueStatusesService.loadIssueStatuses();
+        this.init();
+      }
     });
+  }
+
+  ngOnInit() {
   }
 
   openHandler() {
@@ -61,5 +64,20 @@ export class IssuesKanbanColunsConfiguratorComponent {
     this.store.dispatch(new SetSettingsKanban({
       activeIssueStatuses: [...this.activeIssueStatuses],
     }));
+  }
+
+  private init() {
+    const issueStatuses$ = this.issueStatusesService.issueStatuses.pipe(take(1));
+
+    this.activeIssueStatuses$.pipe(
+      take(1),
+      combineLatestWith(issueStatuses$),
+    ).subscribe(([activeIssueStatuses, availableIssueStatuses]) => {
+      this.activeIssueStatuses = [...(activeIssueStatuses)];
+
+      this.availableIssueStatuses = (availableIssueStatuses.filter(({ id }) => {
+        return !activeIssueStatuses.some(activeStatus => activeStatus.id === id);
+      }));
+    });
   }
 }
