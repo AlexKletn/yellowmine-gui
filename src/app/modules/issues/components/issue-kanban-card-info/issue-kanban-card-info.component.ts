@@ -41,8 +41,6 @@ export class IssueKanbanCardInfoComponent {
       this.issueDetails = issue;
 
       if (issue.description) {
-        console.log();
-
         this.description = this.issuesService.parseDescription(issue.description);
       }
       this.loading = false;

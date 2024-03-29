@@ -21,7 +21,6 @@ export class ProjectPageComponent {
     this.route.params.subscribe(({ id }) => {
       this.id = id;
     });
-    console.log('fdas');
   }
 
   ngOnInit() {

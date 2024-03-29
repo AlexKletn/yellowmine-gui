@@ -21,7 +21,6 @@ export class TrakersSelectComponent {
 
   constructor(private trackerService: TrackerService) {
     this.trackerService.trackers.subscribe((trackers) => {
-      console.log(trackers);
       this.trackers = trackers;
     });
   }
@@ -29,8 +28,6 @@ export class TrakersSelectComponent {
   @Input() value!: Tracker['id'];
   @Output() onChanged = new EventEmitter<Tracker['id']>();
   change(newId: Tracker['id']) {
-    console.log(newId);
-
     this.onChanged.emit(newId);
   }
 }

@@ -14,16 +14,12 @@ export default class TimeEntriesService {
   }
 
   createTimeEntry(timeEntry: CreateTimeEntryRequest) {
-    console.log(timeEntry);
-
     return this.redmineApiService.post<TimeEntryResponse>('api/time_entries.json', {
       time_entry: timeEntry,
     });
   }
 
   updateTimeEntry(timeEntry: UpdateTimeEntryRequest) {
-    console.log(timeEntry);
-
     return this.redmineApiService.put<TimeEntryResponse>(`api/time_entries/${timeEntry.id}.json`, {
       time_entry: timeEntry,
     });

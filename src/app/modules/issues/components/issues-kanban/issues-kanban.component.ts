@@ -181,10 +181,15 @@ export class IssuesKanbanComponent {
     if (filters.subject) {
       this.issuesFilterMaker.setFilter('subject', `~${filters.subject}`);
     }
+    else {
+      this.issuesFilterMaker.removeFilter('subject');
+    }
 
     const assigned_to = filters.isMy ? 'me' : '*';
 
     this.issuesFilterMaker.setFilter('assigned_to_id', assigned_to);
+
+    return;
   }
 
   private init() {

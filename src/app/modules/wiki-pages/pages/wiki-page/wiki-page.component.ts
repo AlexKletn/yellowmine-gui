@@ -25,8 +25,6 @@ export class WikiPageComponent {
 
   ngOnInit() {
     this.wikiPagesService.getWikiPage(this.page).subscribe(({ wiki_page }) => {
-      console.log(wiki_page);
-
       this.text = this.wikiPagesService.transformPageText(wiki_page.text);
 
       // console.log(this.text);

@@ -168,7 +168,6 @@ export class TimeEntriesPageComponent {
   getFullHoursCountByDate(date: Date) {
     const events = this.calendarOptions.events as Array<{ date: Date; extendedProps: { hours: number } }>;
     const dayEvents = events.filter(({ date: eventDate }) => {
-      // console.log(eventDate);
       return dayjs(eventDate).isSame(date, 'day');
     });
 
@@ -277,8 +276,6 @@ export class TimeEntriesPageComponent {
 
   private updateMountNames() {
     const date = this.calendarComponent.getApi().getDate();
-
-    console.log(this.calendarComponent.getApi());
 
     const mountName = dayjs(date).format('MMMM (YYYY)');
     const nextMountName = dayjs(date).add(1, 'M').format('MMMM (YYYY)');
