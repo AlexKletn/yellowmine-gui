@@ -1,30 +1,74 @@
-.issueView {
-  &Header {
-    width: 100%;
+:host {
+  height: 100%;
 
-    display: grid;
-    gap: 0.5em;
-    grid-template-areas: '. . tags';
-    grid-template-columns: auto 1fr auto;
-
-    .tags {
-      grid-area: tags;
-
-      display: flex;
-      gap: 0.5em;
+  ::ng-deep {
+    .ng-star-inserted {
+      height: 100%;
     }
   }
+}
+
+.issueView {
+  height: 100%;
 
   &Content {
+    height: 100%;
     display: grid;
-    grid-template-areas: '. .';
-    grid-template-columns: 1fr .5fr;
+    grid-template-areas: 'details details'
+                         '.       .      '
+                         'bottom  bottom ';
+    grid-template-columns: 1fr .5fr auto;
+    grid-template-rows: auto 1fr;
     gap: 1rem;
 
+    .title {
+      color: var(--text-color-secondary)
+    }
+
+    .details-list {
+      grid-area: details;
+      display: flex;
+      flex-direction: column;
+      gap: .4em;
+    }
+
     .details {
-      //padding: 1rem;
+      display: grid;
+      grid-template-areas: 'title       actions'
+                           'description actions';
+      grid-template-columns: 1fr auto;
+
+      &Title {
+        grid-area: title;
+      }
+
       &Description {
-        min-height: 300px;
+        grid-area: description;
+        padding: .3em;
+      }
+
+      &Actions {
+        grid-area: actions;
+        align-self: stretch;
+        justify-self: stretch;
+      }
+    }
+
+    .bottom {
+      grid-area: bottom;
+
+      display: grid;
+      grid-template-areas: 'progress progress'
+                           '.        redmine';
+      gap: 1em;
+
+      .progress {
+        grid-area: progress;
+      }
+
+      .open-redmine {
+        grid-area: redmine;
+        justify-self: end;
       }
     }
   }

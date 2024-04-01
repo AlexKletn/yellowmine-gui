@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ViewChild } from '@angular/core';
 import IssuesService from '../../issues-service/issues.service';
 import Issue from '../../domain/Issue';
 import { DatePipe, JsonPipe, NgIf } from '@angular/common';
@@ -8,6 +8,11 @@ import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
 import { Title } from '@angular/platform-browser';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ButtonModule } from 'primeng/button';
+import RedmineConfigService from '../../../../core/services/redmine-config/redmine-config.service';
+import { TimeEntryFormComponent } from '../../../time-entries/components/time-entry-form/time-entry-form.component';
 
 type Argument = {
   label: string;
@@ -26,12 +31,21 @@ type Argument = {
     DividerModule,
     TableModule,
     DatePipe,
+    ProgressSpinnerModule,
+    ProgressBarModule,
+    ButtonModule,
+    TimeEntryFormComponent,
   ],
   templateUrl: './issue-view.component.html',
   styleUrl: './issue-view.component.scss',
 })
 export class IssueViewComponent {
+  @ViewChild('createForm') createForm!: TimeEntryFormComponent;
+
   private titleService = inject(Title);
+  private redmineConfig = inject(RedmineConfigService);
+  private redmineUrl?: string;
+
   @Input() id!: number;
   issue?: Issue;
 
@@ -39,11 +53,41 @@ export class IssueViewComponent {
 
   issueArguments: Array<Argument> = [];
 
+  isLoading: boolean = false;
+
   constructor(private issuesService: IssuesService) {
     this.titleService.setTitle('Задача...');
+    this.redmineConfig.getRedmineUrl().then(({ url }) => {
+      this.redmineUrl = url;
+    });
   }
 
   ngOnInit() {
+    if (this.id) {
+      this.loadIssue();
+    }
+  }
+
+  ngOnChanges() {
+    if (this.id) {
+      this.loadIssue();
+    }
+  }
+
+  openInRedmine() {
+    console.log(`${this.redmineUrl}/issues/${this.id}`);
+    window.open(`${this.redmineUrl}/issues/${this.id}`, '_blank');
+  }
+
+  openTimeEntryForm() {
+    this.createForm.updateFormData({
+      issue: this.issue,
+    });
+  }
+
+  private loadIssue() {
+    this.isLoading = true;
+
     this.issuesService.getIssue(this.id).subscribe({
       next: ({ issue }) => {
         this.issue = issue;
@@ -52,6 +96,7 @@ export class IssueViewComponent {
         this.description = this.issuesService.parseDescription(issue.description);
 
         this.titleService.setTitle(`Задача: ${issue.id} - ${issue.subject}`);
+        this.isLoading = false;
       },
     });
   }

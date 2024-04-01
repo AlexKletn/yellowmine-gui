@@ -24,6 +24,9 @@ import { EmptyComponent } from '../../../../shared/components/empty/empty.compon
 import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
 import { KanbanItem } from '../../../../shared/components/kanban/types';
 import deepClone from 'deep-clone';
+import { DialogModule } from 'primeng/dialog';
+import { IssuesKanbanCardContextComponent } from '../issues-kanban-card-context/issues-kanban-card-context.component';
+import { IssueViewComponent } from '../issue-view/issue-view.component';
 
 const UNASSIGNED = '* Нет исполнителя';
 
@@ -51,6 +54,9 @@ type IssuesByAssigned = { [key: string]: {
     TooltipModule,
     EmptyComponent,
     BottomPanelComponent,
+    DialogModule,
+    IssuesKanbanCardContextComponent,
+    IssueViewComponent,
   ],
   templateUrl: './issues-kanban.component.html',
   styleUrl: './issues-kanban.component.scss',
@@ -58,6 +64,7 @@ type IssuesByAssigned = { [key: string]: {
 export class IssuesKanbanComponent {
   private messageService = inject(MessageService);
   private issuesService = inject(IssuesService);
+  private _selectedIssue?: Issue;
 
   @Select(IssuesState.currentFilter)
   currentFilter$!: Observable<Record<string, unknown>>;
@@ -75,7 +82,6 @@ export class IssuesKanbanComponent {
   issuesByAssigned: { [key: string]: Issue[] } = {};
   issuesByAssignedAndStatus: IssuesByAssigned = {};
 
-  settingsIsOpen: boolean = false;
   isLoading: boolean = true;
   issuesInUpdate: Set<Issue['id']> = new Set<Issue['id']>();
 
@@ -84,6 +90,19 @@ export class IssuesKanbanComponent {
     this.issuesFilterMaker.setFilter('set_filter', 1);
 
     this.init();
+  }
+
+  get selectedIssue(): Issue | undefined {
+    return this._selectedIssue;
+  }
+
+  set selectedIssue(issue: Issue | undefined | boolean) {
+    if (typeof issue === 'boolean') {
+      this._selectedIssue = undefined;
+    }
+    else {
+      this._selectedIssue = issue;
+    }
   }
 
   ngAfterViewInit() {
@@ -96,8 +115,6 @@ export class IssuesKanbanComponent {
   }
 
   changeHandler({ item, additional }: KanbanItem<Issue, Issue['assigned_to']>, newStatus: IssueStatus) {
-    console.log(item, additional);
-
     const targetIssue = this.issues.find(issue => issue.id === item.id);
 
     if (targetIssue) {
@@ -126,12 +143,8 @@ export class IssuesKanbanComponent {
     }
   }
 
-  openSettingsHandler() {
-    this.settingsIsOpen = true;
-  }
-
-  getTrackByStatusKey(index: unknown, { id }: IssueStatus) {
-    return id;
+  issueModalSwitch(issue?: Issue) {
+    this.selectedIssue = issue;
   }
 
   getTrackByUserKey(index: number) {

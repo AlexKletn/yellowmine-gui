@@ -67,9 +67,19 @@ class IssuesService {
       attributes: {
         target: '_blank',
       },
+      validate: {
+        url: value => /^https?:\/\//.test(value),
+      },
       format: {
         url: (value) => {
-          const url = new URL(value);
+          let url;
+
+          try {
+            url = new URL(value);
+          }
+          catch (e) {
+            return value;
+          }
 
           const host = url.hostname.replace('www.', '');
 

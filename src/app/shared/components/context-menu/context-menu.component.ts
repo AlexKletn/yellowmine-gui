@@ -54,6 +54,8 @@ export class ContextMenuComponent {
 
   containerClickHandler(event: MouseEvent) {
     event.stopPropagation();
-    event.preventDefault();
+    if (event.type === 'mousedown') {
+      event.preventDefault();
+    }
   }
 }

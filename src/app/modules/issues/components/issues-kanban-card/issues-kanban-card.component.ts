@@ -6,6 +6,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SharedModule } from 'primeng/api';
 import { IssuesKanbanCardContextComponent } from '../issues-kanban-card-context/issues-kanban-card-context.component';
 import { TagModule } from 'primeng/tag';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'rm-issues-kanban-card',
@@ -17,6 +18,7 @@ import { TagModule } from 'primeng/tag';
     SharedModule,
     IssuesKanbanCardContextComponent,
     TagModule,
+    DialogModule,
   ],
   templateUrl: './issues-kanban-card.component.html',
   styleUrl: './issues-kanban-card.component.scss',

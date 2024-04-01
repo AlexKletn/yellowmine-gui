@@ -1,35 +1,66 @@
 <div class="issueView">
-  <p-panel *ngIf="issue">
-    <ng-template pTemplate="header">
-      <div class="issueViewHeader">
-        <span class="font-bold">
-          {{ issue.subject }}
-        </span>
-
-        <div class="tags">
-          <p-tag [value]="issue.priority.name"></p-tag>
-          <p-tag [value]="issue.status.name"></p-tag>
-        </div>
-      </div>
-    </ng-template>
-
+  <div *ngIf="!isLoading && issue">
     <div class="issueViewContent">
-      <div class="details">
-        <div class="detailsDescription" [innerHTML]="description">
+      <div class="details-list">
+
+        <div *ngIf="description" class="details">
+          <div class="title detailsTitle">
+            Описание
+          </div>
+          <div class="detailsDescription" [innerHTML]="description"></div>
+        </div>
+
+        <div class="details">
+          <div class="title detailsTitle">
+            Оценка и трудозатраты
+          </div>
+          <div class="detailsDescription">
+            @if (issue.total_estimated_hours) {
+              Оценка {{ issue.total_estimated_hours }}ч
+              <br />
+            }
+            Списано {{ issue.total_spent_hours }}ч
+          </div>
+
+          <div class="detailsActions">
+            <p-button
+              icon="pi pi-plus"
+              severity="success"
+              label="трудозатраты"
+              size="small"
+              [text]="true"
+              [disabled]="true"
+
+              (click)="openTimeEntryForm()"
+            ></p-button>
+          </div>
         </div>
       </div>
 
-      <div>
-        <p-table [value]="issueArguments">
-          <ng-template pTemplate="body" let-issueArgument>
-            <tr>
-              <td>{{ issueArgument.label }}</td>
-              <td>{{ issueArgument.value }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
+      <div class="bottom">
+        <p-progressBar class="progress" [value]="issue.done_ratio" />
 
+        <p-button
+          class="open-redmine"
+          size="small"
+          icon="pi pi-external-link"
+          label="Открыть в Redmine"
+          severity="danger"
+
+          [text]="true"
+          (click)="openInRedmine()"
+        ></p-button>
+
+      </div>
     </div>
-  </p-panel>
+  </div>
+
+  <div *ngIf="isLoading">
+    <p-progressSpinner
+      styleClass="w-4rem h-4rem"
+      animationDuration=".5s"
+    ></p-progressSpinner>
+  </div>
 </div>
+
+<rm-time-entry-form #createForm />

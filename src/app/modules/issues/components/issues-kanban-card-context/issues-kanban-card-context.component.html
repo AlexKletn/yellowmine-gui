@@ -1,4 +1,7 @@
-<rm-context-menu [target]="issueCard" [model]="[]">
+<rm-context-menu
+  [target]="issueCard"
+  [model]="menuItems"
+>
   <ng-template #top>
     <rm-issue-kanban-card-info [issue]="issue"/>
   </ng-template>

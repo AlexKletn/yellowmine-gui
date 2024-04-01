@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading && issues.length > 0" class="kanban-list">
+<div *ngIf="!isLoading || issues.length > 0" class="kanban-list">
   <div
     class="kanban-list-item"
     *ngFor="let assignedName of (issuesByAssignedAndStatus | keyvalue); trackBy:getTrackByUserKey"
@@ -17,7 +17,12 @@
       class="issue-kanban"
     >
       <ng-template #data let-item="item">
-        <rm-issues-kanban-card [issue]="item" [loading]="issuesInUpdate.has(item.id)"/>
+        <rm-issues-kanban-card
+          [issue]="item"
+          [loading]="issuesInUpdate.has(item.id)"
+
+          (click)="issueModalSwitch(item)"
+        />
       </ng-template>
     </rm-kanban>
 
@@ -28,7 +33,7 @@
   <rm-empty />
 </div>
 
-<div *ngIf="isLoading" class="kanban-list-loader">
+<div *ngIf="isLoading && issues.length === 0" class="kanban-list-loader">
   <p-progressSpinner
     styleClass="w-4rem h-4rem"
     animationDuration=".5s"
@@ -56,3 +61,29 @@
     <rm-issues-kanban-coluns-configurator />
   </ng-template>
 </rm-bottom-panel>
+
+<p-dialog
+  [(visible)]="!!selectedIssue"
+  [closable]="true"
+  [header]="selectedIssue?.id + '' ?? ''"
+  [resizable]="true"
+  position="right"
+
+  [style]="{
+    minHeight: '30em',
+    minWidth: '30em',
+    height: 'auto',
+    width: '30em',
+  }"
+>
+  <ng-template pTemplate="header">
+    {{ selectedIssue?.subject }}
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <rm-issue-view
+      *ngIf="selectedIssue"
+      [id]="selectedIssue.id"
+    />
+  </ng-template>
+</p-dialog>

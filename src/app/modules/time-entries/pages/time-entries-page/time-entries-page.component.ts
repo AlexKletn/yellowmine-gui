@@ -17,14 +17,14 @@ import _ from 'lodash';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { DropdownFilterEvent, DropdownModule } from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import IssuesService from '../../../issues/issues-service/issues.service';
-import Issue from '../../../issues/domain/Issue';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
-import { CreateTimeEntryRequest, UpdateTimeEntryRequest } from '../../service/types';
+import { UpdateTimeEntryRequest } from '../../service/types';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { TimeEntryFormComponent } from '../../components/time-entry-form/time-entry-form.component';
+import { TimeEntry } from '../../domine/types';
 
 dayjs.extend(customParseFormat);
 dayjs.locale('ru');
@@ -49,6 +49,7 @@ dayjs.locale('ru');
     ReactiveFormsModule,
     TooltipModule,
     NgClass,
+    TimeEntryFormComponent,
   ],
   templateUrl: './time-entries-page.component.html',
   styleUrl: './time-entries-page.component.scss',
@@ -56,28 +57,11 @@ dayjs.locale('ru');
 })
 export class TimeEntriesPageComponent {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+  @ViewChild('timeEntryForm') timeEntryForm!: TimeEntryFormComponent;
 
   private timeEntriesService = inject(TimeEntriesService);
-  private issuesService = inject(IssuesService);
 
   private filter: RequestFilterMaker = new RequestFilterMaker(0, 100);
-
-  private issuesFilter: RequestFilterMaker = new RequestFilterMaker(0, 10);
-  issues: Issue[] = [];
-
-  timeEntreForm = new FormGroup({
-    id: new FormControl<number>(0),
-    date: new FormControl(dayjs().format('DD.MM.YYYY'), {
-      validators: [Validators.required],
-    }),
-    issueId: new FormControl(null, {
-      validators: [Validators.required],
-    }),
-    hours: new FormControl(0, {
-      validators: [Validators.required],
-    }),
-    comment: new FormControl(null),
-  });
 
   currentMonthName: string = '...';
   nextMonthName: string = '...';
@@ -85,10 +69,6 @@ export class TimeEntriesPageComponent {
 
   isNextDisabled: boolean = false;
   isLoading: boolean = true;
-  isLoadingIssues: boolean = true;
-
-  isOpenedTimeEntryDialog: boolean = false;
-  isCreateTimeEntryLoading: boolean = false;
 
   ngAfterViewInit() {
     this.isNextDisabled = true;
@@ -96,7 +76,8 @@ export class TimeEntriesPageComponent {
     this.updateMountNames();
     this.updateTimeEntries();
     this.dateCheck();
-    this.loadIssues({ filter: '' });
+
+    this.timeEntryForm.loadIssues({ filter: '' });
   }
 
   calendarOptions: CalendarOptions = {
@@ -120,36 +101,13 @@ export class TimeEntriesPageComponent {
   };
 
   handleDateClick({ date }: DateClickArg) {
-    if (!this.isOpenedTimeEntryDialog) {
-      this.timeEntreForm.reset({
-        date: dayjs(date).format('DD.MM.YYYY'),
-        hours: 1,
-      });
-    }
-    else {
-      this.timeEntreForm.patchValue({
-        date: dayjs(date).format('DD.MM.YYYY'),
-      });
-    }
-
-    this.openTimeEntryDialog();
+    this.timeEntryForm.updateFormData({
+      spent_on: dayjs(date).format('DD.MM.YYYY'),
+    });
   }
 
   handleEventClick({ event }: EventClickArg) {
-    const { extendedProps } = event.toPlainObject();
-
-    this.timeEntreForm.reset({
-      id: extendedProps.id,
-      date: dayjs(extendedProps.spent_on, 'YYYY-MM-DD').format('DD.MM.YYYY'),
-      hours: extendedProps.hours,
-      comment: extendedProps.comments,
-      issueId: extendedProps.issue.id,
-    });
-
-    this.issuesService.getIssue(extendedProps.issue.id).subscribe(({ issue }) => {
-      this.issues = [...this.issues, issue];
-      this.openTimeEntryDialog();
-    });
+    this.timeEntryForm.setFormData(event.toPlainObject()['extendedProps'] as TimeEntry);
   }
 
   dropHandler({ event }: EventDropArg) {
@@ -160,9 +118,7 @@ export class TimeEntriesPageComponent {
       spent_on: dayjs(start).format('YYYY-MM-DD'),
     };
 
-    this.timeEntriesService.updateTimeEntry(timeEntry).subscribe(() => {
-      // this.updateTimeEntries();
-    });
+    this.timeEntriesService.updateTimeEntry(timeEntry);
   }
 
   getFullHoursCountByDate(date: Date) {
@@ -207,63 +163,6 @@ export class TimeEntriesPageComponent {
         });
       },
     );
-  }
-
-  sendTimeEntry() {
-    if (this.timeEntreForm.valid) {
-      this.isCreateTimeEntryLoading = true;
-
-      const { date, issueId, comment, hours, id } = this.timeEntreForm.value;
-
-      const timeEntry: CreateTimeEntryRequest = {
-        spent_on: dayjs(date, 'DD.MM.YYYY').format('YYYY-MM-DD')!,
-        issue_id: issueId!,
-        comments: comment!,
-        hours: hours ?? 0,
-      };
-
-      if (id) {
-        this.timeEntriesService.updateTimeEntry({
-          ...timeEntry,
-          id,
-        }).subscribe(() => {
-          this.isCreateTimeEntryLoading = false;
-          this.updateTimeEntries();
-          this.closeTimeEntryDialog();
-        });
-      }
-      else {
-        this.timeEntriesService.createTimeEntry(timeEntry).subscribe(
-          () => {
-            this.isCreateTimeEntryLoading = false;
-            this.updateTimeEntries();
-            this.closeTimeEntryDialog();
-          },
-        );
-      }
-    }
-  }
-
-  loadIssues({ filter }: Partial<Pick<DropdownFilterEvent, 'filter'>> = {}) {
-    this.isLoadingIssues = true;
-    if (filter) {
-      this.issuesFilter.setFilter('subject', `~${filter}`);
-    }
-
-    this.issuesService.getIssues(this.issuesFilter).subscribe(
-      ({ issues }) => {
-        this.issues = issues;
-        this.isLoadingIssues = false;
-      },
-    );
-  }
-
-  openTimeEntryDialog() {
-    this.isOpenedTimeEntryDialog = true;
-  }
-
-  closeTimeEntryDialog() {
-    this.isOpenedTimeEntryDialog = false;
   }
 
   private updateFilter() {

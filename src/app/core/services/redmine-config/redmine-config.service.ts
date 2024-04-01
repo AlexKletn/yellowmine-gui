@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import RedmineApiService from '../redmine-api/redmine-api.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 class RedmineConfigService {
-  private redmineUrl?: string;
+  private redmineApiService = inject(RedmineApiService);
 
-  addRedmineUrl(url: string) {
-    this.redmineUrl = url;
-
-    return this.redmineUrl;
+  constructor() {
   }
 
-  getRedmineUrl() {
-    return this.redmineUrl;
+  async getRedmineUrl() {
+    const request = this.redmineApiService.get<{ url: string }>('api/redmine-url');
+
+    return lastValueFrom(request);
   }
 }
 

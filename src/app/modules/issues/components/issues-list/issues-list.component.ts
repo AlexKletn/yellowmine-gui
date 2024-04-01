@@ -96,21 +96,21 @@ export class IssuesListComponent {
   private updateFilters() {
     const filters = this.issuesFilter;
 
-    if (filters.isMy) {
+    if (filters?.isMy) {
       this.filter.setFilter('assigned_to_id', 'me');
     }
     else {
       this.filter.removeFilter('assigned_to_id');
     }
 
-    if (filters.tag) {
+    if (filters?.tag) {
       this.filter.setFilter('tags', filters.tag);
     }
     else {
       this.filter.removeFilter('tags');
     }
 
-    if (filters.subject) {
+    if (filters?.subject) {
       this.filter.setFilter('subject', `~${filters.subject}`);
     }
 
