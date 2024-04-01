@@ -1,22 +1,31 @@
 import { inject, Injectable } from '@angular/core';
 import RedmineApiService from '../redmine-api/redmine-api.service';
-import { lastValueFrom, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import RedmineConfigState from './store/redmine-config.state';
+import { SetRedmineUrlAction } from './store/actions/setRedmineUrl.action';
 
 @Injectable({ providedIn: 'root' })
 class RedmineConfigService {
+  private store = inject(Store);
+
+  @Select(RedmineConfigState.apiKey)
+  private apiKey$!: Observable<string>;
+
   private redmineApiService = inject(RedmineApiService);
-  redmineUrl: Subject<string> = new Subject<string>();
 
   constructor() {
-    this.getRedmineUrl().then(({ url }) => {
-      this.redmineUrl?.next(url);
+    this.apiKey$.subscribe((key) => {
+      if (key) {
+        this.getRedmineUrl().subscribe(({ url }) => {
+          this.store.dispatch(new SetRedmineUrlAction(url));
+        });
+      }
     });
   }
 
-  async getRedmineUrl() {
-    const request = this.redmineApiService.get<{ url: string }>('api/redmine-url');
-
-    return lastValueFrom(request);
+  getRedmineUrl() {
+    return this.redmineApiService.get<{ url: string }>('api/redmine-url');
   }
 }
 

@@ -1,4 +1,5 @@
 import { IssueStatus } from '../../issue-statuses/domain/IssueStatus';
+import { Membership } from '../../projects/domain/Membership';
 
 export interface IssuesStoreState {
   settings: {
@@ -11,6 +12,7 @@ export interface IssuesStoreState {
         tag?: string;
         subject?: string;
         isMy?: boolean;
+        assignedTo?: Array<Membership['user']['id']>;
       };
     };
   };

@@ -15,8 +15,8 @@ import { IssuesKanbanCardComponent } from '../issues-kanban-card/issues-kanban-c
 import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-kanban-filters.component';
 import { ButtonModule } from 'primeng/button';
 import {
-  IssuesKanbanColunsConfiguratorComponent,
-} from '../issues-kanban-coluns-configurator/issues-kanban-coluns-configurator.component';
+  IssuesKanbanColumnsConfiguratorComponent,
+} from '../issues-kanban-coluns-configurator/issues-kanban-columns-configurator.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import ProjectsState from '../../../projects/store/projects.state';
@@ -47,7 +47,7 @@ type IssuesByAssigned = { [key: string]: {
     IssuesKanbanCardComponent,
     IssuesKanbanFiltersComponent,
     ButtonModule,
-    IssuesKanbanColunsConfiguratorComponent,
+    IssuesKanbanColumnsConfiguratorComponent,
     NgIf,
     NgForOf,
     ReactiveFormsModule,
@@ -223,6 +223,13 @@ export class IssuesKanbanComponent {
     }
     else {
       this.issuesFilterMaker.removeFilter('assigned_to_id');
+
+      if (filters.assignedTo) {
+        this.issuesFilterMaker.setFilter('assigned_to_ids', filters.assignedTo);
+      }
+      else {
+        this.issuesFilterMaker.removeFilter('assigned_to_ids');
+      }
     }
 
     return;

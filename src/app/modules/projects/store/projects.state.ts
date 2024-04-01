@@ -3,6 +3,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { ProjectsStoreState } from './types';
 import { SetActiveProject, SetProjects } from './projects.actions';
 import { SetTags } from './projects.actions/set-tags';
+import { SetMembershipsAction } from './projects.actions/set-memberships.action';
 
 type ProjectsStateContext = StateContext<ProjectsStoreState>;
 
@@ -11,6 +12,7 @@ type ProjectsStateContext = StateContext<ProjectsStoreState>;
   defaults: {
     items: [],
     tags: [],
+    memberships: [],
     activeProject: undefined,
   },
 })
@@ -19,6 +21,11 @@ export default class ProjectsState {
   @Selector()
   static activeProject(state: ProjectsStoreState) {
     return state.activeProject;
+  }
+
+  @Selector()
+  static memberships(state: ProjectsStoreState) {
+    return state.memberships;
   }
 
   @Action(SetProjects)
@@ -45,6 +52,15 @@ export default class ProjectsState {
       ...ctx.getState(),
 
       tags: action.tags,
+    });
+  }
+
+  @Action(SetMembershipsAction)
+  setMemberships(ctx: ProjectsStateContext, action: SetMembershipsAction) {
+    ctx.setState({
+      ...ctx.getState(),
+
+      memberships: action.memberships,
     });
   }
 }

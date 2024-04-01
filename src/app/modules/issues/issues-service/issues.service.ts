@@ -9,6 +9,7 @@ import { IssueResponse, IssuesResponse, IssueUpdateRequest } from './types';
 import textile from 'textile-js';
 import linkifyHtml from 'linkify-html';
 import _ from 'lodash';
+import { forkJoin, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 class IssuesService {
@@ -39,8 +40,37 @@ class IssuesService {
       return this.getIssues(filter);
     }
 
+    const {
+      assigned_to_ids,
+
+      ...filters
+    } = filter?.make() ?? {};
+
+    if ((assigned_to_ids as Array<string>)?.length > 0 && filters['assigned_to_id'] !== 'me') {
+      const requests = (assigned_to_ids as Array<string>).map(id => (
+        this.redmineApi.get<IssuesResponse>(`api/projects/${this.activeProject ?? 0}/issues.json`, {
+          params: {
+            ...filters,
+            assigned_to_id: id,
+          },
+        })
+      ));
+
+      return (forkJoin(requests))
+        .pipe(
+          map((responses) => {
+            return responses.reduce((acc, value) => {
+              return {
+                issues: [...acc.issues, ...value.issues],
+                total_count: acc.total_count + value.total_count,
+              };
+            }, { issues: [], total_count: 0 } as IssuesResponse);
+          }),
+        );
+    }
+
     return this.redmineApi.get<IssuesResponse>(`api/projects/${this.activeProject ?? 0}/issues.json`, {
-      params: filter?.make() ?? undefined,
+      params: filters,
     });
   }
 
@@ -49,16 +79,6 @@ class IssuesService {
   }
 
   updateIssue({ id, ...issue }: IssueUpdateRequest) {
-    // const request: IssueUpdateRequest = {
-    //   ...issue,
-    //
-    //   project_id: project.id,
-    //   tracker_id: tracker.id,
-    //   status_id: status.id,
-    //   priority_id: priority.id,
-    //   assigned_to_id: assigned_to?.id,
-    // };
-
     return this.redmineApi.put<IssueResponse>(`api/issues/${id}.json`, { issue });
   }
 
@@ -69,7 +89,6 @@ class IssuesService {
       },
       validate: {
         url: (value) => {
-          console.log(value);
           return /^https?:\/\//.test(value);
         },
       },

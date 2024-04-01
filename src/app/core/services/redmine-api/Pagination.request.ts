@@ -46,7 +46,7 @@ export class RequestFilterMaker<FILTER = Record<string, unknown>> {
   }
 
   make() {
-    const result: Record<string, string | number> = {};
+    const result: Record<string, string | number | Array<string | number>> = {};
 
     if (this.offset) {
       result['offset'] = this.offset;

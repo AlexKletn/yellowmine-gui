@@ -13,7 +13,9 @@ type IssuesStateContext = StateContext<IssuesStoreState>;
         activeIssueStatuses: [],
       },
       kanbanFilters: {
-        model: {},
+        model: {
+          isMy: true,
+        },
       },
     },
   },

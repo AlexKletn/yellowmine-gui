@@ -5,6 +5,7 @@ import { SetIssueStatuses } from '../store/issueStatuses.actions';
 import { Observable } from 'rxjs';
 import { IssueStatus } from '../domain/IssueStatus';
 import { IssueStatusesResponse } from './types';
+import RedmineConfigState from '../../../core/services/redmine-config/store/redmine-config.state';
 
 @Injectable({ providedIn: 'root' })
 class IssueStatusesService {
@@ -13,8 +14,15 @@ class IssueStatusesService {
   @Select(state => state.issueStatuses.items)
   issueStatuses!: Observable<IssueStatus[]>;
 
+  @Select(RedmineConfigState.apiKey)
+  private apiKey$!: Observable<string>;
+
   constructor(private redmineApi: RedmineApiService, private store: Store) {
-    this.loadIssueStatuses();
+    this.apiKey$.subscribe((key) => {
+      if (key) {
+        this.loadIssueStatuses();
+      }
+    });
   }
 
   loadIssueStatuses() {

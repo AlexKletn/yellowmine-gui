@@ -1,0 +1,16 @@
+<p-multiSelect
+  [options]="memberships"
+  [virtualScroll]="true"
+  [filter]="true"
+  [virtualScrollItemSize]="43"
+  [showClear]="true"
+  [(ngModel)]="value"
+  [disabled]="disabled"
+  [selectionLimit]="5"
+  [style]="{
+    width: '20em',
+  }"
+  optionLabel="user.name"
+  optionValue="user.id"
+  placeholder="Исполнитель"
+></p-multiSelect>

@@ -3,12 +3,19 @@
   class="filters-form"
   [ngxsForm]="'issues.settings.kanbanFilters'"
   [ngxsFormDebounce]="300"
+
+  (ngSubmit)="changeHandler($event)"
 >
   <p-toggleButton
     formControlName="isMy"
     onLabel="Мои"
-    offLabel="Все"
+    [offLabel]="filterForm.value['assignedTo'] && filterForm.value['assignedTo'].length > 0 ? 'Выбранные' : 'Все'"
   ></p-toggleButton>
+
+  <rm-project-memberships
+    *ngIf="!filterForm.value['isMy']"
+    formControlName="assignedTo"
+  />
 
   <input formControlName="tag" pInputText placeholder="Метка"/>
   <input formControlName="subject" pInputText placeholder="Поиск по теме"/>

@@ -13,8 +13,8 @@ import { IssuesStoreState } from '../../store/types';
 import { combineLatestWith, Observable } from 'rxjs';
 import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
 import {
-  IssuesKanbanColunsConfiguratorComponent,
-} from '../issues-kanban-coluns-configurator/issues-kanban-coluns-configurator.component';
+  IssuesKanbanColumnsConfiguratorComponent,
+} from '../issues-kanban-coluns-configurator/issues-kanban-columns-configurator.component';
 import ProjectsState from '../../../projects/store/projects.state';
 import { ButtonModule } from 'primeng/button';
 import { IssueViewComponent } from '../issue-view/issue-view.component';
@@ -30,7 +30,7 @@ import { IssueViewComponent } from '../issue-view/issue-view.component';
     RouterLink,
     IssuesKanbanFiltersComponent,
     BottomPanelComponent,
-    IssuesKanbanColunsConfiguratorComponent,
+    IssuesKanbanColumnsConfiguratorComponent,
     ButtonModule,
     IssueViewComponent,
     NgClass,
@@ -54,22 +54,14 @@ export class IssuesListComponent {
   filter: RequestFilterMaker;
 
   isReady: boolean = false;
-  settingsIsOpen: boolean = false;
 
   constructor(private issuesService: IssuesService, private store: Store) {
-    // const activeProject = store.select(({ projects }) =>
-    //   projects.activeProject,
-    // ).pipe();
-
     this.filter = new RequestFilterMaker();
     this.filter.setOffsetPagination(this.start, this.pageSize);
   }
 
   ngOnInit() {
     const activeProject$ = this.store.select(ProjectsState.activeProject);
-    // this.store.select(ProjectsState.activeProject).subscribe(() => {
-    //   this.updateFilters();
-    // });
     this.issuesFilter$
       .pipe(
         combineLatestWith(activeProject$),
@@ -92,7 +84,7 @@ export class IssuesListComponent {
     if (this.filter) {
       this.isLoading = true;
 
-      this.issuesService.getIssues(this.filter).subscribe(({ issues, total_count }) => {
+      this.issuesService.getProjectIssues(this.filter).subscribe(({ issues, total_count }) => {
         this.issues = issues;
         this.total_count = total_count;
         this.isLoading = false;
@@ -122,13 +114,6 @@ export class IssuesListComponent {
   private updateFilters() {
     const filters = this.issuesFilter;
 
-    if (filters?.isMy) {
-      this.filter.setFilter('assigned_to_id', 'me');
-    }
-    else {
-      this.filter.removeFilter('assigned_to_id');
-    }
-
     if (filters?.tag) {
       this.filter.setFilter('tags', filters.tag);
     }
@@ -138,6 +123,20 @@ export class IssuesListComponent {
 
     if (filters?.subject) {
       this.filter.setFilter('subject', `~${filters.subject}`);
+    }
+
+    if (filters.isMy) {
+      this.filter.setFilter('assigned_to_id', 'me');
+    }
+    else {
+      this.filter.removeFilter('assigned_to_id');
+
+      if (filters.assignedTo) {
+        this.filter.setFilter('assigned_to_ids', filters.assignedTo);
+      }
+      else {
+        this.filter.removeFilter('assigned_to_ids');
+      }
     }
 
     this.loadIssues();

@@ -11,9 +11,11 @@ import { Title } from '@angular/platform-browser';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ButtonModule } from 'primeng/button';
-import RedmineConfigService from '../../../../core/services/redmine-config/redmine-config.service';
 import { TimeEntryFormComponent } from '../../../time-entries/components/time-entry-form/time-entry-form.component';
 import { DialogModule } from 'primeng/dialog';
+import { Select } from '@ngxs/store';
+import RedmineConfigState from '../../../../core/services/redmine-config/store/redmine-config.state';
+import { Observable } from 'rxjs';
 
 type Argument = {
   label: string;
@@ -44,8 +46,10 @@ type Argument = {
 export class IssueViewComponent {
   @ViewChild('createForm') createForm!: TimeEntryFormComponent;
 
+  @Select(RedmineConfigState.redmineUrl)
+  private redmineUrl$!: Observable<string>;
+
   private titleService = inject(Title);
-  private redmineConfig = inject(RedmineConfigService);
   private redmineUrl?: string;
 
   @Input() id!: number;
@@ -59,7 +63,8 @@ export class IssueViewComponent {
 
   constructor(private issuesService: IssuesService) {
     this.titleService.setTitle('Задача...');
-    this.redmineConfig.redmineUrl.subscribe((url) => {
+
+    this.redmineUrl$.subscribe((url) => {
       this.redmineUrl = url;
     });
   }

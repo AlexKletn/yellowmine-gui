@@ -12,7 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import RedmineConfigState from '../../../../core/services/redmine-config/store/redmine-config.state';
 
 @Component({
-  selector: 'rm-issues-kanban-coluns-configurator',
+  selector: 'rm-issues-kanban-columns-configurator',
   standalone: true,
   imports: [
     DialogModule,
@@ -20,10 +20,10 @@ import RedmineConfigState from '../../../../core/services/redmine-config/store/r
     SharedModule,
     ButtonModule,
   ],
-  templateUrl: './issues-kanban-coluns-configurator.component.html',
-  styleUrl: './issues-kanban-coluns-configurator.component.scss',
+  templateUrl: './issues-kanban-columns-configurator.component.html',
+  styleUrl: './issues-kanban-columns-configurator.component.scss',
 })
-export class IssuesKanbanColunsConfiguratorComponent {
+export class IssuesKanbanColumnsConfiguratorComponent {
   isOpen: boolean = false;
 
   private store = inject(Store);
@@ -67,7 +67,7 @@ export class IssuesKanbanColunsConfiguratorComponent {
   }
 
   private init() {
-    const issueStatuses$ = this.issueStatusesService.issueStatuses.pipe(take(1));
+    const issueStatuses$ = this.issueStatusesService.issueStatuses;
 
     this.activeIssueStatuses$.pipe(
       take(1),
