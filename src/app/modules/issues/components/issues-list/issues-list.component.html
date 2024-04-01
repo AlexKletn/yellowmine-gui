@@ -18,7 +18,6 @@
 
 <div class="issues-list">
   <p-table
-    *ngIf="isReady"
 
     [tableStyle]="{ 'min-width': '50rem' }"
     [value]="issues"
@@ -29,6 +28,8 @@
     [showCurrentPageReport]="true"
     [lazy]="true"
     [loading]="isLoading"
+    [selection]="[selectedIssue]"
+    [rowSelectable]="true"
 
     (onLazyLoad)="lazyLoadIssues($event)"
 
@@ -37,9 +38,6 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 1rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
         <th style="width: 40%" colspan="2">Задача</th>
         <th>Приоритет</th>
         <th>Статус</th>
@@ -48,10 +46,15 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-issue>
-      <tr [pSelectableRow]="issue">
-        <td>
-          <p-tableCheckbox [value]="issue"></p-tableCheckbox>
-        </td>
+      <tr
+        class="issue-row"
+
+        [ngClass]="{
+          'selected': issue.id === selectedIssue?.id,
+        }"
+
+        (click)="issueSelectHandler(issue)"
+      >
         <td>{{ issue.id }}</td>
         <td>
 <!--          <a [routerLink]="'./' + issue.id">-->
@@ -68,3 +71,8 @@
     </ng-template>
   </p-table>
 </div>
+
+<rm-issue-view
+  *ngIf="selectedIssue"
+  [id]="selectedIssue.id"
+/>

@@ -1,17 +1,29 @@
 import { Injectable } from '@angular/core';
 import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
-import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { combineLatest, combineLatestWith, Observable, Subject } from 'rxjs';
 import Project from '../domain/Project';
 import { ProjectsResponse } from './types';
 import { SetActiveProject, SetProjects } from '../store/projects.actions';
+import { RequestFilterMaker } from '../../../core/services/redmine-api/Pagination.request';
+import RedmineConfigState from '../../../core/services/redmine-config/store/redmine-config.state';
+
+const LIMIT = 100;
 
 @Injectable({ providedIn: 'root' })
 class ProjectsService {
+  private projectsFilter: RequestFilterMaker = new RequestFilterMaker(0, LIMIT);
+
+  @Select(RedmineConfigState.apiKey)
+  private redmineApiKey$!: Observable<string>;
+
+  totalCount: Subject<number> = new Subject();
   projects: Observable<Project[]>;
   activeProject: Observable<Project>;
 
   constructor(private redmineApi: RedmineApiService, private store: Store) {
+    this.projectsFilter.setFilter('set_filter', '1');
+
     this.projects = store.select(({ projects }) => {
       return projects.items;
     });
@@ -20,17 +32,63 @@ class ProjectsService {
       return projects.items.find(({ id }: Project) => id == projects.activeProject);
     });
 
-    this.loadProjects();
+    this.redmineApiKey$.subscribe((key) => {
+      if (key) {
+        this.getTotalCount();
+      }
+    });
+
+    this.totalCount.pipe(
+      combineLatestWith(this.redmineApiKey$),
+    ).subscribe(([count, key]) => {
+      if (key) {
+        this.loadProjects(count);
+      }
+    });
   }
 
-  loadProjects() {
-    this.redmineApi.get<ProjectsResponse>('/api/projects.json').subscribe(({ projects }) => {
+  get filter() {
+    return this.projectsFilter;
+  }
+
+  loadProjects(totalCount: number) {
+    const pages = totalCount / LIMIT;
+
+    const requests = [];
+
+    for (let i = 0; i < pages; i++) {
+      this.projectsFilter.setOffsetPagination(i * LIMIT, LIMIT);
+      const request = this.loadProjectsPage(this.projectsFilter.make());
+
+      requests.push(request);
+    }
+
+    (combineLatest(requests)).subscribe((res) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const projects = res.reduce((acc, proj) => ([...acc, ...proj.projects]), [] as Project[]);
       this.store.dispatch(new SetProjects(projects));
     });
   }
 
   setActiveProject(id: Project['id']) {
     return this.store.dispatch(new SetActiveProject(id));
+  }
+
+  private getTotalCount() {
+    this.redmineApi.get<ProjectsResponse>('/api/projects.json', {
+      params: this.projectsFilter.make(),
+    }).subscribe(({ total_count }) => {
+      this.totalCount.next(total_count);
+    });
+  }
+
+  private loadProjectsPage(filters: Record<string, unknown>) {
+    return this.redmineApi.get<ProjectsResponse>('/api/projects.json', {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      params: filters,
+    });
   }
 }
 

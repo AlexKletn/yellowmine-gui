@@ -39,3 +39,13 @@
     }
   }
 }
+
+:host {
+  ::ng-deep {
+    .p-paginator {
+      background: unset;
+      padding: unset;
+      border: unset;
+    }
+  }
+}

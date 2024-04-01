@@ -4,19 +4,20 @@ import { RequestFilterMaker } from '../../../../core/services/redmine-api/Pagina
 import { Select, Store } from '@ngxs/store';
 import Issue from '../../domain/Issue';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { RouterLink } from '@angular/router';
 import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-kanban-filters.component';
 import IssuesState from '../../store/issues.state';
 import { IssuesStoreState } from '../../store/types';
-import { Observable } from 'rxjs';
+import { combineLatestWith, Observable } from 'rxjs';
 import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
 import {
   IssuesKanbanColunsConfiguratorComponent,
 } from '../issues-kanban-coluns-configurator/issues-kanban-coluns-configurator.component';
 import ProjectsState from '../../../projects/store/projects.state';
 import { ButtonModule } from 'primeng/button';
+import { IssueViewComponent } from '../issue-view/issue-view.component';
 
 @Component({
   selector: 'rm-issues-list',
@@ -31,6 +32,8 @@ import { ButtonModule } from 'primeng/button';
     BottomPanelComponent,
     IssuesKanbanColunsConfiguratorComponent,
     ButtonModule,
+    IssueViewComponent,
+    NgClass,
   ],
   templateUrl: './issues-list.component.html',
   styleUrl: './issues-list.component.scss',
@@ -38,6 +41,8 @@ import { ButtonModule } from 'primeng/button';
 export class IssuesListComponent {
   @Select(IssuesState.currentFilter)
   private issuesFilter$!: Observable<IssuesStoreState['settings']['kanbanFilters']['model']>;
+
+  private _selectedIssue?: Issue;
 
   issuesFilter!: IssuesStoreState['settings']['kanbanFilters']['model'];
 
@@ -61,11 +66,15 @@ export class IssuesListComponent {
   }
 
   ngOnInit() {
-    this.store.select(ProjectsState.activeProject).subscribe(() => {
-      this.updateFilters();
-    });
+    const activeProject$ = this.store.select(ProjectsState.activeProject);
+    // this.store.select(ProjectsState.activeProject).subscribe(() => {
+    //   this.updateFilters();
+    // });
     this.issuesFilter$
-      .subscribe((filters) => {
+      .pipe(
+        combineLatestWith(activeProject$),
+      )
+      .subscribe(([filters]) => {
         this.issuesFilter = filters;
 
         this.updateFilters();
@@ -90,6 +99,23 @@ export class IssuesListComponent {
 
         this.isReady = true;
       });
+    }
+  }
+
+  issueSelectHandler(issue: Issue) {
+    this.selectedIssue = issue;
+  }
+
+  get selectedIssue(): Issue | undefined {
+    return this._selectedIssue;
+  }
+
+  set selectedIssue(issue: Issue | undefined | boolean) {
+    if (typeof issue === 'boolean') {
+      this._selectedIssue = undefined;
+    }
+    else {
+      this._selectedIssue = issue;
     }
   }
 

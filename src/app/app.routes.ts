@@ -40,7 +40,7 @@ export const routes: Routes = [
   },
   {
     path: 'issues/:id',
-    loadComponent: () => import('./modules/issues/pages/issue-page/issue-page.component').then(m => m.IssuePageComponent),
+    loadComponent: () => import('./modules/issues/pages/issues-page/issues-page.component').then(m => m.IssuesPageComponent),
     canActivate: [loginGuard],
   },
   {

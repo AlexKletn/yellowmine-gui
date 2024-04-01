@@ -62,28 +62,7 @@
   </ng-template>
 </rm-bottom-panel>
 
-<p-dialog
-  [(visible)]="!!selectedIssue"
-  [closable]="true"
-  [header]="selectedIssue?.id + '' ?? ''"
-  [resizable]="true"
-  position="right"
-
-  [style]="{
-    minHeight: '30em',
-    minWidth: '30em',
-    height: 'auto',
-    width: '30em',
-  }"
->
-  <ng-template pTemplate="header">
-    {{ selectedIssue?.subject }}
-  </ng-template>
-
-  <ng-template pTemplate="content">
-    <rm-issue-view
-      *ngIf="selectedIssue"
-      [id]="selectedIssue.id"
-    />
-  </ng-template>
-</p-dialog>
+<rm-issue-view
+  *ngIf="selectedIssue"
+  [id]="selectedIssue.id"
+/>

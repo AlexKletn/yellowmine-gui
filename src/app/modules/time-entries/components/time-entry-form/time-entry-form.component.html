@@ -1,20 +1,26 @@
-<form #form class="register-time" [formGroup]="timeEntreForm" (submit)="sendTimeEntry()">
+<form class="register-time" [formGroup]="timeEntreForm" (submit)="sendTimeEntry()">
   <p-dialog
     [visible]="isOpenedTimeEntryDialog"
-    [style]="{ width: '430px' }"
+    [style]="{ width: '430px', height: 'auto' }"
     [draggable]="true"
     [resizable]="false"
     [closable]="false"
-
-    [appendTo]="form"
+    position="center"
 
     [ngClass]="{
       'p-dialog-loading': isCreateTimeEntryLoading
     }"
   >
+
     <ng-template pTemplate="header">
       <div class="header">
-        Трудозатраты за:
+        <div>
+          Трудозатраты за:
+        </div>
+
+        <div *ngIf="timeEntreForm.value.id">
+          изменение
+        </div>
 
         <p-calendar
           id="date"
@@ -23,6 +29,7 @@
           [showIcon]="true"
           [required]="true"
           [disabled]="isCreateTimeEntryLoading"
+          appendTo="body"
           dataType="date"
           dateFormat="dd.mm.yy"
           formControlName="date"
@@ -69,6 +76,7 @@
           [options]="issues"
           [required]="true"
           [disabled]="isCreateTimeEntryLoading"
+          appendTo="body"
 
           (onFilter)="loadIssues($event)"
         >
@@ -81,8 +89,8 @@
               </p-tag>
 
               <span class="subject">
-                  {{ issue.subject }}
-                </span>
+                {{ issue.subject }}
+              </span>
             </div>
           </ng-template>
           <ng-template let-issue pTemplate="item">
@@ -98,8 +106,8 @@
                 [pTooltip]="issue.description"
                 tooltipPosition="right"
               >
-                  {{ issue.subject }}
-                </span>
+                {{ issue.subject }}
+              </span>
             </div>
           </ng-template>
 
@@ -125,16 +133,16 @@
       <p-floatLabel
         class="comment"
         [ngClass]="{
-            'disabled': isCreateTimeEntryLoading
-          }"
+          'disabled': isCreateTimeEntryLoading
+        }"
       >
-          <textarea
-            id="comment"
-            pInputTextarea
-            formControlName="comment"
+        <textarea
+          id="comment"
+          pInputTextarea
+          formControlName="comment"
 
-            [disabled]="isCreateTimeEntryLoading"
-          ></textarea>
+          [disabled]="isCreateTimeEntryLoading"
+        ></textarea>
         <label for="comment">Комментарий</label>
       </p-floatLabel>
 

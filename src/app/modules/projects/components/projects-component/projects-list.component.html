@@ -1,5 +1,5 @@
 <div class="container">
-  @for (project of projects; track $index) {
+  @for (project of projectsPage; track $index) {
     <div class="project" (click)="openProject(project.id)">
       <div class="project-id">
         <p-tag
@@ -16,3 +16,13 @@
     </div>
   }
 </div>
+
+<rm-bottom-panel>
+  <ng-template #start>
+    <input pInputText placeholder="Поиск по имени" [(ngModel)]="search"/>
+  </ng-template>
+
+  <ng-template #end>
+    <p-paginator [first]="1" [rows]="25" [totalRecords]="totalCount" (onPageChange)="changePageHandler($event)"></p-paginator>
+  </ng-template>
+</rm-bottom-panel>

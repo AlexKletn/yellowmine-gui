@@ -30,7 +30,7 @@ export class IssuesKanbanCardContextComponent {
   menuItems!: MenuItem[];
 
   constructor() {
-    this.redmineConfig.getRedmineUrl().then(({ url }) => {
+    this.redmineConfig.redmineUrl.subscribe((url) => {
       this.redmineUrl = url;
 
       this.menuItems = [

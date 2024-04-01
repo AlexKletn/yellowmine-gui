@@ -112,13 +112,14 @@ export class TimeEntriesPageComponent {
 
   dropHandler({ event }: EventDropArg) {
     const { start, extendedProps } = event.toPlainObject();
+    console.log('dropHandler');
 
     const timeEntry: UpdateTimeEntryRequest = {
       id: extendedProps.id,
       spent_on: dayjs(start).format('YYYY-MM-DD'),
     };
 
-    this.timeEntriesService.updateTimeEntry(timeEntry);
+    this.timeEntriesService.updateTimeEntry(timeEntry).subscribe(() => {});
   }
 
   getFullHoursCountByDate(date: Date) {
@@ -150,17 +151,22 @@ export class TimeEntriesPageComponent {
 
     this.timeEntriesService.loadTimeEntries(this.filter).subscribe(
       ({ time_entries }) => {
-        this.calendarOptions.events = time_entries.map(({ spent_on, comments, id, issue, hours }) => {
+        if (time_entries.length === 0) {
           this.isLoading = false;
+        }
+        else {
+          this.calendarOptions.events = time_entries.map(({ spent_on, comments, id, issue, hours }) => {
+            this.isLoading = false;
 
-          return ({ date: spent_on, title: comments, extendedProps: {
-            spent_on,
-            comments,
-            issue,
-            hours,
-            id,
-          } });
-        });
+            return ({ date: spent_on, title: comments, extendedProps: {
+              spent_on,
+              comments,
+              issue,
+              hours,
+              id,
+            } });
+          });
+        }
       },
     );
   }

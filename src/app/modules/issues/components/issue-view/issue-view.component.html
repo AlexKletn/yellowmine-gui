@@ -1,66 +1,111 @@
-<div class="issueView">
-  <div *ngIf="!isLoading && issue">
-    <div class="issueViewContent">
-      <div class="details-list">
+<p-dialog
+  [(visible)]="!!id"
+  [closable]="true"
+  [header]="issue?.id + ''"
+  position="right"
 
-        <div *ngIf="description" class="details">
-          <div class="title detailsTitle">
-            Описание
+  [style]="{
+    minWidth: '30em',
+    maxWidth: '40vw',
+    height: 'auto',
+    width: 'auto',
+  }"
+>
+  <ng-template pTemplate="header">
+    <div class="title">
+      <p-tag [value]="'#' + issue?.id"/>  {{ issue?.subject }}
+    </div>
+  </ng-template>
+
+  <div class="issueView">
+    <div *ngIf="!isLoading && issue">
+      <div class="issueViewContent">
+        <div class="details-list">
+
+          <div class="details">
+            <div class="title detailsTitle">
+                Статус
+            </div>
+
+            <div class="detailsDescription">
+              {{ issue.status.name }}
+            </div>
+
+            <div class="detailsActions">
+            </div>
           </div>
-          <div class="detailsDescription" [innerHTML]="description"></div>
+
+          <div class="details">
+            <div class="title detailsTitle">
+              Исполнитель
+            </div>
+
+            <div class="detailsDescription">
+              {{ issue.assigned_to?.name ?? '-' }}
+            </div>
+
+            <div class="detailsActions">
+            </div>
+          </div>
+
+          <div *ngIf="description" class="details">
+            <div class="title detailsTitle">
+              Описание
+            </div>
+            <div class="detailsDescription" [innerHTML]="description"></div>
+          </div>
+
+          <div class="details">
+            <div class="title detailsTitle">
+              Оценка и трудозатраты
+            </div>
+            <div class="detailsDescription">
+              @if (issue.total_estimated_hours) {
+                Оценка {{ issue.total_estimated_hours }}ч
+                <br />
+              }
+              Списано {{ issue.total_spent_hours }}ч
+            </div>
+
+            <div class="detailsActions">
+              <p-button
+                icon="pi pi-plus"
+                severity="success"
+                label="трудозатраты"
+                size="small"
+                [text]="true"
+
+                (click)="openTimeEntryForm()"
+              ></p-button>
+            </div>
+          </div>
         </div>
 
-        <div class="details">
-          <div class="title detailsTitle">
-            Оценка и трудозатраты
-          </div>
-          <div class="detailsDescription">
-            @if (issue.total_estimated_hours) {
-              Оценка {{ issue.total_estimated_hours }}ч
-              <br />
-            }
-            Списано {{ issue.total_spent_hours }}ч
-          </div>
+        <div class="bottom">
+          <p-progressBar class="progress" [value]="issue.done_ratio" />
 
-          <div class="detailsActions">
-            <p-button
-              icon="pi pi-plus"
-              severity="success"
-              label="трудозатраты"
-              size="small"
-              [text]="true"
-              [disabled]="true"
+          <p-button
+            class="open-redmine"
+            size="small"
+            icon="pi pi-external-link"
+            label="Открыть в Redmine"
+            severity="danger"
 
-              (click)="openTimeEntryForm()"
-            ></p-button>
-          </div>
+            [text]="true"
+            (click)="openInRedmine()"
+          ></p-button>
+
         </div>
-      </div>
-
-      <div class="bottom">
-        <p-progressBar class="progress" [value]="issue.done_ratio" />
-
-        <p-button
-          class="open-redmine"
-          size="small"
-          icon="pi pi-external-link"
-          label="Открыть в Redmine"
-          severity="danger"
-
-          [text]="true"
-          (click)="openInRedmine()"
-        ></p-button>
-
       </div>
     </div>
-  </div>
 
-  <div *ngIf="isLoading">
-    <p-progressSpinner
-      styleClass="w-4rem h-4rem"
-      animationDuration=".5s"
-    ></p-progressSpinner>
+    <div *ngIf="isLoading" class="loader">
+      <p-progressSpinner
+        styleClass="w-4rem h-4rem"
+        animationDuration=".5s"
+      ></p-progressSpinner>
+    </div>
   </div>
-</div>
+</p-dialog>
 
 <rm-time-entry-form #createForm />

@@ -3,10 +3,13 @@
   optionLabel="name"
   filterBy="name"
   placeholder="Выберите проект"
+  [filter]="true"
   [options]="projects"
   [ngModel]="value"
   [style]="{width: '100%'}"
   (onChange)="changeHandler($event.value)"
+
+  (onFilter)="filterHandler($event)"
 >
   <ng-template pTemplate="selectedItem" let-selectedOption>
     <div class="flex align-items-center gap-2">

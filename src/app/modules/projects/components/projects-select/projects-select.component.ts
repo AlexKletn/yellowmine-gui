@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import Project from '../../domain/Project';
 import ProjectsService from '../../services/projects.service';
-import { DropdownModule } from 'primeng/dropdown';
+import { DropdownFilterEvent, DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -32,5 +32,12 @@ export class ProjectsSelectComponent {
   @Output() onChanged = new EventEmitter<Project['id']>();
   changeHandler(newId: Project['id']) {
     this.onChanged.emit(newId);
+  }
+
+  filterHandler({ filter }: DropdownFilterEvent) {
+    console.log(filter);
+    this.projectsService.filter.setFilter('name', `${filter}`);
+
+    // this.projectsService.loadProjects();
   }
 }

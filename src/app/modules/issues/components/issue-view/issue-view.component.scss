@@ -2,34 +2,49 @@
   height: 100%;
 
   ::ng-deep {
-    .ng-star-inserted {
-      height: 100%;
-    }
+    //.ng-star-inserted {
+    //  height: 100%;
+    //}
   }
+}
+
+.title {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
 }
 
 .issueView {
   height: 100%;
 
+  .loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   &Content {
     height: 100%;
+    width: 100%;
     display: grid;
     grid-template-areas: 'details details'
                          '.       .      '
                          'bottom  bottom ';
-    grid-template-columns: 1fr .5fr auto;
+    grid-template-columns: 1fr .5fr;
     grid-template-rows: auto 1fr;
-    gap: 1rem;
+    gap: 1em;
 
     .title {
       color: var(--text-color-secondary)
     }
 
     .details-list {
+      width: 100%;
       grid-area: details;
       display: flex;
       flex-direction: column;
-      gap: .4em;
+      gap: .8em;
+      align-items: stretch;
     }
 
     .details {
@@ -37,6 +52,9 @@
       grid-template-areas: 'title       actions'
                            'description actions';
       grid-template-columns: 1fr auto;
+      background: var(--surface-c);
+      border-radius: var(--border-radius);
+      padding: .6em;
 
       &Title {
         grid-area: title;

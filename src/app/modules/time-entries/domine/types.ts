@@ -4,7 +4,7 @@ import Project from '../../projects/domain/Project';
 
 export interface TimeEntry {
   id: number;
-  issue: Pick<Issue, 'id'>;
+  issue: Issue;
   comments: string;
   hours: number;
   project: Pick<Project, 'id' | 'name'>;

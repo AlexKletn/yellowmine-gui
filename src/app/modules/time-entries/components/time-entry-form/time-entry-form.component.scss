@@ -1,12 +1,26 @@
 .register-time {
   position: absolute;
-  
+
   .header {
     display: grid;
-    grid-template-areas: '. .';
+    grid-template-areas: 'title            date'
+                         'change-indicator date';
     grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
     width: 100%;
     align-items: center;
+  }
+
+  .title {
+    grid-area: title;
+  }
+
+  .change-indicator {
+    grid-area: change-indicator;
+  }
+
+  .date {
+    grid-area: date;
   }
 
   .actions {
@@ -27,6 +41,12 @@
 
     .issue {
       grid-area: issue;
+
+      ::ng-deep {
+        .ng-star-inserted {
+          height: unset !important;
+        }
+      }
 
       .value {
         display: grid;
@@ -62,9 +82,6 @@
           }
         }
       }
-    }
-    .date {
-      grid-area: date;
     }
     .time {
       grid-area: time;

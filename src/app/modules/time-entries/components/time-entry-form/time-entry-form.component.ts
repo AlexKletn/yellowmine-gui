@@ -10,7 +10,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SharedModule } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import dayjs from 'dayjs';
 import { RequestFilterMaker } from '../../../../core/services/redmine-api/Pagination.request';
 import Issue from '../../../issues/domain/Issue';
@@ -37,6 +37,7 @@ import { TimeEntry } from '../../domine/types';
     TagModule,
     NgClass,
     TooltipModule,
+    NgIf,
   ],
   providers: [TimeEntriesService, IssuesService],
   templateUrl: './time-entry-form.component.html',
@@ -74,8 +75,13 @@ export class TimeEntryFormComponent {
     // @ts-ignore
     const newFormValue: any = {};
 
+    console.log(entry);
+
     if (entry.id) {
       newFormValue.id = entry.id;
+    }
+    else {
+      newFormValue.id = null;
     }
     if (entry.spent_on) {
       newFormValue.date = entry.spent_on;
@@ -88,6 +94,14 @@ export class TimeEntryFormComponent {
     }
     if (entry.issue) {
       newFormValue.issueId = entry.issue.id;
+
+      this.issuesService.getIssue(entry.issue.id).subscribe(({ issue }) => {
+        this.issues = [...this.issues, issue];
+        this.openTimeEntryDialog();
+      });
+    }
+    else {
+      this.openTimeEntryDialog();
     }
 
     this.timeEntreForm.patchValue(newFormValue);

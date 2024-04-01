@@ -13,6 +13,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ButtonModule } from 'primeng/button';
 import RedmineConfigService from '../../../../core/services/redmine-config/redmine-config.service';
 import { TimeEntryFormComponent } from '../../../time-entries/components/time-entry-form/time-entry-form.component';
+import { DialogModule } from 'primeng/dialog';
 
 type Argument = {
   label: string;
@@ -35,6 +36,7 @@ type Argument = {
     ProgressBarModule,
     ButtonModule,
     TimeEntryFormComponent,
+    DialogModule,
   ],
   templateUrl: './issue-view.component.html',
   styleUrl: './issue-view.component.scss',
@@ -57,7 +59,7 @@ export class IssueViewComponent {
 
   constructor(private issuesService: IssuesService) {
     this.titleService.setTitle('Задача...');
-    this.redmineConfig.getRedmineUrl().then(({ url }) => {
+    this.redmineConfig.redmineUrl.subscribe((url) => {
       this.redmineUrl = url;
     });
   }

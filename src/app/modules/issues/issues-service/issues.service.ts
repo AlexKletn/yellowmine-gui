@@ -68,7 +68,10 @@ class IssuesService {
         target: '_blank',
       },
       validate: {
-        url: value => /^https?:\/\//.test(value),
+        url: (value) => {
+          console.log(value);
+          return /^https?:\/\//.test(value);
+        },
       },
       format: {
         url: (value) => {

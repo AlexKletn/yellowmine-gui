@@ -1,3 +1,11 @@
 .issues-list {
   margin-bottom: 6em;
 }
+
+.issue-row {
+  cursor: pointer;
+
+  &.selected {
+    background: var(--highlight-bg);
+  }
+}
