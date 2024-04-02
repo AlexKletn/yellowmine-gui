@@ -111,6 +111,10 @@ export class IssuesListComponent {
     }
   }
 
+  issueViewCloseHandler() {
+    this.selectedIssue = undefined;
+  }
+
   private updateFilters() {
     const filters = this.issuesFilter;
 

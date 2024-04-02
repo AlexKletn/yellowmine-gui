@@ -75,8 +75,6 @@ export class TimeEntryFormComponent {
     // @ts-ignore
     const newFormValue: any = {};
 
-    console.log(entry);
-
     if (entry.id) {
       newFormValue.id = entry.id;
     }

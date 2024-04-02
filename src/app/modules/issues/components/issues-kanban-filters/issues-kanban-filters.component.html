@@ -3,8 +3,6 @@
   class="filters-form"
   [ngxsForm]="'issues.settings.kanbanFilters'"
   [ngxsFormDebounce]="300"
-
-  (ngSubmit)="changeHandler($event)"
 >
   <p-toggleButton
     formControlName="isMy"

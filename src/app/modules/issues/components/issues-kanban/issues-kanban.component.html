@@ -62,7 +62,10 @@
   </ng-template>
 </rm-bottom-panel>
 
-<rm-issue-view
-  *ngIf="selectedIssue"
-  [id]="selectedIssue.id"
-/>
+<div *ngIf="selectedIssue">
+  <rm-issue-view
+    [id]="selectedIssue.id"
+
+    (closed)="issueViewCloseHandler()"
+  />
+</div>

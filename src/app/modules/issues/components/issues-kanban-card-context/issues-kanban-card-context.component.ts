@@ -51,7 +51,6 @@ export class IssuesKanbanCardContextComponent {
   }
 
   openInRedmine() {
-    console.log(`${this.redmineUrl}/issues/${this.issue.id}`);
     window.open(`${this.redmineUrl}/issues/${this.issue.id}`, '_blank');
   }
 }

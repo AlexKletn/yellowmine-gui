@@ -9,7 +9,7 @@ import Issue from '../../domain/Issue';
 import IssuesService from '../../issues-service/issues.service';
 import { IssuesStoreState } from '../../store/types';
 import { KanbanComponent } from '../../../../shared/components/kanban/kanban.component';
-import { KeyValuePipe, NgForOf, NgIf } from '@angular/common';
+import { JsonPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { IssuesKanbanCardComponent } from '../issues-kanban-card/issues-kanban-card.component';
 import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-kanban-filters.component';
@@ -57,6 +57,7 @@ type IssuesByAssigned = { [key: string]: {
     DialogModule,
     IssuesKanbanCardContextComponent,
     IssueViewComponent,
+    JsonPipe,
   ],
   templateUrl: './issues-kanban.component.html',
   styleUrl: './issues-kanban.component.scss',
@@ -164,6 +165,10 @@ export class IssuesKanbanComponent {
     });
 
     return loadRequest;
+  }
+
+  issueViewCloseHandler() {
+    this.selectedIssue = undefined;
   }
 
   private sortIssuesByAssigned() {

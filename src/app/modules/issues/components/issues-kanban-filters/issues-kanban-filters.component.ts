@@ -43,7 +43,6 @@ export class IssuesKanbanFiltersComponent {
       const assignedToDisabled = this.filterForm.controls['assignedTo'].disabled;
 
       if (isMy && !assignedToDisabled) {
-        console.log('isMy');
         this.filterForm.controls['assignedTo'].disable();
       }
 
@@ -51,9 +50,5 @@ export class IssuesKanbanFiltersComponent {
         this.filterForm.controls['assignedTo'].enable();
       }
     });
-  }
-
-  changeHandler(e: any) {
-    console.log(e);
   }
 }

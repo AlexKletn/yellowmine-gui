@@ -35,7 +35,6 @@ export class ProjectsSelectComponent {
   }
 
   filterHandler({ filter }: DropdownFilterEvent) {
-    console.log(filter);
     this.projectsService.filter.setFilter('name', `${filter}`);
 
     // this.projectsService.loadProjects();

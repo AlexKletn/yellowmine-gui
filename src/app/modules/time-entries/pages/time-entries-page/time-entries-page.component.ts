@@ -112,7 +112,6 @@ export class TimeEntriesPageComponent {
 
   dropHandler({ event }: EventDropArg) {
     const { start, extendedProps } = event.toPlainObject();
-    console.log('dropHandler');
 
     const timeEntry: UpdateTimeEntryRequest = {
       id: extendedProps.id,

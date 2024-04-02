@@ -1,4 +1,4 @@
-import { Component, inject, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import IssuesService from '../../issues-service/issues.service';
 import Issue from '../../domain/Issue';
 import { DatePipe, JsonPipe, NgIf } from '@angular/common';
@@ -43,13 +43,14 @@ type Argument = {
   templateUrl: './issue-view.component.html',
   styleUrl: './issue-view.component.scss',
 })
-export class IssueViewComponent {
+export class IssueViewComponent implements OnDestroy, OnInit, OnChanges {
   @ViewChild('createForm') createForm!: TimeEntryFormComponent;
 
   @Select(RedmineConfigState.redmineUrl)
   private redmineUrl$!: Observable<string>;
 
   private titleService = inject(Title);
+  private oldTitle?: string;
   private redmineUrl?: string;
 
   @Input() id!: number;
@@ -62,6 +63,8 @@ export class IssueViewComponent {
   isLoading: boolean = false;
 
   constructor(private issuesService: IssuesService) {
+    this.oldTitle = this.titleService.getTitle();
+
     this.titleService.setTitle('Задача...');
 
     this.redmineUrl$.subscribe((url) => {
@@ -75,6 +78,10 @@ export class IssueViewComponent {
     }
   }
 
+  ngOnDestroy() {
+    this.titleService.setTitle(this.oldTitle!);
+  }
+
   ngOnChanges() {
     if (this.id) {
       this.loadIssue();
@@ -82,7 +89,6 @@ export class IssueViewComponent {
   }
 
   openInRedmine() {
-    console.log(`${this.redmineUrl}/issues/${this.id}`);
     window.open(`${this.redmineUrl}/issues/${this.id}`, '_blank');
   }
 
@@ -92,8 +98,14 @@ export class IssueViewComponent {
     });
   }
 
+  @Output() closed = new EventEmitter();
+  closedHandler() {
+    this.closed.emit();
+  }
+
   private loadIssue() {
     this.isLoading = true;
+    this.titleService.setTitle('Задача...');
 
     this.issuesService.getIssue(this.id).subscribe({
       next: ({ issue }) => {

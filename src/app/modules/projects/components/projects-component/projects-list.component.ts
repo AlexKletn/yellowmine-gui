@@ -57,8 +57,6 @@ class ProjectsListComponent {
 
       const found = this.projects.filter(({ name }) => searchRegex.test(name));
 
-      console.log(found);
-
       this.projectsPage = found;
       this.totalCount = found.length;
     }
