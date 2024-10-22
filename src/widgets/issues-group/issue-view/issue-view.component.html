@@ -1,0 +1,189 @@
+<div class="issue-view">
+  <div
+    class="issue-view-title"
+    [innerText]="issue()?.subject"
+  >
+  </div>
+
+  @if (issue()) {
+    <div
+      class="issue-view-content"
+    >
+      <p-scroll-panel [style]="{ height: '100%' }">
+        <div class="issue-view-content-wrapper">
+          <div class="issue-view-content-container">
+            <div class="issue-view-content-description">
+              <ym-textile-view [content]="issueDescription()"/>
+            </div>
+
+            @if (issueComments().length > 0) {
+              <div class="issue-view-comments">
+                @for (comment of issueComments(); track comment) {
+                  <div class="comment">
+                    <div class="comment-user">
+                      {{ comment.user.name }}
+                    </div>
+                    <div class="comment-date">
+                      {{ comment.created_on | date:"short" }}
+                    </div>
+
+                    <div class="comment-content">
+                      <ym-textile-view [content]="comment.notes"/>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </p-scroll-panel>
+    </div>
+  }
+
+  <div class="issue-view-sidebar">
+      <div class="issue-view-attributes">
+        <div class="attribute">
+          <div class="attribute-label">
+            Тип
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.tracker.name"
+          >
+          </div>
+        </div>
+        <div class="attribute">
+          <div class="attribute-label">
+            Автор
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.author.name"
+          >
+          </div>
+        </div>
+        <div class="attribute">
+          <div class="attribute-label">
+            Статус
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.status.name"
+          >
+          </div>
+        </div>
+        <div class="attribute">
+          <div class="attribute-label">
+            Исполнитель
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.assigned_to?.name ?? 'Нет исполнителя'"
+          >
+          </div>
+        </div>
+        <div class="attribute">
+          <div class="attribute-label">
+            Проект
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.project.name"
+          >
+          </div>
+        </div>
+
+        @if (issue()?.estimated_hours) {
+          <div class="attribute">
+            <div class="attribute-label">
+              Оценка
+            </div>
+            <div
+              class="attribute-value"
+              [innerText]="issue()?.estimated_hours"
+            >
+            </div>
+          </div>
+        }
+        <div class="attribute">
+          <div class="attribute-label">
+            Трудозатраты
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.total_spent_hours"
+          >
+          </div>
+        </div>
+
+        <div class="attribute">
+          <div class="attribute-label">
+            Создана
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.created_on | date:'medium'"
+          >
+          </div>
+        </div>
+
+        <div class="attribute">
+          <div class="attribute-label">
+            Обновлена
+          </div>
+          <div
+            class="attribute-value"
+            [innerText]="issue()?.updated_on | date:'medium'"
+          >
+          </div>
+        </div>
+
+        @for (customField of issue()?.custom_fields; track customField.id) {
+          @if (customField.value) {
+            <div class="attribute">
+              <div class="attribute-label" [innerText]="customField.name">
+              </div>
+              <div
+                class="attribute-value"
+                [innerText]="customField.value"
+              >
+              </div>
+            </div>
+          }
+        }
+      </div>
+
+    @if (!!issue()?.attachments.length) {
+      <div class="issue-view-attachments">
+        <div class="attachments-label">
+          Вложения
+        </div>
+
+        <div class="attachments-list">
+          @for (attachment of issue()?.attachments;track attachment.id) {
+            <div class="attachment">
+              <span class="attachment-icon pi pi-paperclip"></span>
+
+              <div class="attachment-name">
+                {{ attachment.filename }}
+              </div>
+
+              <div class="attachment-size">
+                {{ fileSizeParser(attachment.filesize) }}
+              </div>
+
+              <p-button
+                [text]="true"
+                severity="info"
+                size="small"
+                icon="pi pi-download"
+
+                (click)="download(attachment)"
+              />
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

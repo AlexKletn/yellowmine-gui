@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
 import { Observable } from 'rxjs';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+
 import { Tracker } from '../domain/types';
-import { TrackersResponse } from './types';
 import SetTrackers from '../store/actions/setTrackers';
+
+import { TrackersResponse } from './types';
 
 @Injectable({ providedIn: 'root' })
 class TrackerService {

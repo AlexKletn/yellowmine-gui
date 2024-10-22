@@ -1,5 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 type MouseCoords = { x: number; y: number };

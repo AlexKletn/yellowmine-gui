@@ -1,0 +1,26 @@
+.page-panel {
+  border-right: var(--border-default);
+  height: 100%;
+
+  animation: page-panel-in .5s ease-out;
+  overflow: hidden;
+  position: relative;
+
+  .content {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+  }
+}
+
+@keyframes page-panel-in {
+  0% {
+    transform: translate(-100%);
+  }
+  100% {
+    transform: translate(0);
+  }
+}

@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
-import { RequestFilterMaker } from '../../../core/services/redmine-api/Pagination.request';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+
 import { CreateTimeEntryRequest, TimeEntryResponse, UpdateTimeEntryRequest } from './types';
 
 @Injectable()

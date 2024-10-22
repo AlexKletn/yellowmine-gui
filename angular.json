@@ -9,12 +9,17 @@
         "@schematics/angular:component": {
           "style": "scss",
           "skipTests": true,
-          "prefix": "rm"
+          "prefix": "ym"
         }
       },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": {
+          "code": "ru"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -23,7 +28,8 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -33,18 +39,10 @@
             ],
             "styles": [
               "src/styles.scss",
-              {
-                "input": "src/assets/dark-theme.scss",
-                "bundleName": "dark",
-                "inject": false
-              },
-              {
-                "input": "src/assets/light-theme.scss",
-                "bundleName": "light",
-                "inject": false
-              }
+              "src/shared/assets/styles/vars.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "aot":false
           },
           "configurations": {
             "production": {
@@ -106,6 +104,7 @@
   "cli": {
     "schematicCollections": [
       "@angular-eslint/schematics"
-    ]
+    ],
+    "analytics": "e1eebef2-bf9d-4e9d-9994-c3f6c8159256"
   }
 }

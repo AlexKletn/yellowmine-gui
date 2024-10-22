@@ -1,8 +1,9 @@
 import { Component, forwardRef, inject } from '@angular/core';
-import ProjectMembershipsService from '../../services/project-memberships.service';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { Membership } from '../../domain/Membership';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
+
+import { Membership } from '../../domain/Membership';
+import ProjectMembershipsService from '../../services/project-memberships.service';
 
 type MembershipValue = Membership['user']['id'][];
 

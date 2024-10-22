@@ -1,23 +1,25 @@
-import { Component } from '@angular/core';
-import IssuesService from '../../issues-service/issues.service';
-import { RequestFilterMaker } from '../../../../core/services/redmine-api/Pagination.request';
-import { Select, Store } from '@ngxs/store';
-import Issue from '../../domain/Issue';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { DatePipe, NgClass, NgIf } from '@angular/common';
-import { TagModule } from 'primeng/tag';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-kanban-filters.component';
+import { Select, Store } from '@ngxs/store';
+import { ButtonModule } from 'primeng/button';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { combineLatestWith, Observable } from 'rxjs';
+
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+
+import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
+import ProjectsState from '../../../projects/store/projects.state';
+import Issue from '../../domain/Issue';
+import IssuesService from '../../issues-service/issues.service';
 import IssuesState from '../../store/issues.state';
 import { IssuesStoreState } from '../../store/types';
-import { combineLatestWith, Observable } from 'rxjs';
-import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
+import { IssueViewComponent } from '../issue-view/issue-view.component';
 import {
   IssuesKanbanColumnsConfiguratorComponent,
 } from '../issues-kanban-coluns-configurator/issues-kanban-columns-configurator.component';
-import ProjectsState from '../../../projects/store/projects.state';
-import { ButtonModule } from 'primeng/button';
-import { IssueViewComponent } from '../issue-view/issue-view.component';
+import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-kanban-filters.component';
 
 @Component({
   selector: 'rm-issues-list',

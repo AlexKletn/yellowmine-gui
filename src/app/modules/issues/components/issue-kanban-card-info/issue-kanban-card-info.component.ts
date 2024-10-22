@@ -1,11 +1,12 @@
+import { NgClass, NgIf } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
-import Issue from '../../domain/Issue';
-import IssuesService from '../../issues-service/issues.service';
-import { InplaceModule } from 'primeng/inplace';
 import { SharedModule } from 'primeng/api';
+import { InplaceModule } from 'primeng/inplace';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { NgClass, NgIf } from '@angular/common';
+
+import Issue from '../../domain/Issue';
+import IssuesService from '../../issues-service/issues.service';
 
 @Component({
   selector: 'rm-issue-kanban-card-info',

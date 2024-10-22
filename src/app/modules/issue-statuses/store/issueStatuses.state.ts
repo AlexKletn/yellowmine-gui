@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
-import { IssueStatusesStoreState } from './types';
+
 import { SetIssueStatuses } from './issueStatuses.actions';
+import { IssueStatusesStoreState } from './types';
 
 type ProjectsStateContext = StateContext<IssueStatusesStoreState>;
 

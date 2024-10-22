@@ -1,30 +1,32 @@
+import { JsonPipe, NgClass } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
-import TimeEntriesService from '../../service/timeEntries.service';
-import { CalendarModule } from 'primeng/calendar';
-import { CardModule } from 'primeng/card';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, EventClickArg, EventDropArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-import { RequestFilterMaker } from '../../../../core/services/redmine-api/Pagination.request';
-import { JsonPipe, NgClass } from '@angular/common';
 import dayjs from 'dayjs';
-import { PanelModule } from 'primeng/panel';
-import { TagModule } from 'primeng/tag';
-import { BadgeModule } from 'primeng/badge';
-import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import _ from 'lodash';
+import { BadgeModule } from 'primeng/badge';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { ReactiveFormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PanelModule } from 'primeng/panel';
+import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
-import { UpdateTimeEntryRequest } from '../../service/types';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+
+import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
 import { TimeEntryFormComponent } from '../../components/time-entry-form/time-entry-form.component';
 import { TimeEntry } from '../../domine/types';
+import TimeEntriesService from '../../service/timeEntries.service';
+import { UpdateTimeEntryRequest } from '../../service/types';
 
 dayjs.extend(customParseFormat);
 dayjs.locale('ru');

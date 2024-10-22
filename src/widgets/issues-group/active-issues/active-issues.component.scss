@@ -1,0 +1,26 @@
+.active-tasks {
+  grid-area: active-tasks;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-size-c);
+
+  .active-task {
+    grid-area: active-task;
+    font-size: 1em;
+    height: 3em;
+    box-sizing: border-box;
+    border-radius: 0;
+    animation: side-in-top .6s;
+    text-decoration: none;
+  }
+
+  .more {
+    grid-area: more;
+    font-size: 1em;
+    height: 3em;
+    box-sizing: border-box;
+    border-radius: 0;
+    animation: side-in-top .6s both;
+    animation-delay: .2s;
+  }
+}

@@ -1,15 +1,17 @@
 import { Component, inject } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { SharedModule } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PickListModule } from 'primeng/picklist';
-import { SharedModule } from 'primeng/api';
-import { SetSettingsKanban } from '../../store/issues.actions/SetSettingsKanban';
-import { Select, Store } from '@ngxs/store';
-import IssuesState from '../../store/issues.state';
 import { combineLatestWith, Observable, take } from 'rxjs';
+
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
+
 import { IssueStatus } from '../../../issue-statuses/domain/IssueStatus';
 import IssueStatusesService from '../../../issue-statuses/service/issueStatuses.service';
-import { ButtonModule } from 'primeng/button';
-import RedmineConfigState from '../../../../core/services/redmine-config/store/redmine-config.state';
+import { SetSettingsKanban } from '../../store/issues.actions/SetSettingsKanban';
+import IssuesState from '../../store/issues.state';
 
 @Component({
   selector: 'rm-issues-kanban-columns-configurator',

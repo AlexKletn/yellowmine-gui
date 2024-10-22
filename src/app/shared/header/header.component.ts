@@ -1,23 +1,25 @@
+import { NgForOf, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ToolbarModule } from 'primeng/toolbar';
-import { AvatarModule } from 'primeng/avatar';
 import { Router, RouterLink } from '@angular/router';
-import { ProjectsSelectComponent } from '../../modules/projects/components/projects-select/projects-select.component';
-import { MenubarModule } from 'primeng/menubar';
+import { Select, Store } from '@ngxs/store';
 import { MenuItem } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { SidebarModule } from 'primeng/sidebar';
+import { ToolbarModule } from 'primeng/toolbar';
+import { Observable } from 'rxjs';
+
+import { SetTokenAction } from '@shared/model/redmine-config/store/actions/setToken.action';
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
+import { LogoComponent } from '@shared/ui/logo/logo.component';
+
+import { ThemeService } from '../../core/services/theme-service/theme.service';
 import {
   ProjectGlobalSelectComponent,
 } from '../../modules/projects/components/project-global-select/project-global-select.component';
-import { Select, Store } from '@ngxs/store';
-import RedmineConfigState from '../../core/services/redmine-config/store/redmine-config.state';
-import { Observable } from 'rxjs';
-import { ButtonModule } from 'primeng/button';
-import { SidebarModule } from 'primeng/sidebar';
-import { MenuModule } from 'primeng/menu';
-import { NgForOf, NgIf } from '@angular/common';
-import { LogoComponent } from '../logo/logo.component';
-import { SetTokenAction } from '../../core/services/redmine-config/store/actions/setToken.action';
-import { ThemeService } from '../../core/services/theme-service/theme.service';
+import { ProjectsSelectComponent } from '../../modules/projects/components/projects-select/projects-select.component';
 
 @Component({
   selector: 'header-component',

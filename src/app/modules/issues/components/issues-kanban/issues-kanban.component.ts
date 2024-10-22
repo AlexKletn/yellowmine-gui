@@ -1,32 +1,34 @@
+import { JsonPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Select } from '@ngxs/store';
-import IssuesState from '../../store/issues.state';
+import deepClone from 'deep-clone';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TooltipModule } from 'primeng/tooltip';
 import { Observable, skip } from 'rxjs';
+
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+
+import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
+import { EmptyComponent } from '../../../../shared/components/empty/empty.component';
+import { KanbanComponent } from '../../../../shared/components/kanban/kanban.component';
+import { KanbanItem } from '../../../../shared/components/kanban/types';
 import { IssueStatus } from '../../../issue-statuses/domain/IssueStatus';
-import { RequestFilterMaker } from '../../../../core/services/redmine-api/Pagination.request';
+import ProjectsState from '../../../projects/store/projects.state';
 import Issue from '../../domain/Issue';
 import IssuesService from '../../issues-service/issues.service';
+import IssuesState from '../../store/issues.state';
 import { IssuesStoreState } from '../../store/types';
-import { KanbanComponent } from '../../../../shared/components/kanban/kanban.component';
-import { JsonPipe, KeyValuePipe, NgForOf, NgIf } from '@angular/common';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { IssueViewComponent } from '../issue-view/issue-view.component';
 import { IssuesKanbanCardComponent } from '../issues-kanban-card/issues-kanban-card.component';
-import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-kanban-filters.component';
-import { ButtonModule } from 'primeng/button';
+import { IssuesKanbanCardContextComponent } from '../issues-kanban-card-context/issues-kanban-card-context.component';
 import {
   IssuesKanbanColumnsConfiguratorComponent,
 } from '../issues-kanban-coluns-configurator/issues-kanban-columns-configurator.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TooltipModule } from 'primeng/tooltip';
-import ProjectsState from '../../../projects/store/projects.state';
-import { EmptyComponent } from '../../../../shared/components/empty/empty.component';
-import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
-import { KanbanItem } from '../../../../shared/components/kanban/types';
-import deepClone from 'deep-clone';
-import { DialogModule } from 'primeng/dialog';
-import { IssuesKanbanCardContextComponent } from '../issues-kanban-card-context/issues-kanban-card-context.component';
-import { IssueViewComponent } from '../issue-view/issue-view.component';
+import { IssuesKanbanFiltersComponent } from '../issues-kanban-filters/issues-kanban-filters.component';
 
 const UNASSIGNED = '* Нет исполнителя';
 

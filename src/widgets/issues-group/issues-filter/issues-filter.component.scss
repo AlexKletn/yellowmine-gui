@@ -1,0 +1,25 @@
+.issues-filter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--gap-size-b);
+  border-bottom: var(--border-default);
+  padding: var(--padding-size-b);
+
+  font-size: 1em;
+  --p-icon-size: 1em;
+
+  ::ng-deep {
+    .p-inputtext {
+      font-size: 1em;
+    }
+  }
+
+  &-select {
+    --p-select-padding-y: .5em;
+    --p-select-dropdown-width: 1.5em;
+
+    border: var(--border-default-light);
+    min-width: 10em;
+  }
+}

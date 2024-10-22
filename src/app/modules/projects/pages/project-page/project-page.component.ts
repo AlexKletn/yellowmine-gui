@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import ProjectComponent from '../../components/project-component/project.component';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+
+import ProjectComponent from '../../components/project-component/project.component';
 
 @Component({
   selector: 'project-page',

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
 
 @Injectable({ providedIn: 'root' })
 class CustomFieldsService {

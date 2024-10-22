@@ -1,0 +1,20 @@
+<div class="issues-filter">
+  <p-select
+    class="issues-filter-select"
+    placeholder="Проект"
+    [options]="projects()?.projects"
+    optionLabel="name"
+    optionValue="id"
+    [filter]="true"
+
+    (onChange)="setFilter('project_id', $event.value)"
+  />
+  <p-select
+    class="issues-filter-select"
+    placeholder="Исполнитель"
+  />
+  <p-select
+    class="issues-filter-select"
+    placeholder="Статус"
+  />
+</div>

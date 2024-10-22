@@ -1,5 +1,5 @@
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'rm-bottom-panel',

@@ -1,9 +1,10 @@
+import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import ProjectsService from '../../services/projects.service';
 import { PanelModule } from 'primeng/panel';
-import { NgIf } from '@angular/common';
+
 import Project from '../../domain/Project';
+import ProjectsService from '../../services/projects.service';
 
 @Component({
   selector: 'project-view',

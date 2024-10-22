@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PanelModule } from 'primeng/panel';
-import { DragDropModule } from 'primeng/dragdrop';
-import { KanbanElementComponent } from '../kanban-element/kanban-element.component';
 import { NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DndDropzoneDirective } from 'ngx-drag-drop';
-import { KanbanColumn } from '../types';
 import { ButtonModule } from 'primeng/button';
+import { DragDropModule } from 'primeng/dragdrop';
+import { PanelModule } from 'primeng/panel';
+
+import { KanbanElementComponent } from '../kanban-element/kanban-element.component';
+import { KanbanColumn } from '../types';
 
 @Component({
   selector: 'rm-kanban-column',

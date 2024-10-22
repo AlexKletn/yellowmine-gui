@@ -1,9 +1,10 @@
-import { inject, Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Inject, inject, Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import ApplicationState from '../../store/application-store/application.state';
+import { Observable } from 'rxjs';
+
 import SetThemeAction from '../../store/application-store/actions/set-theme.action';
+import ApplicationState from '../../store/application-store/application.state';
 
 @Injectable({
   providedIn: 'root',

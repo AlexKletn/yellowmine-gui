@@ -1,7 +1,8 @@
-import Issue from '../domain/Issue';
-import { BaseResponse, DefinitionRecord } from '../../../core/services/redmine-api/types';
+import { DefinitionRecord } from '@shared/api/redmine-api/types';
 
-export interface IssuesResponse extends BaseResponse {
+import Issue from '../domain/Issue';
+
+export interface IssuesResponse {
   issues: Issue[];
 }
 

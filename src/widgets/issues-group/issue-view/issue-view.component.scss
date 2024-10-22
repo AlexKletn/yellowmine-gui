@@ -1,0 +1,200 @@
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.issue-view {
+  //border-left: var(--border-default);
+  //margin-left: var(--padding-size-d);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  background: var(--background-neutral);
+
+  display: grid;
+  grid-template-areas:
+    "title sidebar"
+    "content sidebar";
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr auto;
+
+  &-title {
+    grid-area: title;
+    padding: var(--padding-size-a);
+    font-size: 1.1em;
+    border-bottom: var(--border-default-light);
+    user-select: all;
+    border-right: var(--border-default);
+    background: var(--background-neutral);
+
+    z-index: 1;
+  }
+
+  &-content {
+    grid-area: content;
+    overflow: auto;
+    border-right: var(--border-default);
+    background: var(--background-neutral);
+
+    z-index: 1;
+
+    &-wrapper {
+      display: grid;
+      grid-area: description;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+       'description';
+
+      position: relative;
+    }
+
+    &-container {
+      grid-area: container;
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    &-description {
+      grid-area: description;
+      width: 100%;
+      padding: var(--padding-size-c);
+    }
+  }
+
+  &-sidebar {
+    grid-area: sidebar;
+    display: grid;
+    margin-left: var(--padding-size-d);
+    border-left: var(--border-default);
+    position: sticky;
+    height: 100%;
+    width: 25em;
+    top: 0;
+
+    grid-template-areas:
+      'attributes'
+      '.'
+      'attachments';
+    grid-template-rows: auto 1fr auto;
+    animation: side-in-left .8s both ease-in-out;
+  }
+
+  &-comments {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-size-a);
+    border-top: var(--border-default);
+    padding: var(--padding-size-b);
+    margin: 2.5em 0;
+
+    .comment {
+      display: grid;
+      grid-template-areas:
+        'user date'
+        'content content';
+      grid-template-columns: 1fr auto;
+      border: var(--border-default);
+
+      &-user {
+        grid-area: user;
+        border-bottom: var(--border-default);
+        padding: var(--padding-size-c);
+      }
+      &-date {
+        grid-area: date;
+        border-bottom: var(--border-default);
+        padding: var(--padding-size-c);
+        color: var(--secondary-content);
+      }
+      &-content {
+        grid-area: content;
+      }
+    }
+  }
+
+  &-attributes {
+    grid-area: attributes;
+    width: 100%;
+
+    .attribute {
+      display: grid;
+      grid-template-areas:
+        'label'
+        'value';
+      border-bottom: var(--border-default-light);
+      padding: var(--padding-size-b);
+      gap: var(--gap-size-c);
+
+      &-label {
+        grid-area: label;
+        color: var(--secondary-content);
+        font-size: .8em;
+      }
+      &-value {
+        grid-area: value;
+        color: var(--primary-content);
+        margin-left: var(--padding-size-c);
+      }
+    }
+  }
+
+  &-attachments {
+    grid-area: attachments;
+    width: 100%;
+
+    animation: side-in-bottom .5s both ease-in-out;
+    animation-delay: .25s;
+
+    .attachments-label {
+      border-top: var(--border-default);
+      border-bottom: var(--border-default);
+      padding: var(--padding-size-b);
+      margin-bottom: var(--padding-size-c);
+    }
+
+    .attachments-list {
+      border-top: var(--border-default);
+      border-bottom: var(--border-default);
+    }
+
+    .attachment {
+      display: grid;
+      grid-template-areas: 'icon name size .';
+      grid-template-columns: auto auto 1fr auto;
+      align-items: center;
+      gap: var(--gap-size-b);
+      padding-left: var(--padding-size-b);
+      border-bottom: var(--border-default-light);
+      box-sizing: border-box;
+
+      &-icon {
+        grid-area: icon;
+        font-size: 1em;
+      }
+
+      &-name {
+        grid-area: name;
+        font-size: .95em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &-size {
+        grid-area: size;
+        font-size: .8em;
+        color: var(--secondary-content);
+      }
+    }
+  }
+}

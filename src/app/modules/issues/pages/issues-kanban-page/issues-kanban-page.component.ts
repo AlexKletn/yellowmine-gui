@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
+
 import { IssuesKanbanComponent } from '../../components/issues-kanban/issues-kanban.component';
 
 @Component({

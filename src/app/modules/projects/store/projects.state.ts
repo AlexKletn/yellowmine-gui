@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { ProjectsStoreState } from './types';
-import { SetActiveProject, SetProjects } from './projects.actions';
-import { SetTags } from './projects.actions/set-tags';
+
 import { SetMembershipsAction } from './projects.actions/set-memberships.action';
+import { SetTags } from './projects.actions/set-tags';
+import { SetActiveProject, SetProjects } from './projects.actions';
+import { ProjectsStoreState } from './types';
 
 type ProjectsStateContext = StateContext<ProjectsStoreState>;
 

@@ -1,15 +1,17 @@
 import { inject } from '@angular/core';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
-import ProjectsService from '../../projects/services/projects.service';
-import Project from '../../projects/domain/Project';
-import { WikiPageResponse, WikiPagesResponse } from './types';
-import { WikiPage } from '../domain/types';
-
+import linkifyHtml from 'linkify-html';
+import _ from 'lodash';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import textile from 'textile-js';
-import linkifyHtml from 'linkify-html';
-import _ from 'lodash';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+
+import Project from '../../projects/domain/Project';
+import ProjectsService from '../../projects/services/projects.service';
+import { WikiPage } from '../domain/types';
+
+import { WikiPageResponse, WikiPagesResponse } from './types';
 
 export default class WikiService {
   private redmineApiService = inject(RedmineApiService);

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { IssuesListComponent } from '../../components/issues-list/issues-list.component';
 
 @Component({

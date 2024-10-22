@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SetTokenAction } from '../../store/actions/setToken.action';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { PanelModule } from 'primeng/panel';
 import { Router } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
+
+import { SetTokenAction } from '@shared/model/redmine-config/store/actions/setToken.action';
 
 @Component({
   selector: 'rm-login-page',

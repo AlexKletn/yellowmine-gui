@@ -5,7 +5,8 @@
     "outDir": "./out-tsc/app",
     "noUnusedLocals": true,
     "types": [
-      "node"
+      "node",
+      "@angular/localize"
     ]
   },
   "files": [

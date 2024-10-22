@@ -1,0 +1,26 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  width: 2.25rem;
+  padding: var(--padding-size-c);
+
+  user-select: none;
+
+  .title {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-color-secondary);
+
+    .yellow {
+      color: var(--primary);
+    }
+  }
+
+  &:hover {
+    background-color: var(--highlight-color);
+    cursor: pointer;
+  }
+}

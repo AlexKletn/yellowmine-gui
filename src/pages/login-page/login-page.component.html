@@ -1,0 +1,34 @@
+<ym-page-panel>
+  <div class="login-panel">
+    <p-floatlabel>
+      <input
+        pInputText
+        [(ngModel)]="apiKeyModel"
+        id="apiKey"
+        class="api-key"
+        type="text"
+        variant="filled"
+        maxlength="40"
+      />
+      <label for="apiKey">API ключ {{apiKeyLengthLabel()}}</label>
+    </p-floatlabel>
+
+    <button pButton [disabled]="saveDisabled()" (click)="saveApiKey()">
+      Сохранить
+    </button>
+
+    <a
+      pButton
+      pRipple
+      text
+      class="link-button"
+      icon="pi pi-external-link"
+      size="small"
+      target="_blank"
+      rel="noopener noreferrer"
+      [href]="redmineApiKeyUrl()"
+    >
+        Получить API ключ
+    </a>
+  </div>
+</ym-page-panel>

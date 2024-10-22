@@ -1,0 +1,40 @@
+@keyframes side-in-left {
+  0% {
+    opacity: .5;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes side-in-right {
+  0% {
+    opacity: .5;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes side-in-top {
+  0% {
+    opacity: .5;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes side-in-bottom {
+  0% {
+    opacity: .5;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

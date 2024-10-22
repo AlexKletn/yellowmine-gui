@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import RedmineApiService from '../redmine-api/redmine-api.service';
-import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import RedmineConfigState from './store/redmine-config.state';
-import { SetRedmineUrlAction } from './store/actions/setRedmineUrl.action';
+import { Observable } from 'rxjs';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+import { SetRedmineUrlAction } from '@shared/model/redmine-config/store/actions/setRedmineUrl.action';
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
 
 @Injectable({ providedIn: 'root' })
 class RedmineConfigService {

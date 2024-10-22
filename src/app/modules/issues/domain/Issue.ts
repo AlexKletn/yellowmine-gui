@@ -1,4 +1,4 @@
-import { BaseModel, DefinitionRecord } from '../../../core/services/redmine-api/types';
+import { BaseModel, DefinitionRecord } from '@shared/api/redmine-api/types';
 
 export default interface Issue extends BaseModel {
   subject: string;

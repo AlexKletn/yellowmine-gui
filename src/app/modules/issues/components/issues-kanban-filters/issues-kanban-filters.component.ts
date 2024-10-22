@@ -1,10 +1,11 @@
+import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+
 import {
   ProjectMembershipsComponent,
 } from '../../../projects/components/project-memberships/project-memberships.component';

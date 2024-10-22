@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
-import { RequestFilterMaker } from '../../../core/services/redmine-api/Pagination.request';
 import { Store } from '@ngxs/store';
-import { IssueResponse, IssuesResponse, IssueUpdateRequest } from './types';
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import textile from 'textile-js';
 import linkifyHtml from 'linkify-html';
 import _ from 'lodash';
 import { forkJoin, map } from 'rxjs';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import textile from 'textile-js';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+
+import { IssueResponse, IssuesResponse, IssueUpdateRequest } from './types';
 
 @Injectable({ providedIn: 'root' })
 class IssuesService {

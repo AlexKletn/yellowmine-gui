@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import WikiService from '../../services/wiki.service';
 import { ActivatedRoute } from '@angular/router';
+
+import WikiService from '../../services/wiki.service';
 
 @Component({
   selector: 'rm-wiki-page',

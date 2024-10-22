@@ -1,4 +1,8 @@
+import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import dayjs from 'dayjs';
+import { SharedModule } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
@@ -7,18 +11,16 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PaginatorModule } from 'primeng/paginator';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SharedModule } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
-import { NgClass, NgIf } from '@angular/common';
-import dayjs from 'dayjs';
-import { RequestFilterMaker } from '../../../../core/services/redmine-api/Pagination.request';
-import Issue from '../../../issues/domain/Issue';
-import TimeEntriesService from '../../service/timeEntries.service';
-import IssuesService from '../../../issues/issues-service/issues.service';
-import { CreateTimeEntryRequest } from '../../service/types';
 import { TooltipModule } from 'primeng/tooltip';
+
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+
+import Issue from '../../../issues/domain/Issue';
+import IssuesService from '../../../issues/issues-service/issues.service';
 import { TimeEntry } from '../../domine/types';
+import TimeEntriesService from '../../service/timeEntries.service';
+import { CreateTimeEntryRequest } from '../../service/types';
 
 @Component({
   selector: 'rm-time-entry-form',

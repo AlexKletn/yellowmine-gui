@@ -1,7 +1,8 @@
-import { Action, State, StateContext } from '@ngxs/store';
-import { TrackersStoreState } from './types';
-import SetTrackers from './actions/setTrackers';
 import { Injectable } from '@angular/core';
+import { Action, State, StateContext } from '@ngxs/store';
+
+import SetTrackers from './actions/setTrackers';
+import { TrackersStoreState } from './types';
 
 type TrackersStore = StateContext<TrackersStoreState>;
 

@@ -1,7 +1,8 @@
-import { Component, ContentChild, Inject, inject, Input, TemplateRef } from '@angular/core';
-import { MenuModule } from 'primeng/menu';
 import { DOCUMENT, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { Component, ContentChild, Inject, inject, Input, TemplateRef } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
+
 import MouseService from '../../service/mouse.service';
 
 @Component({

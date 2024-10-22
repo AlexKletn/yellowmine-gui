@@ -1,7 +1,8 @@
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { ApplicationStoreState } from './types';
 import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+
 import SetThemeAction from './actions/set-theme.action';
+import { ApplicationStoreState } from './types';
 
 type ApplicationConfigStore = StateContext<ApplicationStoreState>;
 

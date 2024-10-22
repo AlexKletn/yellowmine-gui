@@ -1,9 +1,10 @@
+import { JsonPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+
 import { Tracker } from '../../domain/types';
 import TrackerService from '../../service/trackers.service';
-import { JsonPipe } from '@angular/common';
-import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'rm-trakers-select',

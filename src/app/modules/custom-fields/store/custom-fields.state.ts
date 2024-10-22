@@ -1,6 +1,7 @@
-import { CustomFieldsStore } from './types';
 import { Action, State, StateContext } from '@ngxs/store';
+
 import { SetCustomFields } from './actions/SetCustomFields';
+import { CustomFieldsStore } from './types';
 
 type CustomFieldsContext = StateContext<CustomFieldsStore>;
 

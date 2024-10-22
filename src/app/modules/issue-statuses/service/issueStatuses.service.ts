@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
-import { SetIssueStatuses } from '../store/issueStatuses.actions';
 import { Observable } from 'rxjs';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
+
 import { IssueStatus } from '../domain/IssueStatus';
+import { SetIssueStatuses } from '../store/issueStatuses.actions';
+
 import { IssueStatusesResponse } from './types';
-import RedmineConfigState from '../../../core/services/redmine-config/store/redmine-config.state';
 
 @Injectable({ providedIn: 'root' })
 class IssueStatusesService {

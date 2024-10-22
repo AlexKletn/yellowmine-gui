@@ -1,4 +1,4 @@
-import { DefinitionRecord } from '../../../core/services/redmine-api/types';
+import { DefinitionRecord } from '@shared/api/redmine-api/types';
 
 export interface Tracker {
   id: number;

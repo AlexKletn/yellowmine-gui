@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import ProjectsService from '../../services/projects.service';
 import { Router } from '@angular/router';
-import Project from '../../domain/Project';
-import { TagModule } from 'primeng/tag';
-import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { CardModule } from 'primeng/card';
 import { ChipsModule } from 'primeng/chips';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { TagModule } from 'primeng/tag';
+
+import { BottomPanelComponent } from '../../../../shared/components/bottom-panel/bottom-panel.component';
+import Project from '../../domain/Project';
+import ProjectsService from '../../services/projects.service';
 
 @Component({
   selector: 'projects-list',

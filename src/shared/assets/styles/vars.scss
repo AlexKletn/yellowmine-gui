@@ -1,0 +1,46 @@
+// colors
+$primary: var(--primary, #f9dc23);
+$primary-content: var(--primary-content, #1c1801);
+$primary-dark: var(--primary-dark, #e3c506);
+$primary-light: var(--primary-light, #fae455);
+
+$secondary: var(--secondary, #c122a7);
+$secondary-content: var(--secondary-content, #4c4c4c);
+$secondary-dark: var(--secondary-dark, #8c1879);
+$secondary-light: var(--secondary-light, #ec2bcd);
+
+$background: var(--background, #f2f1ee);
+$foreground: var(--foreground, #fcfcfb);
+$border: var(--border, #e4e4d8);
+
+$copy: var(--copy, #2b2a21);
+$copy-light: var(--copy-light, #736f59);
+$copy-lighter: var(--copy-lighter, #9b977e);
+
+$success: var(--success, #23f923);
+$warning: var(--warning, #f9f923);
+$error: var(--error, #f92323);
+$success-content: var(--success-content, #011c01);
+$warning-content: var(--warning-content, #1c1c01);
+$error-content: var(--error-content, #ffffff);
+//
+
+$default-sizer: var(--sizer, .5rem);
+
+@function size($factor: 1) {
+  @return calc(#{$default-sizer} * #{$factor});
+}
+
+$padding-size-a: var(--padding-size-a, #{size(1.5)});
+$padding-size-b: var(--padding-size-b, #{size(1)});
+$padding-size-c: var(--padding-size-c, #{size(.5)});
+
+$gap-size-a: var(--gap-size-a, #{size(1.5)});
+$gap-size-b: var(--gap-size-b, #{size(1)});
+$gap-size-c: var(--gap-size-c, #{size(.5)});
+
+$border-radius-size-a: var(--border-radius-size-a, #{size(1.5)});
+$border-radius-size-b: var(--border-radius-size-b, #{size(1)});
+$border-radius-size-c: var(--border-radius-size-c, #{size(.5)});
+
+$border-default: var(--border-default, #{size(.125)} solid #{$border});

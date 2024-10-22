@@ -1,0 +1,37 @@
+<div>
+  <full-calendar
+    #calendar
+    class="calendar"
+  >
+<!--    [options]="calendarOptions"-->
+
+    <ng-template #dayCellContent let-arg>
+      {{ arg.dayNumberText }}
+
+      <div class="total-time">
+<!--        {{getFullHoursCountByDate(arg.date)}}ч-->
+      </div>
+    </ng-template>
+
+    <ng-template #eventContent let-arg>
+      <div class="time-entry">
+        <div class="id">
+          #{{ arg.event.extendedProps.issue.id }}
+        </div>
+
+        <div class="subject">
+          {{ arg.event.title}}
+        </div>
+
+        <div>
+          <p-tag
+            icon="pi pi-clock"
+            [value]="arg.event.extendedProps.hours + 'ч'"
+          >
+          </p-tag>
+        </div>
+      </div>
+    </ng-template>
+  </full-calendar>
+</div>
+

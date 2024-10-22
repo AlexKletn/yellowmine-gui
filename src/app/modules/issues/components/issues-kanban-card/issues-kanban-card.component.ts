@@ -1,12 +1,13 @@
-import { Component, Input } from '@angular/core';
-import Issue from '../../domain/Issue';
 import { NgIf } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { SharedModule } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SharedModule } from 'primeng/api';
-import { IssuesKanbanCardContextComponent } from '../issues-kanban-card-context/issues-kanban-card-context.component';
 import { TagModule } from 'primeng/tag';
-import { DialogModule } from 'primeng/dialog';
+
+import Issue from '../../domain/Issue';
+import { IssuesKanbanCardContextComponent } from '../issues-kanban-card-context/issues-kanban-card-context.component';
 
 @Component({
   selector: 'rm-issues-kanban-card',

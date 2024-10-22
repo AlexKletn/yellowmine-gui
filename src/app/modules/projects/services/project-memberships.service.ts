@@ -1,14 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import ProjectsState from '../store/projects.state';
-import { Membership } from '../domain/Membership';
 import { combineLatest, combineLatestWith, Observable, Subject } from 'rxjs';
-import { RequestFilterMaker } from '../../../core/services/redmine-api/Pagination.request';
-import { ProjectMembershipsResponse } from './types';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
-import RedmineConfigState from '../../../core/services/redmine-config/store/redmine-config.state';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
+
+import { Membership } from '../domain/Membership';
 import Project from '../domain/Project';
 import { SetMembershipsAction } from '../store/projects.actions/set-memberships.action';
+import ProjectsState from '../store/projects.state';
+
+import { ProjectMembershipsResponse } from './types';
 
 const LIMIT = 100;
 

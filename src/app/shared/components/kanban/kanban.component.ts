@@ -1,18 +1,21 @@
-import { Component, ContentChild, EventEmitter, inject, Input, Output, Renderer2, TemplateRef } from '@angular/core';
-import { KanbanColumnComponent } from './kanban-column/kanban-column.component';
 import { NgClass, NgForOf, NgStyle, NgTemplateOutlet } from '@angular/common';
-import { KanbanColumn, KanbanItem } from './types';
-import { DragDropModule } from 'primeng/dragdrop';
-import MouseService from '../../service/mouse.service';
-import { DividerModule } from 'primeng/divider';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { NgScrollbar } from 'ngx-scrollbar';
-import { BaseModel } from '../../../core/services/redmine-api/types';
+import { Component, ContentChild, EventEmitter, inject, Input, Output, Renderer2, TemplateRef } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import KanbanState from './store/Kanban.state';
-import { Observable } from 'rxjs';
-import { SetCurrentItem } from './store/actions/setItem.action';
 import deepClone from 'deep-clone';
+import { NgScrollbar } from 'ngx-scrollbar';
+import { DividerModule } from 'primeng/divider';
+import { DragDropModule } from 'primeng/dragdrop';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { Observable } from 'rxjs';
+
+import { BaseModel } from '@shared/api/redmine-api/types';
+
+import MouseService from '../../service/mouse.service';
+
+import { KanbanColumnComponent } from './kanban-column/kanban-column.component';
+import { SetCurrentItem } from './store/actions/setItem.action';
+import KanbanState from './store/Kanban.state';
+import { KanbanColumn, KanbanItem } from './types';
 
 @Component({
   selector: 'rm-kanban',

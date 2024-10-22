@@ -1,0 +1,30 @@
+<div class="active-tasks">
+  @if (issues()?.issues.length > 0) {
+    @for (issue of issues()?.issues.slice(0, 1);track issue.id) {
+      <a
+        pRipple
+        pButton
+        class="active-task"
+
+        text
+        [routerLink]="'/issues/' + issue.id.toString()"
+      >
+        <div class="active-tasks-label">В работе:</div>
+        {{ issue.subject }}
+      </a>
+    }
+  }
+
+  @if(issues()?.issues.length > 1) {
+    <button
+      pButton
+      pRipple
+
+      text
+      class="more"
+      severity="warn"
+    >
+      +{{ issues()?.total_count - 1}}
+    </button>
+  }
+</div>

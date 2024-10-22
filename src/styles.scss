@@ -1,45 +1,91 @@
-@import "primeng/resources/primeng.css";
+@import "shared/assets/styles/full-calendar";
+@import "shared/assets/styles/common/loading-panel";
 @import "primeicons/primeicons.css";
 
-@import "assets/full-calendar";
-@import "assets/loading-panel";
+@import "shared/assets/styles/vars";
+@import "shared/assets/styles/common/animations";
+
+@import 'highlight.js/styles/github.css' screen and (prefers-color-scheme: light);
+@import 'highlight.js/styles/github-dark.css' screen and (prefers-color-scheme: dark);
+
+:root {
+  --sizer: #{$default-sizer};
+
+  --primary: #7119dd;
+  --primary-content: #1c1801;
+  --primary-dark: #5c15b3;
+  --primary-light: #831fff;
+  --secondary: #c122a7;
+  --secondary-content: #4c4c4c;
+  --secondary-dark: #8c1879;
+  --secondary-light: #ec2bcd;
+
+  --background: #f2f1ee;
+  --background-neutral: #fefefe;
+
+  --active-background: #faf3ff;
+
+  --foreground: #f2f2f1;
+  --border: #d6d6c9;
+  --border-light: #e4e4d7;
+  --copy: #2b2a21;
+  --copy-light: #736f59;
+  --copy-lighter: #9b977e;
+  --success: #23f923;
+  --warning: #f9f923;
+  --error: #f92323;
+  --success-content: #011c01;
+  --warning-content: #1c1c01;
+  --error-content: #ffffff;
+
+  --highlight-color: rgba(47, 45, 50, 0.1);
+
+  @media screen and (prefers-color-scheme: dark){
+    --primary-content: #e1dfd7;
+    --secondary-content: #aca6a6;
+
+    --border: #22221f;
+    --border-light: #1c1c19;
+
+    --background: #202020;
+    --background-neutral: #121212;
+    --active-background: #1e0d32;
+    --highlight-color: rgba(200, 189, 213, 0.1);
+  }
+
+  --padding-size-a: #{size(1.5)};
+  --padding-size-b: #{size(1)};
+  --padding-size-c: #{size(.5)};
+  --padding-size-d: #{size(.25)};
+  --gap-size-a: #{size(1.5)};
+  --gap-size-b: #{size(1)};
+  --gap-size-c: #{size(.5)};
+  --border-radius-size-a: #{size(1.5)};
+  --border-radius-size-b: #{size(1)};
+  --border-radius-size-c: #{size(.5)};
+  --border-default: #{size(.125)} solid var(--border);
+  --border-default-light: #{size(.125)} solid var(--border-light);
+}
 
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  font-size: .75rem;
 }
 
 html {
-  font-size: 14px;
-  display: none;
+  font-size: 16px;
 }
 
-.control {
-  width: 100%
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.link-button {
+  text-decoration: none;
 }
 
-.p-scrollpanel-content {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  scrollbar-width: none;
-}
-
-p {
-  margin: .3em 0;
-}
-
-.required {
-  &:before {
-    content: '*';
-    color: var(--red-500);
-  }
-}
-
-.p-dialog-loading {
-  .p-dialog {
-    @extend .loading;
-  }
+.p-image-original {
+  max-width: 100vw !important;
+  max-height: 100vh !important;
 }

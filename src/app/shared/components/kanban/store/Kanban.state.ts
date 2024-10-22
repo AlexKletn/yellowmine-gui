@@ -1,6 +1,7 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { KanbanStoreState } from './types';
+
 import { SetCurrentItem } from './actions/setItem.action';
+import { KanbanStoreState } from './types';
 
 type KanbanStore = StateContext<KanbanStoreState>;
 

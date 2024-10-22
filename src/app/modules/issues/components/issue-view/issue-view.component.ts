@@ -1,21 +1,23 @@
-import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import IssuesService from '../../issues-service/issues.service';
-import Issue from '../../domain/Issue';
 import { DatePipe, JsonPipe, NgIf } from '@angular/common';
-import { PanelModule } from 'primeng/panel';
-import { TagModule } from 'primeng/tag';
-import { CardModule } from 'primeng/card';
-import { DividerModule } from 'primeng/divider';
-import { TableModule } from 'primeng/table';
+import { Component, EventEmitter, inject, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { ButtonModule } from 'primeng/button';
-import { TimeEntryFormComponent } from '../../../time-entries/components/time-entry-form/time-entry-form.component';
-import { DialogModule } from 'primeng/dialog';
 import { Select } from '@ngxs/store';
-import RedmineConfigState from '../../../../core/services/redmine-config/store/redmine-config.state';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
+import { PanelModule } from 'primeng/panel';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { Observable } from 'rxjs';
+
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
+
+import { TimeEntryFormComponent } from '../../../time-entries/components/time-entry-form/time-entry-form.component';
+import Issue from '../../domain/Issue';
+import IssuesService from '../../issues-service/issues.service';
 
 type Argument = {
   label: string;

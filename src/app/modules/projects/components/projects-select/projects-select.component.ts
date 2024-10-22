@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DropdownFilterEvent, DropdownModule } from 'primeng/dropdown';
+
 import Project from '../../domain/Project';
 import ProjectsService from '../../services/projects.service';
-import { DropdownFilterEvent, DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'projects-select',

@@ -1,7 +1,8 @@
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { IssuesStoreState } from './types';
-import { SetSettingsKanban } from './issues.actions/SetSettingsKanban';
 import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+
+import { SetSettingsKanban } from './issues.actions/SetSettingsKanban';
+import { IssuesStoreState } from './types';
 
 type IssuesStateContext = StateContext<IssuesStoreState>;
 

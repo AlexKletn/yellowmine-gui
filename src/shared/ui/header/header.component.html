@@ -1,0 +1,59 @@
+<div class="header">
+  <div class="logo-container">
+    <ym-logo />
+  </div>
+
+  <div class="header-menu">
+    @for (menuItem of menu(); track menuItem.label) {
+      <a
+        pButton
+        pRipple
+        [ngClass]="{
+          'header-menu-item': true,
+          'p-button-secondary': !isActiveRoute(menuItem.routerLink, true)
+        }"
+        text
+
+        [label]="menuItem.label"
+        [routerLink]="menuItem.routerLink"
+      >
+      </a>
+
+      @if (!!menuItem.children && isActiveRoute(menuItem.routerLink, true)) {
+        <div class="header-menu-sub">
+          @for (subItem of menuItem.children; track subItem.label) {
+            <a
+              pButton
+              pRipple
+              [ngClass]="{
+                'header-menu-item': true,
+                'p-button-secondary': !isActiveRoute([menuItem.routerLink, subItem.routerLink].join('/'), true)
+              }"
+              text
+
+              [label]="subItem.label"
+              [routerLink]="subItem.routerLink"
+            >
+            </a>
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <ym-active-issues />
+
+  @if (isAuth()) {
+    <button
+      pButton
+      class="exit-button"
+      severity="danger"
+      pRipple
+      icon="pi pi-sign-out"
+
+      text
+      (click)="logout()"
+    >
+    </button>
+  }
+</div>

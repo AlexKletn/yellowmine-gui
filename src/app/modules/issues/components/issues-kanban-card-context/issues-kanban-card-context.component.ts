@@ -1,13 +1,15 @@
 import { Component, Input } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { MenuItem } from 'primeng/api';
+import { InplaceModule } from 'primeng/inplace';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { Observable } from 'rxjs';
+
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
+
 import { ContextMenuComponent } from '../../../../shared/components/context-menu/context-menu.component';
 import Issue from '../../domain/Issue';
-import { InplaceModule } from 'primeng/inplace';
 import { IssueKanbanCardInfoComponent } from '../issue-kanban-card-info/issue-kanban-card-info.component';
-import { TieredMenuModule } from 'primeng/tieredmenu';
-import { MenuItem } from 'primeng/api';
-import { Select } from '@ngxs/store';
-import RedmineConfigState from '../../../../core/services/redmine-config/store/redmine-config.state';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'rm-issues-kanban-card-context',

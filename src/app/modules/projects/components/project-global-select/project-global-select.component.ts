@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ProjectsSelectComponent } from '../projects-select/projects-select.component';
-import ProjectsService from '../../services/projects.service';
+
 import Project from '../../domain/Project';
+import ProjectsService from '../../services/projects.service';
+import { ProjectsSelectComponent } from '../projects-select/projects-select.component';
 
 @Component({
   selector: 'rm-project-global-select',

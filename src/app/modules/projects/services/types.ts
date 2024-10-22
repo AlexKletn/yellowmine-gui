@@ -1,6 +1,7 @@
-import Project from '../domain/Project';
-import { BaseResponse } from '../../../core/services/redmine-api/types';
+import { BaseResponse } from '@shared/api/redmine-api/types';
+
 import { Membership } from '../domain/Membership';
+import Project from '../domain/Project';
 
 export interface ProjectsResponse extends BaseResponse {
   projects: Project[];

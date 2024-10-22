@@ -1,5 +1,6 @@
+import { DefinitionRecord } from '@shared/api/redmine-api/types';
+
 import Issue from '../../issues/domain/Issue';
-import { DefinitionRecord } from '../../../core/services/redmine-api/types';
 import Project from '../../projects/domain/Project';
 
 export interface TimeEntry {

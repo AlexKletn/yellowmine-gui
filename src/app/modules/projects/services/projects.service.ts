@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import RedmineApiService from '../../../core/services/redmine-api/redmine-api.service';
 import { Select, Store } from '@ngxs/store';
 import { combineLatest, combineLatestWith, Observable, Subject } from 'rxjs';
+
+import RedmineApiService from '@shared/api/redmine-api/redmine-api.service';
+import { RequestFilterMaker } from '@shared/api/redmine-api/RequestFilter';
+import RedmineConfigState from '@shared/model/redmine-config/store/redmine-config.state';
+
 import Project from '../domain/Project';
-import { ProjectsResponse } from './types';
 import { SetActiveProject, SetProjects } from '../store/projects.actions';
-import { RequestFilterMaker } from '../../../core/services/redmine-api/Pagination.request';
-import RedmineConfigState from '../../../core/services/redmine-config/store/redmine-config.state';
+
+import { ProjectsResponse } from './types';
 
 const LIMIT = 100;
 
