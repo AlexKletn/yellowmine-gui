@@ -62,6 +62,7 @@
       top: 0;
       left: 0;
       right: 0;
+      //bottom: 0;
     }
 
     &-description {
@@ -69,6 +70,14 @@
       width: 100%;
       padding: var(--padding-size-c);
     }
+  }
+
+  &-progress {
+    height: 50em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &-sidebar {
@@ -95,7 +104,7 @@
     gap: var(--gap-size-a);
     border-top: var(--border-default);
     padding: var(--padding-size-b);
-    margin: 2.5em 0;
+    margin: 1em 0;
 
     .comment {
       display: grid;

@@ -1,11 +1,11 @@
 <div class="issue-view">
-  <div
-    class="issue-view-title"
-    [innerText]="issue()?.subject"
-  >
-  </div>
+  @if (issue() || !isLoading()) {
+    <div
+      class="issue-view-title"
+      [innerText]="issue()?.subject"
+    >
+    </div>
 
-  @if (issue()) {
     <div
       class="issue-view-content"
     >
@@ -38,9 +38,8 @@
         </div>
       </p-scroll-panel>
     </div>
-  }
 
-  <div class="issue-view-sidebar">
+    <div class="issue-view-sidebar">
       <div class="issue-view-attributes">
         <div class="attribute">
           <div class="attribute-label">
@@ -153,37 +152,43 @@
         }
       </div>
 
-    @if (!!issue()?.attachments.length) {
-      <div class="issue-view-attachments">
-        <div class="attachments-label">
-          Вложения
-        </div>
+      @if (!!issue()?.attachments.length) {
+        <div class="issue-view-attachments">
+          <div class="attachments-label">
+            Вложения
+          </div>
 
-        <div class="attachments-list">
-          @for (attachment of issue()?.attachments;track attachment.id) {
-            <div class="attachment">
-              <span class="attachment-icon pi pi-paperclip"></span>
+          <div class="attachments-list">
+            @for (attachment of issue()?.attachments;track attachment.id) {
+              <div class="attachment">
+                <span class="attachment-icon pi pi-paperclip"></span>
 
-              <div class="attachment-name">
-                {{ attachment.filename }}
+                <div class="attachment-name">
+                  {{ attachment.filename }}
+                </div>
+
+                <div class="attachment-size">
+                  {{ fileSizeParser(attachment.filesize) }}
+                </div>
+
+                <p-button
+                  [text]="true"
+                  severity="info"
+                  size="small"
+                  icon="pi pi-download"
+
+                  (click)="download(attachment)"
+                />
               </div>
-
-              <div class="attachment-size">
-                {{ fileSizeParser(attachment.filesize) }}
-              </div>
-
-              <p-button
-                [text]="true"
-                severity="info"
-                size="small"
-                icon="pi pi-download"
-
-                (click)="download(attachment)"
-              />
-            </div>
-          }
+            }
+          </div>
         </div>
-      </div>
-    }
-  </div>
+      }
+    </div>
+  } @else {
+    <div class="issue-view-progress">
+      <p-progress-spinner ariaLabel="loading" strokeWidth="1" />
+    </div>
+  }
+
 </div>

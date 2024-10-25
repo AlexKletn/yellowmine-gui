@@ -4,18 +4,47 @@
   right: 0;
   bottom: 0;
   left: 0;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .issues-list {
   display: flex;
   flex-direction: column;
-  width: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: calc(100% + 110px);
+
+  padding-bottom: 1em;
+
+  &-wrapper {
+    position: relative;
+
+    ::ng-deep .p-scrollpanel-content {
+      width: auto;
+    }
+  }
+
+  &-end {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+
+    pointer-events: none;
+  }
 
   .list-item {
     user-select: none;
     padding: 1.5em;
 
     cursor: pointer;
+    content-visibility: auto;
 
     border-bottom: var(--border-default-light);
     flex-shrink: 0;
@@ -31,7 +60,6 @@
     align-items: center;
     gap: var(--gap-size-b);
 
-    animation: side-in-top .6s ease-in-out;
     transition: background .5s;
 
     color: var(--primary-content);

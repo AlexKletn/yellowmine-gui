@@ -27,6 +27,15 @@ export class RequestFilter<FILTER = Record<string, unknown>> extends Subject<FIL
     return this;
   }
 
+  increment(count: number) {
+    this.offset = (this.offset ?? 0) + (this.limit ?? 0);
+    this.limit = count;
+
+    this.make();
+
+    return this;
+  }
+
   setFilters(filters: FILTER) {
     this.filters = filters;
 

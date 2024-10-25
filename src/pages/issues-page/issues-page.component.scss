@@ -8,10 +8,8 @@
   width: 35em;
   height: 100%;
 
-  //z-index: 1123;
-  //background: var(--background-neutral);
+  animation: side-in-left .5s ease-out;
   background: var(--background);
-  //box-shadow: 0 10px 8px 3px rgba(58, 58, 58, 0.17);
 }
 
 .issue-view {
@@ -30,3 +28,4 @@
     opacity: 1;
   }
 }
+

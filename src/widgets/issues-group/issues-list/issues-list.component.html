@@ -1,32 +1,42 @@
 <ym-issues-filter [filter]="filter"/>
 
-<p-scroll-panel [style]="{ width: '100%', height: '100%' }">
-  <div class="issues-list">
-    @for (issue of issues()?.issues ?? []; track issue.id) {
-      <a
-        pRipple
-        [ngClass]="{
+<div class="issues-list-wrapper">
+  <p-scroll-panel  #list  [style]="{ width: '100%', height: '100%' }">
+    <div class="issues-list">
+      @for (issue of issues() ?? []; track issue.id) {
+        <a
+          pRipple
+          [ngClass]="{
           'list-item': true,
           active: isActive('/issues/' + issue.id.toString(), true)
         }"
-        [routerLink]="issue.id.toString()"
-      >
-        <div class="list-item-id">
-          {{ issue.id }}
-        </div>
+          [routerLink]="issue.id.toString()"
+        >
+          <div class="list-item-id">
+            {{ issue.id }}
+          </div>
 
-        <div class="list-item-status">
-          {{ issue.status.name }}
-        </div>
+          <div class="list-item-status">
+            {{ issue.status.name }}
+          </div>
 
-        <div class="list-item-assigned">
-          {{ issue.assigned_to?.name ?? 'Нет исполнителя' }}
-        </div>
+          <div class="list-item-assigned">
+            {{ issue.assigned_to?.name ?? 'Нет исполнителя' }}
+          </div>
 
-        <div class="list-item-subject">
-          {{ issue.subject }}
-        </div>
-      </a>
-    }
-  </div>
-</p-scroll-panel>
+          <div class="list-item-subject">
+            {{ issue.subject }}
+          </div>
+        </a>
+      }
+
+      @if(isLoading()) {
+        @for (i of [].constructor(20); track $index) {
+          <p-skeleton height="6.5em"/>
+        }
+      }
+
+      <div #listEnd class="issues-list-end"></div>
+    </div>
+  </p-scroll-panel>
+</div>

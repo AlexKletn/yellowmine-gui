@@ -1,27 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
-// import { firstValueFrom } from 'rxjs';
 import { Attachment } from '@entities/attachment/types';
 import { RedmineApi } from '@shared/api/redmine-api';
 import { AstNode } from '@shared/lib/textile/types';
-// import { SavePart } from '@shared/lib/textile/types';
-
-// const listRegex = /\n((\*+)\s([^*]+))+\r\n/gi;
-// const listItemRegex = /((\*+)\s([^*]+))+/gmi;
-// const codeRegex = /@(.+?)@/gi;
 
 const linkWithLabelRegex = /"([^"]+?)":((https?:\/\/)([0-9a-z./\-%_]+)+(:\d{0,10})?([\da-z;,/?:@&=+$-_.!~*'()#]+)(\?[\da-z;,/?:@&=+$-_.!~*'()#]+)?(#[\da-z;,/?:@&=+$-_.!~*'()#]+)?)/gi;
 const linkRegex = /((https?:\/\/)([0-9a-z./\-%_]+)+(:\d{0,10})?([\da-z;,/?:@&=+$-_.!~*'()#]+)(\?[\da-z;,/?:@&=+$-_.!~*'()#]+)?(#[\da-z;,/?:@&=+$-_.!~*'()#]+)?)/gi;
-// const textDecoration = /[_\-*+].+?[_\-*+]/;
-
 const listLineRegex = /^([*|#]+?) (.+$)/i;
-const getListLineRegex = (level: string | number = '+?') => {
-  const regex = new RegExp(`^([*|#])${level} (.+$)`, 'i');
-
-  return regex;
-};
 const imageRegex = /!(.+?\.(png|jpg|jpeg|gif|webp))!/gi;
+
+const getListLineRegex = (level: string | number = '+?') => {
+  return new RegExp(`^([*|#])${level} (.+$)`, 'i');
+};
 
 @Injectable({ providedIn: 'root' })
 class Textile {

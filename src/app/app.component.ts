@@ -113,6 +113,11 @@ export class AppComponent {
               iconSize: '1em',
             },
           },
+          scrollpanel: {
+            bar: {
+              size: '.4em',
+            },
+          },
         },
         options: {
           darkModeSelector: '.my-app-dark',

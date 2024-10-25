@@ -3,6 +3,7 @@ import { Component, effect, inject, input, signal } from '@angular/core';
 import { filesize } from 'filesize';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { firstValueFrom } from 'rxjs';
 
@@ -24,6 +25,7 @@ import { TextileViewComponent } from '@shared/ui/textile-view/textile-view.compo
     ScrollPanelModule,
     ButtonModule,
     DatePipe,
+    ProgressSpinnerModule,
   ],
   templateUrl: './issue-view.component.html',
   styleUrl: './issue-view.component.scss',
@@ -33,11 +35,13 @@ export class IssueViewComponent {
   private textile = inject(Textile);
 
   id = input<number>(-1);
+
   private issuesService = inject(IssuesService);
 
-  issue = this.issuesService.issue(this.id);
-  issueDescription = signal('', {
-  });
+  isLoading = signal(false);
+
+  issue = this.issuesService.issue(this.id, this.isLoading);
+  issueDescription = signal('');
 
   issueComments = signal<IssueJournal[]>([]);
 

@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { effect, inject, Injectable, Signal, signal } from '@angular/core';
+import { effect, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { mergeMap } from 'rxjs';
+import { mergeMap, tap } from 'rxjs';
 
 import Issue from '@entities/issues/model/types';
 import { RedmineApi } from '@shared/api/redmine-api';
@@ -14,21 +14,29 @@ import { BaseResponse } from '@shared/api/redmine-api/types';
 export class IssuesService {
   private redmineApi = inject(RedmineApi);
 
-  issues(filter: RequestFilter) {
+  issues(filter: RequestFilter, isLoading?: WritableSignal<boolean>) {
     filter.make();
 
     return toSignal(
       filter
         .pipe(
-          mergeMap(filter => this.redmineApi.get<BaseResponse<{ issues: Issue[] }>>('/redmine/issues.json', {
-            params: filter as unknown as HttpParams,
-          })),
+          tap(() => isLoading?.set(true)),
+          mergeMap(
+            filter =>
+              this.redmineApi.get<BaseResponse<{ issues: Issue[] }>>('/redmine/issues.json', {
+                params: filter as unknown as HttpParams,
+              },
+              ).pipe(
+                tap(() => isLoading?.set(false)),
+              ),
+          ),
         ),
     );
   }
 
-  issue(id: Signal<Issue['id']>) {
+  issue(id: Signal<Issue['id']>, isLoading?: WritableSignal<boolean>) {
     const issueSignal = signal<Issue | undefined>(undefined);
+    isLoading?.set(true);
 
     effect(() => {
       this.redmineApi.get<{ issue: Issue }>(`/redmine/issues/${id()}.json`, {
@@ -36,6 +44,9 @@ export class IssuesService {
           include: ['relations', 'journals', 'attachments'].join(','),
         },
       })
+        .pipe(
+          tap(() => isLoading?.set(false)),
+        )
         .subscribe(({ issue }) => issueSignal.set(issue));
     });
 
