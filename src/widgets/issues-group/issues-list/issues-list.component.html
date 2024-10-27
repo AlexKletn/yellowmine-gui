@@ -12,20 +12,19 @@
         }"
           [routerLink]="issue.id.toString()"
         >
-          <div class="list-item-id">
-            {{ issue.id }}
+          <div class="list-item-id" [innerText]="issue.id">
           </div>
 
-          <div class="list-item-status">
-            {{ issue.status.name }}
+          <div class="list-item-status" [innerText]="issue.status.name">
           </div>
 
-          <div class="list-item-assigned">
-            {{ issue.assigned_to?.name ?? 'Нет исполнителя' }}
+          <div class="list-item-assigned" [innerText]="issue.assigned_to?.name ?? 'Нет исполнителя'">
           </div>
 
-          <div class="list-item-subject">
-            {{ issue.subject }}
+          <div class="list-item-subject" [innerText]="issue.subject">
+          </div>
+
+          <div class="list-item-type" [innerText]="issue.tracker.name">
           </div>
         </a>
       }

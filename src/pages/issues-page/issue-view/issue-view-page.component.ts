@@ -18,8 +18,4 @@ export class IssueViewPageComponent {
   private params = toSignal<ParamMap>(this.activeRoute.paramMap);
 
   id = computed(() => this.params()!.get('id') as unknown as number);
-
-  constructor() {
-    console.log(this.id());
-  }
 }

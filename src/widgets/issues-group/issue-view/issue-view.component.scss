@@ -57,7 +57,6 @@
 
     &-container {
       grid-area: container;
-
       position: absolute;
       top: 0;
       left: 0;
@@ -101,12 +100,19 @@
   &-comments {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-size-a);
+    gap: var(--gap-size-b);
     border-top: var(--border-default);
-    padding: var(--padding-size-b);
     margin: 1em 0;
 
+    &-label {
+      //margin-bottom: var(--gap-size-c);
+      border-bottom: var(--border-default);
+      padding: var(--padding-size-b);
+      color: var(--secondary-content);
+    }
+
     .comment {
+      margin: 0 var(--gap-size-b);
       display: grid;
       grid-template-areas:
         'user date'

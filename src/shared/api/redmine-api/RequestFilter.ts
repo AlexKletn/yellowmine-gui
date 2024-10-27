@@ -39,6 +39,7 @@ export class RequestFilter<FILTER = Record<string, unknown>> extends Subject<FIL
   setFilters(filters: FILTER) {
     this.filters = filters;
 
+    this.resetPagination();
     return this;
   }
 
@@ -50,6 +51,7 @@ export class RequestFilter<FILTER = Record<string, unknown>> extends Subject<FIL
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     this.filters[key] = value;
+    this.resetPagination();
 
     return this;
   }
@@ -57,6 +59,7 @@ export class RequestFilter<FILTER = Record<string, unknown>> extends Subject<FIL
   removeFilter(key: keyof FILTER) {
     if (this.filters[key]) {
       delete this.filters[key];
+      this.resetPagination();
     }
   }
 
@@ -76,5 +79,10 @@ export class RequestFilter<FILTER = Record<string, unknown>> extends Subject<FIL
     this.next(result as FILTER);
 
     return result;
+  }
+
+  private resetPagination() {
+    this.offset = 0;
+    this.limit = 25;
   }
 }

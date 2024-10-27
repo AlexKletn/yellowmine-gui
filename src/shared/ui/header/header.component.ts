@@ -7,7 +7,10 @@ import { Ripple } from 'primeng/ripple';
 
 import { RedmineConfigService } from '@shared/model/redmine-config';
 import { RouterToolsService } from '@shared/model/router-tools/router-tools.service';
+import { AccentPaletteComponent } from '@shared/ui/accent-palette/accent-palette.component';
 import { LogoComponent } from '@shared/ui/logo/logo.component';
+import { LogoutButtonComponent } from '@shared/ui/logout-button/logout-button.component';
+import { SchemeSwitcherComponent } from '@shared/ui/scheme-switcher/scheme-switcher.component';
 import { ActiveIssuesComponent } from '@widgets/issues-group/active-issues/active-issues.component';
 
 type MenuItem = {
@@ -28,6 +31,9 @@ type MenuItem = {
     ChipModule,
     NgClass,
     ActiveIssuesComponent,
+    LogoutButtonComponent,
+    SchemeSwitcherComponent,
+    AccentPaletteComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { definePreset } from 'primeng/themes';
 import { Nora } from 'primeng/themes/nora';
 
+import { AppConfigService } from '@shared/model/app-config/app-config.service';
 import { HeaderComponent } from '@shared/ui/header/header.component';
 
 @Component({
@@ -18,6 +19,10 @@ import { HeaderComponent } from '@shared/ui/header/header.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  private appService = inject(AppConfigService);
+
   constructor(
     private config: PrimeNGConfig,
   ) {
@@ -37,32 +42,32 @@ export class AppComponent {
         semantic: {
           transitionDuration: '.5s',
           primary: {
-            50: '{purple.50}',
-            100: '{purple.100}',
-            200: '{purple.200}',
-            300: '{purple.300}',
-            400: '{purple.400}',
-            500: '{purple.500}',
-            600: '{purple.600}',
-            700: '{purple.700}',
-            800: '{purple.800}',
-            900: '{purple.900}',
-            950: '{purple.950}',
+            // 50: 'hsl(from var(--primary) h s calc(l - 50)',
+            // 100: 'hsl(from var(--primary) h s calc(l - 40)',
+            // 200: 'hsl(from var(--primary) h s calc(l - 30)',
+            // 300: 'hsl(from var(--primary) h s calc(l - 20)',
+            // 400: 'hsl(from var(--primary) h s calc(l - 10)',
+            500: 'var(--primary)',
+            // 600: 'hsl(from var(--primary) h s calc(l + 10))',
+            // 700: 'hsl(from var(--primary) h s calc(l + 20))',
+            // 800: 'hsl(from var(--primary) h s calc(l + 30))',
+            // 900: 'hsl(from var(--primary) h s calc(l + 40))',
+            // 950: 'hsl(from var(--primary) h s calc(l + 50))',
           },
           colorScheme: {
             light: {
               primary: {
                 color: 'var(--primary)',
                 inverseColor: '#ffffff',
-                hoverColor: '{purple.900}',
-                activeColor: '{purple.800}',
+                hoverColor: 'var(--highlight-color)',
+                activeColor: 'var(--active-background)',
               },
-              highlight: {
-                background: 'var(--background)',
-                focusBackground: 'var(--foreground)',
-                color: '#ffffff',
-                focusColor: '#ffffff',
-              },
+              // highlight: {
+              //   background: 'var(--background)',
+              //   focusBackground: 'var(--foreground)',
+              //   color: '#ffffff',
+              //   focusColor: '#ffffff',
+              // },
             },
             dark: {
               primary: {
@@ -71,16 +76,26 @@ export class AppComponent {
                 hoverColor: '{purple.500}',
                 activeColor: '{purple.300}',
               },
-              highlight: {
-                background: 'var(--background)',
-                focusBackground: 'var(--foreground)',
-                color: 'rgba(255,255,255,.87)',
-                focusColor: 'rgba(255,255,255,.87)',
-              },
+              // highlight: {
+              //   background: 'var(--background)',
+              //   focusBackground: 'var(--foreground)',
+              //   color: 'rgba(255,255,255,.87)',
+              //   focusColor: 'rgba(255,255,255,.87)',
+              // },
             },
           },
         },
         components: {
+          select: {
+            root: {
+              borderColor: 'var(--border)',
+            },
+          },
+          multiselect: {
+            root: {
+              borderColor: 'var(--border)',
+            },
+          },
           image: {
             preview: {
               icon: {
@@ -119,10 +134,11 @@ export class AppComponent {
             },
           },
         },
-        options: {
-          darkModeSelector: '.my-app-dark',
-        },
       }),
+
+      options: {
+        darkModeSelector: '.p-dark',
+      },
     });
   }
 }

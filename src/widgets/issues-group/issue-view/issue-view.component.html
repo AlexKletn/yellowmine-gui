@@ -18,13 +18,16 @@
 
             @if (issueComments().length > 0) {
               <div class="issue-view-comments">
+                <div class="issue-view-comments-label">
+                  Комментарии
+                </div>
+
                 @for (comment of issueComments(); track comment) {
                   <div class="comment">
-                    <div class="comment-user">
-                      {{ comment.user.name }}
+                    <div class="comment-user" [innerText]="comment.user.name">
                     </div>
-                    <div class="comment-date">
-                      {{ comment.created_on | date:"short" }}
+
+                    <div class="comment-date" [innerText]="comment.created_on | date:'short'">
                     </div>
 
                     <div class="comment-content">
@@ -163,17 +166,15 @@
               <div class="attachment">
                 <span class="attachment-icon pi pi-paperclip"></span>
 
-                <div class="attachment-name">
-                  {{ attachment.filename }}
+                <div class="attachment-name" [innerText]="attachment.filename">
                 </div>
 
-                <div class="attachment-size">
-                  {{ fileSizeParser(attachment.filesize) }}
+                <div class="attachment-size" [innerText]="fileSizeParser(attachment.filesize)">
                 </div>
 
                 <p-button
                   [text]="true"
-                  severity="info"
+                  severity="primary"
                   size="small"
                   icon="pi pi-download"
 

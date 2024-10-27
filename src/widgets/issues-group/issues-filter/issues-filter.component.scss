@@ -13,13 +13,18 @@
     .p-inputtext {
       font-size: 1em;
     }
+
+    .p-multiselect {
+      width: 100%;
+    }
   }
 
   &-select {
     --p-select-padding-y: .5em;
+    --p-multiselect-padding-y: .5em;
     --p-select-dropdown-width: 1.5em;
+    --p-multiselect-dropdown-width: 1.5em;
 
-    border: var(--border-default-light);
-    min-width: 10em;
+    width: 10em;
   }
 }

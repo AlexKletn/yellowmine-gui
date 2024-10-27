@@ -6,9 +6,11 @@
 // import ApplicationState from './core/store/application-store/application.state';
 // import KanbanState from './shared/components/kanban/store/Kanban.state';
 
+import { AppConfigState } from '@shared/model/app-config';
 import { RedmineConfigState } from '@shared/model/redmine-config';
 
 export default [
+  AppConfigState,
   RedmineConfigState,
   // TrackersState,
   // IssueStatusesState,

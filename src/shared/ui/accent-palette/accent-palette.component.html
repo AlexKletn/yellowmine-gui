@@ -1,0 +1,21 @@
+<button
+  pButton
+  class="accent-button"
+  severity="primary"
+  pRipple
+  icon="pi pi-palette"
+
+  text
+
+  (click)="toggle($event)"
+>
+</button>
+
+<p-popover #popover>
+  <p-colorpicker
+    [inline]="true"
+    [ngModel]="currentColor()"
+
+    (onChange)="changeHandler($event)"
+  />
+</p-popover>

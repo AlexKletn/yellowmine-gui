@@ -3,7 +3,7 @@
 
 .header {
   display: grid;
-  grid-template-columns: 2.285rem auto 1fr auto auto;
+  grid-template-columns: 2.285rem auto 1fr auto auto auto;
   grid-template-areas: 'logo menu active-tasks user-panel exit';
 
   position: sticky;
@@ -63,18 +63,6 @@
     grid-area: user-panel;
     border-left: var(--border-default);
     width: 200px;
-  }
-
-  .exit-button {
-    grid-area: exit;
-    border: unset;
-    border-left: var(--border-default) !important;
-    border-radius: 0;
-    font-size: 1em;
-    height: 2.25rem;
-    width: 2.25rem;
-
-    animation: side-in-right .5s;
   }
 }
 

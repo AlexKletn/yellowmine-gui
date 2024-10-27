@@ -6,7 +6,7 @@ import { mergeMap, tap } from 'rxjs';
 import Issue from '@entities/issues/model/types';
 import { RedmineApi } from '@shared/api/redmine-api';
 import { RequestFilter } from '@shared/api/redmine-api/RequestFilter';
-import { BaseResponse } from '@shared/api/redmine-api/types';
+import { BaseResponse, DefinitionRecord } from '@shared/api/redmine-api/types';
 
 @Injectable({
   providedIn: 'root',
@@ -22,13 +22,14 @@ export class IssuesService {
         .pipe(
           tap(() => isLoading?.set(true)),
           mergeMap(
-            filter =>
+            filter => (
               this.redmineApi.get<BaseResponse<{ issues: Issue[] }>>('/redmine/issues.json', {
                 params: filter as unknown as HttpParams,
               },
               ).pipe(
                 tap(() => isLoading?.set(false)),
-              ),
+              )
+            ),
           ),
         ),
     );
@@ -51,5 +52,11 @@ export class IssuesService {
     });
 
     return issueSignal;
+  }
+
+  statuses() {
+    return toSignal(
+      this.redmineApi.get<{ issue_statuses: DefinitionRecord[] }>('/redmine/issue_statuses.json'),
+    );
   }
 }

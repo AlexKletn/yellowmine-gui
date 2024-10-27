@@ -1,6 +1,8 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { Select } from 'primeng/select';
 
+import { IssuesService } from '@features/issues/issues.service';
 import { ProjectsService } from '@features/projects';
 import { RequestFilter } from '@shared/api/redmine-api/RequestFilter';
 
@@ -9,6 +11,7 @@ import { RequestFilter } from '@shared/api/redmine-api/RequestFilter';
   standalone: true,
   imports: [
     Select,
+    MultiSelectModule,
   ],
   templateUrl: './issues-filter.component.html',
   styleUrl: './issues-filter.component.scss',
@@ -16,9 +19,12 @@ import { RequestFilter } from '@shared/api/redmine-api/RequestFilter';
 export class IssuesFilterComponent implements OnInit {
   @Input({ required: true }) filter!: RequestFilter;
 
+  private issuesService = inject(IssuesService);
   private projectsService = inject(ProjectsService);
   private projectsFilter = new RequestFilter(0, 100);
   projects = this.projectsService.projects(this.projectsFilter);
+
+  statuses = this.issuesService.statuses();
 
   ngOnInit() {
     this.projectsFilter
@@ -27,7 +33,6 @@ export class IssuesFilterComponent implements OnInit {
   }
 
   setFilter(name: string, value: string | number) {
-    console.log(value);
     this.filter.setFilter(name, value);
     this.filter.make();
   };

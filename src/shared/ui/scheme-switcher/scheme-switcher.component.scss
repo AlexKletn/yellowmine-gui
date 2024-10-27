@@ -1,0 +1,14 @@
+.scheme-button {
+  border-left: var(--border-default) !important;
+  border-radius: 0;
+  font-size: 1em;
+  height: 2.25rem;
+  width: 2.25rem;
+
+  animation: side-in-right .5s;
+
+  &:hover {
+    border: unset;
+    border-left: var(--border-default) !important;
+  }
+}

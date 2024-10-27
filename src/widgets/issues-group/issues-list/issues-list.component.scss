@@ -54,9 +54,9 @@
 
     display: grid;
     grid-template-areas:
-      'subject subject subject'
-      'id      status  assigned';
-    grid-template-columns: auto 1fr auto;
+      'subject subject subject subject'
+      'type    id      status  assigned';
+    grid-template-columns: auto auto 1fr auto;
     align-items: center;
     gap: var(--gap-size-b);
 
@@ -83,6 +83,12 @@
       font-weight: 500;
     }
 
+    &-type {
+      grid-area: type;
+      color: var(--secondary-content);
+      font-size: .9em;
+    }
+
     &-assigned {
       grid-area: assigned;
       font-weight: 400;
@@ -91,6 +97,7 @@
 
     &.active {
       background: var(--active-background) !important;
+      backdrop-filter: blur(50px);
       z-index: 1;
 
       position: sticky;

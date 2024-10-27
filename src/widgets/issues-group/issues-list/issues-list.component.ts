@@ -47,12 +47,23 @@ export class IssuesListComponent implements OnInit, AfterViewInit {
 
   constructor() {
     effect(() => {
-      this.issues.set(
-        [
-          ...this.issuesAcc,
-          ...this.issuesPage()?.issues ?? [],
-        ],
-      );
+      if (!this.filter.offset) {
+        this.issues.set(
+          [
+            ...this.issuesPage()?.issues ?? [],
+          ],
+        );
+
+        this.issuesAcc = [];
+      }
+      else {
+        this.issues.set(
+          [
+            ...this.issuesAcc,
+            ...this.issuesPage()?.issues ?? [],
+          ],
+        );
+      }
 
       this.issuesAcc.push(...this.issuesPage()?.issues ?? []);
     }, {

@@ -43,17 +43,11 @@
 
   <ym-active-issues />
 
-  @if (isAuth()) {
-    <button
-      pButton
-      class="exit-button"
-      severity="danger"
-      pRipple
-      icon="pi pi-sign-out"
+  <ym-scheme-switcher />
 
-      text
-      (click)="logout()"
-    >
-    </button>
+  <ym-accent-palette />
+
+  @if (isAuth()) {
+    <ym-logout-button />
   }
 </div>

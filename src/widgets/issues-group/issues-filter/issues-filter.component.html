@@ -11,10 +11,17 @@
   />
   <p-select
     class="issues-filter-select"
-    placeholder="Исполнитель"
+    placeholder="Статус"
+    [options]="statuses()?.issue_statuses"
+    optionLabel="name"
+    optionValue="id"
+    appendTo="body"
+
+    (onChange)="setFilter('status_id', $event.value)"
   />
   <p-select
     class="issues-filter-select"
-    placeholder="Статус"
+    placeholder="Исполнитель"
+    [disabled]="true"
   />
 </div>
