@@ -1,19 +1,23 @@
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { Component, effect, inject, input, signal } from '@angular/core';
-import { filesize } from 'filesize';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Store } from '@ngxs/store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { firstValueFrom } from 'rxjs';
 
-import { Attachment } from '@entities/attachment/types';
 import { IssueJournal } from '@entities/issues/model/types';
 import { IssuesService } from '@features/issues/issues.service';
-import { RedmineApi } from '@shared/api/redmine-api';
-import saveFileToDevice from '@shared/lib/saveFileToDevice';
 import Textile from '@shared/lib/textile/textileParser';
 import { TextileViewComponent } from '@shared/ui/textile-view/textile-view.component';
+import {
+  IssueViewAttributesComponent,
+} from '@widgets/issues-group/issue-view/issue-view-attributes/issue-view-attributes.component';
+import { ToggleSidebarAction } from '@widgets/issues-group/issue-view/issue-view-store/actions/toggle-sidebar.action';
+import { IssueViewState } from '@widgets/issues-group/issue-view/issue-view-store/issue-view.state';
+
+import { IssueViewAttachmentsComponent } from './issue-view-attachments/issue-view-attachments.component';
 
 @Component({
   selector: 'ym-issue-view',
@@ -26,12 +30,15 @@ import { TextileViewComponent } from '@shared/ui/textile-view/textile-view.compo
     ButtonModule,
     DatePipe,
     ProgressSpinnerModule,
+    IssueViewAttachmentsComponent,
+    IssueViewAttributesComponent,
+    NgClass,
   ],
   templateUrl: './issue-view.component.html',
   styleUrl: './issue-view.component.scss',
 })
 export class IssueViewComponent {
-  private redmineApi = inject(RedmineApi);
+  private store = inject(Store);
   private textile = inject(Textile);
 
   id = input<number>(-1);
@@ -44,6 +51,12 @@ export class IssueViewComponent {
   issueDescription = signal('');
 
   issueComments = signal<IssueJournal[]>([]);
+
+  sidebarHidden = toSignal(
+    this.store.select(IssueViewState.sidebarHidden),
+  );
+
+  hideIcon = computed(() => !this.sidebarHidden() ? 'pi pi-arrow-circle-right' : 'pi pi-arrow-circle-left');
 
   constructor() {
     effect(async () => {
@@ -63,21 +76,8 @@ export class IssueViewComponent {
     });
   }
 
-  public fileSizeParser(size: number) {
-    return filesize(size);
-  }
-
-  public async download(attachment: Attachment) {
-    const fileBuffer = await firstValueFrom(
-      this.redmineApi.get(
-        `/redmine/attachments/download/${attachment!.id}/${attachment!.filename}`,
-        {
-          responseType: 'arraybuffer',
-        },
-      ),
-    );
-
-    saveFileToDevice(new File([fileBuffer], attachment.filename));
+  toggleSidebarHidden() {
+    this.store.dispatch(new ToggleSidebarAction());
   }
 
   public async textileParse(input: string) {

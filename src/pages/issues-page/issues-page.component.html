@@ -1,5 +1,20 @@
-<ym-page-panel class="issues-list-panel">
-  <ym-issues-list />
+<ym-page-panel
+  [ngClass]="{
+    'issues-list-panel': true,
+    'hidden': listHidden()
+  }"
+>
+  <button
+    pButton
+    [icon]="hideIcon()"
+    severity="secondary"
+    text
+
+    class="hide-toggle"
+    (click)="toggleListHidden()"
+  ></button>
+
+  <ym-issues-list class="issues-list"/>
 </ym-page-panel>
 
 <div class="issue-view">

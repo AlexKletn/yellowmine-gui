@@ -1,0 +1,30 @@
+@if (attachments?.length) {
+  <div class="attachments">
+    <div class="attachments-label">
+      Вложения
+    </div>
+
+    <div class="attachments-list">
+      @for (attachment of attachments;track attachment.id) {
+        <div class="attachment">
+          <span class="attachment-icon pi pi-paperclip"></span>
+
+          <div class="attachment-name" [innerText]="attachment.filename">
+          </div>
+
+          <div class="attachment-size" [innerText]="fileSizeParser(attachment.filesize)">
+          </div>
+
+          <p-button
+            [text]="true"
+            severity="primary"
+            size="small"
+            icon="pi pi-download"
+
+            (click)="download(attachment)"
+          />
+        </div>
+      }
+    </div>
+  </div>
+}

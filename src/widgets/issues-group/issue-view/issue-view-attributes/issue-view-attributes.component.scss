@@ -1,0 +1,25 @@
+.attributes {
+  grid-area: attributes;
+  width: 100%;
+
+  .attribute {
+    display: grid;
+    grid-template-areas:
+        'label'
+        'value';
+    border-bottom: var(--border-default-light);
+    padding: var(--padding-size-b);
+    gap: var(--gap-size-c);
+
+    &-label {
+      grid-area: label;
+      color: var(--secondary-content);
+      font-size: .8em;
+    }
+    &-value {
+      grid-area: value;
+      color: var(--primary-content);
+      margin-left: var(--padding-size-c);
+    }
+  }
+}

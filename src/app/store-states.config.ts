@@ -8,10 +8,12 @@
 
 import { AppConfigState } from '@shared/model/app-config';
 import { RedmineConfigState } from '@shared/model/redmine-config';
+import { IssueViewState } from '@widgets/issues-group/issue-view/issue-view-store/issue-view.state';
 
 export default [
   AppConfigState,
   RedmineConfigState,
+  IssueViewState,
   // TrackersState,
   // IssueStatusesState,
   // IssuesState,

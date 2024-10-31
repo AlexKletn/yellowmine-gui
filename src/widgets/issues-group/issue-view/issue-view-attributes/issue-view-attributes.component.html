@@ -1,0 +1,111 @@
+<div class="attributes">
+  <div class="attribute">
+    <div class="attribute-label">
+      Тип
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.tracker.name"
+    >
+    </div>
+  </div>
+  <div class="attribute">
+    <div class="attribute-label">
+      Автор
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.author.name"
+    >
+    </div>
+  </div>
+  <div class="attribute">
+    <div class="attribute-label">
+      Статус
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.status.name"
+    >
+    </div>
+  </div>
+  <div class="attribute">
+    <div class="attribute-label">
+      Исполнитель
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.assigned_to?.name ?? 'Нет исполнителя'"
+    >
+    </div>
+  </div>
+  <div class="attribute">
+    <div class="attribute-label">
+      Проект
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.project.name"
+    >
+    </div>
+  </div>
+
+  @if (issue.estimated_hours) {
+    <div class="attribute">
+      <div class="attribute-label">
+        Оценка
+      </div>
+      <div
+        class="attribute-value"
+        [innerText]="issue.estimated_hours"
+      >
+      </div>
+    </div>
+  }
+  <div class="attribute">
+    <div class="attribute-label">
+      Трудозатраты
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.total_spent_hours"
+    >
+    </div>
+  </div>
+
+  <div class="attribute">
+    <div class="attribute-label">
+      Создана
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.created_on | date:'medium'"
+    >
+    </div>
+  </div>
+
+  <div class="attribute">
+    <div class="attribute-label">
+      Обновлена
+    </div>
+    <div
+      class="attribute-value"
+      [innerText]="issue.updated_on | date:'medium'"
+    >
+    </div>
+  </div>
+
+  @for (customField of issue.custom_fields; track customField.id) {
+    @if (customField.value) {
+      <div class="attribute">
+        <div class="attribute-label" [innerText]="customField.name">
+        </div>
+        <div
+          class="attribute-value"
+          [innerText]="customField.value"
+        >
+        </div>
+      </div>
+    }
+  }
+</div>

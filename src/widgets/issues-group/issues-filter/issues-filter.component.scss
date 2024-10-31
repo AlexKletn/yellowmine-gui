@@ -2,9 +2,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: var(--gap-size-b);
-  border-bottom: var(--border-default);
-  padding: var(--padding-size-b);
 
   font-size: 1em;
   --p-icon-size: 1em;
@@ -19,12 +16,25 @@
     }
   }
 
-  &-select {
-    --p-select-padding-y: .5em;
-    --p-multiselect-padding-y: .5em;
-    --p-select-dropdown-width: 1.5em;
-    --p-multiselect-dropdown-width: 1.5em;
+  &-btn {
+    display: block;
+    height: 35px !important;
+    font-size: 1em !important;
 
-    width: 10em;
+    ::ng-deep {
+      .p-togglebutton {
+        font-size: 1em;
+        height: 35px;
+        border: unset;
+      }
+    }
+  }
+
+  &-accordion {
+    ::ng-deep {
+      .p-accordioncontent-content {
+        padding: 0 !important;
+      }
+    }
   }
 }

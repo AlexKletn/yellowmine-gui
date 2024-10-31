@@ -1,0 +1,79 @@
+.list-item {
+  user-select: none;
+  padding: 1.5em;
+
+  cursor: pointer;
+  content-visibility: auto;
+
+  border-bottom: var(--border-default-light);
+  flex-shrink: 0;
+
+  text-decoration: none;
+  position: relative;
+
+  display: grid;
+  grid-template-areas:
+      'subject subject subject subject'
+      'type    id      status  assigned';
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: var(--gap-size-b);
+
+  transition: background .5s;
+
+  color: var(--primary-content);
+
+  &-id {
+    grid-area: id;
+    font-weight: 400;
+    color: var(--secondary-content);
+  }
+
+  &-status {
+    grid-area: status;
+    font-weight: 400;
+    color: var(--secondary-content);
+  }
+
+  &-subject {
+    grid-area: subject;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+  }
+
+  &-type {
+    grid-area: type;
+    color: var(--secondary-content);
+    font-size: .9em;
+  }
+
+  &-assigned {
+    grid-area: assigned;
+    font-weight: 400;
+    color: var(--secondary-content);
+  }
+
+  &.active {
+    background: var(--active-background) !important;
+    backdrop-filter: blur(50px);
+    z-index: 1;
+
+    position: sticky;
+    top: 0;
+    bottom: 0;
+
+    &:hover {
+      background: var(--p-primary-100);
+      cursor: default;
+    }
+  }
+
+  &:nth-child(2n+1) {
+    //background: var(--background);
+  }
+
+  &:hover {
+    background-color: var(--highlight-color);
+  }
+}

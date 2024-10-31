@@ -25,14 +25,20 @@
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr auto;
 
-  &-title {
+  &-header {
     grid-area: title;
-    padding: var(--padding-size-a);
-    font-size: 1.1em;
     border-bottom: var(--border-default-light);
-    user-select: all;
     border-right: var(--border-default);
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-title {
+    font-size: 1.1em;
+    user-select: all;
     background: var(--background-neutral);
+    padding: var(--padding-size-a);
 
     z-index: 1;
   }
@@ -94,7 +100,13 @@
       '.'
       'attachments';
     grid-template-rows: auto 1fr auto;
-    animation: side-in-left .8s both ease-in-out;
+    animation: side-in-right .3s both ease-in-out;
+
+    transition: margin-right 0.3s ease-out;
+
+    &.hidden {
+      margin-right: -25em;
+    }
   }
 
   &-comments {
@@ -133,82 +145,6 @@
       }
       &-content {
         grid-area: content;
-      }
-    }
-  }
-
-  &-attributes {
-    grid-area: attributes;
-    width: 100%;
-
-    .attribute {
-      display: grid;
-      grid-template-areas:
-        'label'
-        'value';
-      border-bottom: var(--border-default-light);
-      padding: var(--padding-size-b);
-      gap: var(--gap-size-c);
-
-      &-label {
-        grid-area: label;
-        color: var(--secondary-content);
-        font-size: .8em;
-      }
-      &-value {
-        grid-area: value;
-        color: var(--primary-content);
-        margin-left: var(--padding-size-c);
-      }
-    }
-  }
-
-  &-attachments {
-    grid-area: attachments;
-    width: 100%;
-
-    animation: side-in-bottom .5s both ease-in-out;
-    animation-delay: .25s;
-
-    .attachments-label {
-      border-top: var(--border-default);
-      border-bottom: var(--border-default);
-      padding: var(--padding-size-b);
-      margin-bottom: var(--padding-size-c);
-    }
-
-    .attachments-list {
-      border-top: var(--border-default);
-      border-bottom: var(--border-default);
-    }
-
-    .attachment {
-      display: grid;
-      grid-template-areas: 'icon name size .';
-      grid-template-columns: auto auto 1fr auto;
-      align-items: center;
-      gap: var(--gap-size-b);
-      padding-left: var(--padding-size-b);
-      border-bottom: var(--border-default-light);
-      box-sizing: border-box;
-
-      &-icon {
-        grid-area: icon;
-        font-size: 1em;
-      }
-
-      &-name {
-        grid-area: name;
-        font-size: .95em;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      &-size {
-        grid-area: size;
-        font-size: .8em;
-        color: var(--secondary-content);
       }
     }
   }

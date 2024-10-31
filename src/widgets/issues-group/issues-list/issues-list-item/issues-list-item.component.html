@@ -1,0 +1,23 @@
+<a
+  pRipple
+  [ngClass]="{
+    'list-item': true,
+    active: isActive('/issues/' + issue.id.toString(), true)
+  }"
+  [routerLink]="issue.id.toString()"
+>
+  <div class="list-item-id" [innerText]="issue.id">
+  </div>
+
+  <div class="list-item-status" [innerText]="issue.status.name">
+  </div>
+
+  <div class="list-item-assigned" [innerText]="issue.assigned_to?.name ?? 'Нет исполнителя'">
+  </div>
+
+  <div class="list-item-subject" [innerText]="issue.subject">
+  </div>
+
+  <div class="list-item-type" [innerText]="issue.tracker.name">
+  </div>
+</a>

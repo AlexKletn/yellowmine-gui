@@ -1,27 +1,90 @@
 <div class="issues-filter">
-  <p-select
-    class="issues-filter-select"
-    placeholder="Проект"
-    [options]="projects()?.projects"
-    optionLabel="name"
-    optionValue="id"
-    [filter]="true"
+  <button
+    pButton
+    icon="pi pi-filter"
+    text
 
-    (onChange)="setFilter('project_id', $event.value)"
-  />
-  <p-select
-    class="issues-filter-select"
-    placeholder="Статус"
-    [options]="statuses()?.issue_statuses"
-    optionLabel="name"
-    optionValue="id"
-    appendTo="body"
+    (click)="openDrawer()"
+  ></button>
 
-    (onChange)="setFilter('status_id', $event.value)"
+  <p-selectbutton
+    [options]="[
+      {
+        label: 'Все задачи',
+        value: false
+      },
+      {
+        label: 'Мои задачи',
+        value: true
+      }
+    ]"
+    [ngModel]="isAssignedToMe()"
+    [allowEmpty]="false"
+    class="issues-filter-btn"
+    optionLabel="label"
+    optionValue="value"
+    aria-labelledby="basic"
+
+    (onChange)="setAssignedToMe($event)"
   />
-  <p-select
-    class="issues-filter-select"
-    placeholder="Исполнитель"
-    [disabled]="true"
-  />
+
 </div>
+
+<p-drawer [(visible)]="isDrawerOpened" header="Фильтры">
+  <p-accordion multiple value="0" class="issues-filter-accordion">
+    <p-accordion-panel value="0">
+      <p-accordion-header>Тип</p-accordion-header>
+      <p-accordion-content>
+        <p-listbox
+          class="issues-filter-select"
+          [options]="types()!"
+          optionLabel="name"
+          optionValue="id"
+
+          (onChange)="setFilter('tracker_id', $event.value)"
+        />
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="1">
+      <p-accordion-header>Проект</p-accordion-header>
+      <p-accordion-content>
+        <p-listbox
+          class="issues-filter-select"
+          [options]="projects()?.projects!"
+          optionLabel="name"
+          optionValue="id"
+          [filter]="true"
+
+          (onChange)="setFilter('project_id', $event.value)"
+        />
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="2">
+      <p-accordion-header>Статус</p-accordion-header>
+      <p-accordion-content>
+        <p-listbox
+          class="issues-filter-select"
+          [options]="statuses()?.issue_statuses!"
+          optionLabel="name"
+          optionValue="id"
+          appendTo="body"
+
+          (onChange)="setFilter('status_id', $event.value)"
+        />
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="3" [disabled]="true">
+      <p-accordion-header>Исполнитель</p-accordion-header>
+      <p-accordion-content>
+<!--        <p-listbox-->
+<!--          class="issues-filter-select"-->
+<!--          placeholder="Исполнитель"-->
+<!--          [disabled]="true"-->
+<!--        />-->
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
+</p-drawer>

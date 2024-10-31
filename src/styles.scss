@@ -15,6 +15,7 @@
   --primary-content: #1c1801;
   --primary-dark: hsl(from var(--primary) h s calc(l - 10));
   --primary-light: hsl(from var(--primary) h s calc(l + 10));
+
   --secondary: #c122a7;
   --secondary-content: #4c4c4c;
   --secondary-dark: #8c1879;
@@ -39,19 +40,6 @@
   --error-content: #ffffff;
 
   --highlight-color: rgba(47, 45, 50, 0.1);
-  //
-  //@media screen and (prefers-color-scheme: dark){
-  //  --primary-content: #e1dfd7;
-  //  --secondary-content: #aca6a6;
-  //
-  //  --border: #37353a;
-  //  --border-light: #232321;
-  //
-  //  --background: #121212;
-  //  --background-neutral: #202020;
-  //  //--active-background: #1e0d32;
-  //  --highlight-color: rgba(200, 189, 213, 0.1);
-  //}
 
   &.p-dark {
     --primary-content: #e1dfd7;

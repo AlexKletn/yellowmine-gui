@@ -5,11 +5,29 @@
 
 .issues-list-panel {
   display: block;
-  width: 35em;
   height: 100%;
+  width: 35em;
 
   animation: side-in-left .5s ease-out;
   background: var(--background);
+
+  transition: .3s ease-out;
+
+  .hide-toggle {
+    position: absolute;
+    right: 0;
+    z-index: 20;
+  }
+
+  &.hidden {
+    margin-left: calc((35em - 40px) * -1);
+
+    .issues-list {
+      transition: .3s ease-out;
+      transform: translateX(-40px);
+      content-visibility: hidden;
+    }
+  }
 }
 
 .issue-view {

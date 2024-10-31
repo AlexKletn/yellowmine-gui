@@ -20,7 +20,7 @@ import { HeaderComponent } from '@shared/ui/header/header.component';
 })
 export class AppComponent {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
+  // @ts-ignore
   private appService = inject(AppConfigService);
 
   constructor(
@@ -48,40 +48,40 @@ export class AppComponent {
             // 300: 'hsl(from var(--primary) h s calc(l - 20)',
             // 400: 'hsl(from var(--primary) h s calc(l - 10)',
             500: 'var(--primary)',
-            // 600: 'hsl(from var(--primary) h s calc(l + 10))',
-            // 700: 'hsl(from var(--primary) h s calc(l + 20))',
-            // 800: 'hsl(from var(--primary) h s calc(l + 30))',
-            // 900: 'hsl(from var(--primary) h s calc(l + 40))',
-            // 950: 'hsl(from var(--primary) h s calc(l + 50))',
+            600: 'hsl(from var(--primary) h s calc(l + 10))',
+            700: 'hsl(from var(--primary) h s calc(l + 20))',
+            800: 'hsl(from var(--primary) h s calc(l + 30))',
+            900: 'hsl(from var(--primary) h s calc(l + 40))',
+            950: 'hsl(from var(--primary) h s calc(l + 50))',
           },
           colorScheme: {
             light: {
-              primary: {
-                color: 'var(--primary)',
-                inverseColor: '#ffffff',
-                hoverColor: 'var(--highlight-color)',
-                activeColor: 'var(--active-background)',
-              },
-              // highlight: {
-              //   background: 'var(--background)',
-              //   focusBackground: 'var(--foreground)',
-              //   color: '#ffffff',
-              //   focusColor: '#ffffff',
+              // primary: {
+              //   color: 'var(--primary)',
+              //   inverseColor: '#ffffff',
+              //   hoverColor: 'var(--highlight-color)',
+              //   activeColor: 'var(--active-background)',
               // },
+              // // highlight: {
+              // //   background: 'var(--background)',
+              // //   focusBackground: 'var(--foreground)',
+              // //   color: '#ffffff',
+              // //   focusColor: '#ffffff',
+              // // },
             },
             dark: {
-              primary: {
-                color: 'var(--primary)',
-                inverseColor: '{purple.950}',
-                hoverColor: '{purple.500}',
-                activeColor: '{purple.300}',
-              },
-              // highlight: {
-              //   background: 'var(--background)',
-              //   focusBackground: 'var(--foreground)',
-              //   color: 'rgba(255,255,255,.87)',
-              //   focusColor: 'rgba(255,255,255,.87)',
+              // primary: {
+              //   color: 'var(--primary)',
+              //   inverseColor: '{purple.950}',
+              //   hoverColor: '{purple.500}',
+              //   activeColor: '{purple.300}',
               // },
+              // // highlight: {
+              // //   background: 'var(--background)',
+              // //   focusBackground: 'var(--foreground)',
+              // //   color: 'rgba(255,255,255,.87)',
+              // //   focusColor: 'rgba(255,255,255,.87)',
+              // // },
             },
           },
         },

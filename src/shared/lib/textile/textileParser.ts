@@ -35,6 +35,19 @@ class Textile {
     while (strings.length !== 0) {
       let line = strings.shift()!;
 
+      if (/<\w+? .+\/>/.test(line)) {
+        line = line
+          .replace(/<\w+? .+\/>/g, match => (
+            match
+              .replace(/</, '&lt;')
+              .replace(/>/, '&gt;')
+              .replace(/\*/, '&ast;')
+              .replace(/\+/, '&plus;')
+              .replace(/-/, '&minus;')
+              .replace(/_/, '&lowbar;')
+          ));
+      }
+
       if (getListLineRegex().test(line)) {
         list.push(line.replace(/^[*|#]/, '').trim());
 
@@ -405,12 +418,12 @@ class Textile {
         }>;
 
         if (node.content) {
-          output += `<a href="${meta!.link}">${
+          output += `<a target="_blank" href="${meta!.link}">${
             await this.generateTemplate(node.content as AstNode[])
           }</a>`;
         }
         else {
-          output += `<a href="${meta!.link}">${meta!.link}</a>`;
+          output += `<a target="_blank" href="${meta!.link}">${meta!.link}</a>`;
         }
       }
 

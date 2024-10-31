@@ -1,0 +1,52 @@
+:host {
+  grid-area: attachments;
+}
+
+.attachments {
+  width: 100%;
+
+  animation: side-in-bottom .5s both ease-in-out;
+  animation-delay: .25s;
+
+  .attachments-label {
+    border-top: var(--border-default);
+    border-bottom: var(--border-default);
+    padding: var(--padding-size-b);
+    margin-bottom: var(--padding-size-c);
+  }
+
+  .attachments-list {
+    border-top: var(--border-default);
+    border-bottom: var(--border-default);
+  }
+
+  .attachment {
+    display: grid;
+    grid-template-areas: 'icon name size .';
+    grid-template-columns: auto auto 1fr auto;
+    align-items: center;
+    gap: var(--gap-size-b);
+    padding-left: var(--padding-size-b);
+    border-bottom: var(--border-default-light);
+    box-sizing: border-box;
+
+    &-icon {
+      grid-area: icon;
+      font-size: 1em;
+    }
+
+    &-name {
+      grid-area: name;
+      font-size: .95em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-size {
+      grid-area: size;
+      font-size: .8em;
+      color: var(--secondary-content);
+    }
+  }
+}

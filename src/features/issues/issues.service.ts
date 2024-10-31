@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { effect, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { mergeMap, tap } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs';
 
 import Issue from '@entities/issues/model/types';
 import { RedmineApi } from '@shared/api/redmine-api';
@@ -57,6 +57,16 @@ export class IssuesService {
   statuses() {
     return toSignal(
       this.redmineApi.get<{ issue_statuses: DefinitionRecord[] }>('/redmine/issue_statuses.json'),
+    );
+  }
+
+  types() {
+    return toSignal(
+      this.redmineApi
+        .get<{ trackers: DefinitionRecord[] }>('/redmine/trackers.json')
+        .pipe(
+          map(({ trackers }) => trackers),
+        ),
     );
   }
 }
