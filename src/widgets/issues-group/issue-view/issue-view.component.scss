@@ -30,8 +30,8 @@
     border-bottom: var(--border-default-light);
     border-right: var(--border-default);
 
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
   }
 
   &-title {
